@@ -24,10 +24,12 @@ import { HttpNetworkUserConfig } from 'hardhat/types';
 import { HardhatRuntimeEnvironmentExtended, TEthers } from 'helpers/types/hardhat-type-extensions';
 import { create } from 'ipfs-http-client';
 
+import { node_url, accounts, addForkConfiguration } from './utils/network';
+
 /**
  * Set your target network!!!
  */
-const TARGET_NETWORK = 'localhost';
+const TARGET_NETWORK = 'hardhat';
 
 const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 //
@@ -49,72 +51,6 @@ const getMnemonic = () => {
 
 const config: HardhatUserConfig = {
   defaultNetwork: TARGET_NETWORK,
-  namedAccounts: {
-    deployer: {
-      default: 0, // here this will by default take the first account as deployer
-    },
-  },
-  // don't forget to set your provider like:
-  // REACT_APP_PROVIDER=https://dai.poa.network in packages/react-app/.env
-  // (then your frontend will talk to your contracts on the live network!)
-  // (you will need to restart the `yarn run start` dev server after editing the .env)
-
-  networks: {
-    localhost: {
-      url: 'http://localhost:8545',
-      /*
-        if there is no mnemonic, it will just use account 0 of the hardhat node to deploy
-        (you can put in a mnemonic here to set the deployer locally)
-      */
-      // accounts: {
-      //   mnemonic: mnemonic(),
-      // },
-    },
-    rinkeby: {
-      url: 'https://rinkeby.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad', // <---- YOUR INFURA ID! (or it won't work)
-      accounts: {
-        mnemonic: getMnemonic(),
-      },
-    },
-    kovan: {
-      url: 'https://kovan.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad', // <---- YOUR INFURA ID! (or it won't work)
-      accounts: {
-        mnemonic: getMnemonic(),
-      },
-    },
-    mainnet: {
-      url: 'https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad', // <---- YOUR INFURA ID! (or it won't work)
-      accounts: {
-        mnemonic: getMnemonic(),
-      },
-    },
-    ropsten: {
-      url: 'https://ropsten.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad', // <---- YOUR INFURA ID! (or it won't work)
-      accounts: {
-        mnemonic: getMnemonic(),
-      },
-    },
-    goerli: {
-      url: 'https://goerli.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad', // <---- YOUR INFURA ID! (or it won't work)
-      accounts: {
-        mnemonic: getMnemonic(),
-      },
-    },
-    xdai: {
-      url: 'https://rpc.xdaichain.com/',
-      gasPrice: 1000000000,
-      accounts: {
-        mnemonic: getMnemonic(),
-      },
-    },
-    matic: {
-      url: 'https://rpc-mainnet.maticvigil.com/',
-      gasPrice: 1000000000,
-      accounts: {
-        mnemonic: getMnemonic(),
-      },
-    },
-  },
   solidity: {
     compilers: [
       {
@@ -126,31 +62,56 @@ const config: HardhatUserConfig = {
           },
         },
       },
-      {
-        version: '0.7.6',
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200,
-          },
-        },
-      },
-      {
-        version: '0.6.7',
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200,
-          },
-        },
-      },
     ],
   },
+  namedAccounts: {
+    deployer: {
+      default: 0, // here this will by default take the first account as deployer
+    },
+  },
+  // don't forget to set your provider like:
+  // REACT_APP_PROVIDER=https://dai.poa.network in packages/react-app/.env
+  // (then your frontend will talk to your contracts on the live network!)
+  // (you will need to restart the `yarn run start` dev server after editing the .env)
+
+  networks: addForkConfiguration({
+    hardhat: {
+      initialBaseFeePerGas: 0, // to fix : https://github.com/sc-forks/solidity-coverage/issues/652, see https://github.com/sc-forks/solidity-coverage/issues/652#issuecomment-896330136
+    },
+    localhost: {
+      url: node_url('localhost'),
+      accounts: accounts(),
+    },
+    rinkeby: {
+      url: node_url('rinkeby'),
+      accounts: accounts('rinkeby'),
+    },
+    xdai: {
+      url: node_url('xdai'),
+      gasPrice: 1000000000,
+      accounts: accounts('xdai'),
+    },
+    polygon: {
+      url: node_url('polygon'),
+      gasPrice: 1000000000,
+      accounts: accounts('polygon'),
+    },
+  }),
   paths: {
     cache: './generated/cache',
     artifacts: './generated/artifacts',
     deployments: './generated/deployments',
   },
+  external: process.env.HARDHAT_FORK
+    ? {
+        deployments: {
+          // process.env.HARDHAT_FORK will specify the network that the fork is made from.
+          // these lines allow it to fetch the deployments from the network being forked from both for node and deploy task
+          hardhat: ['deployments/' + process.env.HARDHAT_FORK],
+          localhost: ['deployments/' + process.env.HARDHAT_FORK],
+        },
+      }
+    : undefined,
   typechain: {
     outDir: './generated/typechain',
   },
