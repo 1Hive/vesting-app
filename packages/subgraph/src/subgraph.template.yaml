@@ -3,23 +3,48 @@ schema:
   file: ./src/schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: YourContract
+    name: VestedERC20Factory
     network: localhost
     source:
-      address: "{{localhost_YourContractAddress}}"
-      abi: YourContract
+      address: "{{localhost_VestedERC20FactoryAddress}}"
+      abi: VestedERC20Factory
       startBlock: 1
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - Purpose
-        - Sender
+        - VestedERC20Factory
+        - VestedERC20
+        - ERC20
       abis:
-        - name: YourContract
-          file: ./abis/localhost_YourContract.json
+        - name: VestedERC20Factory
+          file: ./abis/localhost_VestedERC20Factory.json
+        - name: VestedERC20
+          file: ./abis/localhost_VestedERC20.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       eventHandlers:
-        - event: SetPurpose(address,string)
-          handler: handleSetPurpose
+        - event: DeployVestedERC20(address)
+          handler: handleDeployVestedERC20
+      file: ./src/mapping.ts
+templates:
+  - kind: ethereum/contract
+    name: VestedERC20
+    network: localhost
+    source:
+      abi: VestedERC20
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - VestedERC20
+        - Vesting
+      abis:
+        - name: VestedERC20
+          file: ./abis/localhost_VestedERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
       file: ./src/mapping.ts

@@ -2,6 +2,8 @@
 
 pragma solidity ^0.8.11;
 
+import "hardhat/console.sol";
+
 import {ERC20} from "./lib/ERC20.sol";
 import {VestedERC20} from "./VestedERC20.sol";
 import {ClonesWithCallData} from "./lib/ClonesWithCallData.sol";
@@ -21,6 +23,12 @@ contract VestedERC20Factory {
     /// -----------------------------------------------------------------------
 
     error Error_InvalidTimeRange();
+
+    /// -----------------------------------------------------------------------
+    /// Events
+    /// -----------------------------------------------------------------------
+
+    event DeployVestedERC20(address vestedERC0);
 
     /// -----------------------------------------------------------------------
     /// Immutable parameters
@@ -64,9 +72,13 @@ contract VestedERC20Factory {
             mstore(add(ptr, 0x75), shl(0xc0, startTimestamp))
             mstore(add(ptr, 0x7d), shl(0xc0, endTimestamp))
         }
+        address newAddress = address(implementation).cloneWithCallDataProvision(ptr);
+
+        emit DeployVestedERC20(newAddress);
+
         return
             VestedERC20(
-                address(implementation).cloneWithCallDataProvision(ptr)
+                newAddress
             );
     }
 }

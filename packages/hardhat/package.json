@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "chain": "hardhat node --network hardhat --no-deploy",
+    "chain": "hardhat node",
     "fork": "hardhat node --fork https://xdai-archive.blockscout.com --export-all ../react-app/src/contracts/hardhat_contracts.json",
     "test": "hardhat test --network hardhat",
     "compile": "hardhat compile",
