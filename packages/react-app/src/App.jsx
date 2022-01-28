@@ -30,7 +30,7 @@ import externalContracts from "./contracts/external_contracts";
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
 import { Home, ExampleUI, Hints, Subgraph } from "./views";
-import { useStaticJsonRPC } from "./hooks";
+import { useContractConfig, useStaticJsonRPC } from "./hooks";
 
 const { ethers } = require("ethers");
 /*
@@ -73,7 +73,7 @@ const providers = [
 function App(props) {
   // specify all the chains your app is available on. Eg: ['localhost', 'mainnet', ...otherNetworks ]
   // reference './constants.js' for other networks
-  const networkOptions = [initialNetwork.name, "mainnet", "rinkeby"];
+  const networkOptions = [initialNetwork.name, "xdai", "polygon"];
 
   const [injectedProvider, setInjectedProvider] = useState();
   const [address, setAddress] = useState();
@@ -139,40 +139,15 @@ function App(props) {
   const yourLocalBalance = useBalance(localProvider, address);
 
   // Just plug in different 🛰 providers to get your balance on different chains:
-  const yourMainnetBalance = useBalance(mainnetProvider, address);
-
-  // const contractConfig = useContractConfig();
+  // const yourMainnetBalance = useBalance(mainnetProvider, address);
 
   const contractConfig = { deployedContracts: deployedContracts || {}, externalContracts: externalContracts || {} };
 
   // Load in your local 📝 contract and read a value from it:
-  const readContracts = useContractLoader(localProvider, contractConfig);
+  const readContracts = useContractLoader(localProvider, contractConfig, localChainId);
 
   // If you want to make 🔐 write transactions to your contracts, use the userSigner:
-  const writeContracts = useContractLoader(userSigner, contractConfig, localChainId);
-
-  // EXTERNAL CONTRACT EXAMPLE:
-  //
-  // If you want to bring in the mainnet DAI contract it would look like:
-  const mainnetContracts = useContractLoader(mainnetProvider, contractConfig);
-
-  // If you want to call a function on a new block
-  useOnBlock(mainnetProvider, () => {
-    console.log(`⛓ A new mainnet block is here: ${mainnetProvider._lastBlockNumber}`);
-  });
-
-  // Then read your DAI balance like:
-  const myMainnetDAIBalance = useContractReader(mainnetContracts, "DAI", "balanceOf", [
-    "0x34aA3F359A9D614239015126635CE7732c18fDF3",
-  ]);
-
-  // keep track of a variable from the contract in the local React state:
-  const purpose = useContractReader(readContracts, "YourContract", "purpose");
-
-  /*
-  const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
-  console.log("🏷 Resolved austingriffith.eth as:",addressFromENS)
-  */
+  const writeContracts = useContractLoader(userSigner, { contractConfig }, localChainId);
 
   //
   // 🧫 DEBUG 👨🏻‍🔬
@@ -184,10 +159,10 @@ function App(props) {
       address &&
       selectedChainId &&
       yourLocalBalance &&
-      yourMainnetBalance &&
+      // yourMainnetBalance &&
       readContracts &&
-      writeContracts &&
-      mainnetContracts
+      writeContracts
+      // mainnetContracts
     ) {
       console.log("_____________________________________ 🏗 scaffold-eth _____________________________________");
       console.log("🌎 mainnetProvider", mainnetProvider);
@@ -195,10 +170,10 @@ function App(props) {
       console.log("👩‍💼 selected address:", address);
       console.log("🕵🏻‍♂️ selectedChainId:", selectedChainId);
       console.log("💵 yourLocalBalance", yourLocalBalance ? ethers.utils.formatEther(yourLocalBalance) : "...");
-      console.log("💵 yourMainnetBalance", yourMainnetBalance ? ethers.utils.formatEther(yourMainnetBalance) : "...");
+      // console.log("💵 yourMainnetBalance", yourMainnetBalance ? ethers.utils.formatEther(yourMainnetBalance) : "...");
       console.log("📝 readContracts", readContracts);
-      console.log("🌍 DAI contract on mainnet:", mainnetContracts);
-      console.log("💵 yourMainnetDAIBalance", myMainnetDAIBalance);
+      // console.log("🌍 DAI contract on mainnet:", mainnetContracts);
+      // console.log("💵 yourMainnetDAIBalance", myMainnetDAIBalance);
       console.log("🔐 writeContracts", writeContracts);
     }
   }, [
@@ -206,12 +181,12 @@ function App(props) {
     address,
     selectedChainId,
     yourLocalBalance,
-    yourMainnetBalance,
+    // yourMainnetBalance,
     readContracts,
     writeContracts,
-    mainnetContracts,
+    // mainnetContracts,
     localChainId,
-    myMainnetDAIBalance,
+    // myMainnetDAIBalance,
   ]);
 
   const loadWeb3Modal = useCallback(async () => {
@@ -246,7 +221,6 @@ function App(props) {
 
   return (
     <div className="App">
-      {/* ✏️ Edit the header and change the title to your project name */}
       <Header />
       <NetworkDisplay
         NETWORKCHECK={NETWORKCHECK}
@@ -256,21 +230,13 @@ function App(props) {
         logoutOfWeb3Modal={logoutOfWeb3Modal}
         USE_NETWORK_SELECTOR={USE_NETWORK_SELECTOR}
       />
+
       <Menu style={{ textAlign: "center", marginTop: 40 }} selectedKeys={[location.pathname]} mode="horizontal">
         <Menu.Item key="/">
           <Link to="/">App Home</Link>
         </Menu.Item>
         <Menu.Item key="/debug">
           <Link to="/debug">Debug Contracts</Link>
-        </Menu.Item>
-        <Menu.Item key="/hints">
-          <Link to="/hints">Hints</Link>
-        </Menu.Item>
-        <Menu.Item key="/exampleui">
-          <Link to="/exampleui">ExampleUI</Link>
-        </Menu.Item>
-        <Menu.Item key="/mainnetdai">
-          <Link to="/mainnetdai">Mainnet DAI</Link>
         </Menu.Item>
         <Menu.Item key="/subgraph">
           <Link to="/subgraph">Subgraph</Link>
@@ -288,60 +254,26 @@ function App(props) {
                 this <Contract/> component will automatically parse your ABI
                 and give you a form to interact with it locally
             */}
-
           <Contract
-            name="YourContract"
+            name="VestedERC20Factory"
             price={price}
             signer={userSigner}
             provider={localProvider}
             address={address}
             blockExplorer={blockExplorer}
             contractConfig={contractConfig}
+            chainId={localChainId}
           />
-        </Route>
-        <Route path="/hints">
-          <Hints
-            address={address}
-            yourLocalBalance={yourLocalBalance}
-            mainnetProvider={mainnetProvider}
-            price={price}
-          />
-        </Route>
-        <Route path="/exampleui">
-          <ExampleUI
-            address={address}
-            userSigner={userSigner}
-            mainnetProvider={mainnetProvider}
-            localProvider={localProvider}
-            yourLocalBalance={yourLocalBalance}
-            price={price}
-            tx={tx}
-            writeContracts={writeContracts}
-            readContracts={readContracts}
-            purpose={purpose}
-          />
-        </Route>
-        <Route path="/mainnetdai">
           <Contract
-            name="DAI"
-            customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.DAI}
+            name="VestedERC20"
+            price={price}
             signer={userSigner}
-            provider={mainnetProvider}
+            provider={localProvider}
             address={address}
-            blockExplorer="https://etherscan.io/"
+            blockExplorer={blockExplorer}
             contractConfig={contractConfig}
-            chainId={1}
+            chainId={localChainId}
           />
-          {/*
-            <Contract
-              name="UNI"
-              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.UNI}
-              signer={userSigner}
-              provider={mainnetProvider}
-              address={address}
-              blockExplorer="https://etherscan.io/"
-            />
-            */}
         </Route>
         <Route path="/subgraph">
           <Subgraph
@@ -387,30 +319,6 @@ function App(props) {
 
       {/* 🗺 Extra UI like gas price, eth price, faucet, and support: */}
       <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10 }}>
-        <Row align="middle" gutter={[4, 4]}>
-          <Col span={8}>
-            <Ramp price={price} address={address} networks={NETWORKS} />
-          </Col>
-
-          <Col span={8} style={{ textAlign: "center", opacity: 0.8 }}>
-            <GasGauge gasPrice={gasPrice} />
-          </Col>
-          <Col span={8} style={{ textAlign: "center", opacity: 1 }}>
-            <Button
-              onClick={() => {
-                window.open("https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA");
-              }}
-              size="large"
-              shape="round"
-            >
-              <span style={{ marginRight: 8 }} role="img" aria-label="support">
-                💬
-              </span>
-              Support
-            </Button>
-          </Col>
-        </Row>
-
         <Row align="middle" gutter={[4, 4]}>
           <Col span={24}>
             {

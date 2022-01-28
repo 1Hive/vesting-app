@@ -1,7 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  Main,
+  Header,
+  Modal,
+  Tag,
+  Button,
+  IconPlus,
+  textStyle,
+  Split,
+  DataView,
+  Box,
+  EmptyStateCard,
+  GU,
+} from "@1hive/1hive-ui";
 import { Link } from "react-router-dom";
 import { useContractReader } from "eth-hooks";
 import { ethers } from "ethers";
+import UserVestings from "../components/UserVestings";
+import VestingInfoBox from "../components/VestingInfoBox";
+
+import { dateFormat } from "../helpers/date-utils";
+
+// Some demo data
+const token = {
+  name: "Honey",
+  symbol: "HNY",
+  address: "0x…",
+};
+
+const vestings = [
+  { token: token.address, startDate: "1643336653", endDate: "1643336653" },
+  { token: token.address, startDate: "1643336653", endDate: "1643336653" },
+  { token: token.address, startDate: "1643336653", endDate: "1643336653" },
+].map(vesting => {
+  return {
+    ...vesting,
+    startDate: dateFormat(vesting.startDate, "onlyDate"),
+    endDate: dateFormat(vesting.endDate, "onlyDate"),
+  };
+});
 
 /**
  * web3 props can be passed from '../App.jsx' into your local view component for use
@@ -10,75 +47,56 @@ import { ethers } from "ethers";
  * @returns react component
  */
 function Home({ yourLocalBalance, readContracts }) {
-  // you can also use hooks locally in your component of choice
-  // in this case, let's keep track of 'purpose' variable from our contract
-  const purpose = useContractReader(readContracts, "YourContract", "purpose");
+  // Modal
+  const [opened, setOpened] = useState(false);
+  const open = () => setOpened(true);
+  const close = () => setOpened(false);
 
   return (
-    <div>
-      <div style={{ margin: 32 }}>
-        <span style={{ marginRight: 8 }}>📝</span>
-        This Is Your App Home. You can start editing it in{" "}
-        <span
-          className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
-        >
-          packages/react-app/src/views/Home.jsx
-        </span>
-      </div>
-      {!purpose?<div style={{ margin: 32 }}>
-        <span style={{ marginRight: 8 }}>👷‍♀️</span>
-        You haven't deployed your contract yet, run
-        <span
-          className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
-        >
-          yarn chain
-        </span> and <span
-            className="highlight"
-            style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+    <Main assetsUrl="/aragon-ui/">
+      <Header
+        primary={
+          <div
+            css={`
+              ${textStyle("title1")};
+            `}
           >
-            yarn deploy
-          </span> to deploy your first contract!
-      </div>:<div style={{ margin: 32 }}>
-        <span style={{ marginRight: 8 }}>🤓</span>
-        The "purpose" variable from your contract is{" "}
-        <span
-          className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
-        >
-          {purpose}
-        </span>
-      </div>}
-
-      <div style={{ margin: 32 }}>
-        <span style={{ marginRight: 8 }}>🤖</span>
-        An example prop of your balance{" "}
-        <span style={{ fontWeight: "bold", color: "green" }}>({ethers.utils.formatEther(yourLocalBalance)})</span> was
-        passed into the
-        <span
-          className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
-        >
-          Home.jsx
-        </span>{" "}
-        component from
-        <span
-          className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
-        >
-          App.jsx
-        </span>
-      </div>
-      <div style={{ margin: 32 }}>
-        <span style={{ marginRight: 8 }}>💭</span>
-        Check out the <Link to="/hints">"Hints"</Link> tab for more tips.
-      </div>
-      <div style={{ margin: 32 }}>
-        <span style={{ marginRight: 8 }}>🛠</span>
-        Tinker with your smart contract using the <Link to="/debug">"Debug Contract"</Link> tab.
-      </div>
-    </div>
+            Vestings <Tag mode="identifier">🦺</Tag>
+          </div>
+        }
+        secondary={<Button onClick={open} mode="strong" label="Add vesting" icon={<IconPlus />} />}
+      />
+      <Split
+        invert="horizontal"
+        primary={<UserVestings vestings={vestings} />}
+        secondary={
+          <>
+            {vestings.length ? (
+              <div>
+                <div
+                  css={`
+                    display: grid;
+                    grid-gap: ${2 * GU}px;
+                    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                    margin-bottom: ${2 * GU}px;
+                  `}
+                >
+                  {vestings.map(vesting => (
+                    <VestingInfoBox token={token} startDate={vesting.startDate} endDate={vesting.endDate} />
+                    // <GardenCard key={garden.id} garden={garden} />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <EmptyStateCard text="No vesting found" />
+            )}
+          </>
+        }
+      />
+      <Modal visible={opened} onClose={close}>
+        {/* modal content */}
+      </Modal>
+    </Main>
   );
 }
 
