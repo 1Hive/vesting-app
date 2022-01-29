@@ -9,6 +9,19 @@
       "userDataDir": true,
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "hardhat deploy",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "${workspaceFolder}/packages/hardhat/node_modules/.bin/hardhat",
+      "args": [
+        "node",
+        "--export-all",
+        "../react-app/src/contracts/hardhat_contracts.json"
+      ],
+      "cwd": "${workspaceFolder}/packages/hardhat"
     }
   ]
 }

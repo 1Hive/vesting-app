@@ -1,5 +1,5 @@
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { DeployFunction } from 'hardhat-deploy/types';
+import { HardhatRuntimeEnvironment } from "hardhat/types";
+import { DeployFunction } from "hardhat-deploy/types";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre;
@@ -7,14 +7,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const { deployer } = await getNamedAccounts();
 
-  await deploy('TestERC20', {
+  await deploy("TestERC20", {
     from: deployer,
-    args: ['Token', 'TKN', 10000],
+    args: ["Token", "TKN", "10000000000000000000"],
     log: true,
-    deterministicDeployment: true,
   });
 };
 
 export default func;
 
-func.tags = ['token'];
+func.tags = ["token"];

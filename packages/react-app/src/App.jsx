@@ -1,14 +1,6 @@
-import { Button, Col, Menu, Row } from "antd";
+import { Col, Menu, Row } from "antd";
 import "antd/dist/antd.css";
-import {
-  useBalance,
-  useContractLoader,
-  useContractReader,
-  useGasPrice,
-  useOnBlock,
-  useUserProviderAndSigner,
-} from "eth-hooks";
-import { useExchangeEthPrice } from "eth-hooks/dapps/dex";
+import { useBalance, useContractLoader, useGasPrice, useUserProviderAndSigner } from "eth-hooks";
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
@@ -16,21 +8,19 @@ import {
   Account,
   Contract,
   Faucet,
-  GasGauge,
   Header,
-  Ramp,
   ThemeSwitch,
   NetworkDisplay,
   FaucetHint,
   NetworkSwitch,
 } from "./components";
-import { NETWORKS, ALCHEMY_KEY } from "./constants";
+import { NETWORKS } from "./constants";
 import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
-import { Home, ExampleUI, Hints, Subgraph } from "./views";
-import { useContractConfig, useStaticJsonRPC } from "./hooks";
+import { Home, Subgraph } from "./views";
+import { useStaticJsonRPC } from "./hooks";
 
 const { ethers } = require("ethers");
 /*
@@ -62,13 +52,6 @@ const USE_BURNER_WALLET = true; // toggle burner wallet feature
 const USE_NETWORK_SELECTOR = false;
 
 const web3Modal = Web3ModalSetup();
-
-// 🛰 providers
-// const providers = [
-//   "https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406",
-//   `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
-//   "https://rpc.scaffoldeth.io:48544",
-// ];
 
 function App(props) {
   // specify all the chains your app is available on. Eg: ['localhost', 'mainnet', ...otherNetworks ]
@@ -153,41 +136,17 @@ function App(props) {
   // 🧫 DEBUG 👨🏻‍🔬
   //
   useEffect(() => {
-    if (
-      DEBUG &&
-      // mainnetProvider &&
-      address &&
-      selectedChainId &&
-      yourLocalBalance &&
-      // yourMainnetBalance &&
-      readContracts &&
-      writeContracts
-      // mainnetContracts
-    ) {
+    if (DEBUG && address && selectedChainId && yourLocalBalance && readContracts && writeContracts) {
       console.log("_____________________________________ 🏗 scaffold-eth _____________________________________");
       console.log("🌎 provider", localProvider);
       console.log("🏠 localChainId", localChainId);
       console.log("👩‍💼 selected address:", address);
       console.log("🕵🏻‍♂️ selectedChainId:", selectedChainId);
       console.log("💵 yourLocalBalance", yourLocalBalance ? ethers.utils.formatEther(yourLocalBalance) : "...");
-      // console.log("💵 yourMainnetBalance", yourMainnetBalance ? ethers.utils.formatEther(yourMainnetBalance) : "...");
       console.log("📝 readContracts", readContracts);
-      // console.log("🌍 DAI contract on mainnet:", mainnetContracts);
-      // console.log("💵 yourMainnetDAIBalance", myMainnetDAIBalance);
       console.log("🔐 writeContracts", writeContracts);
     }
-  }, [
-    // mainnetProvider,
-    address,
-    selectedChainId,
-    yourLocalBalance,
-    // yourMainnetBalance,
-    readContracts,
-    writeContracts,
-    // mainnetContracts,
-    localChainId,
-    // myMainnetDAIBalance,
-  ]);
+  }, [address, selectedChainId, yourLocalBalance, readContracts, writeContracts, localChainId, localProvider]);
 
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect();
