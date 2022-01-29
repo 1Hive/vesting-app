@@ -10,7 +10,7 @@ function VestingInfoBox({ token, startDate, endDate }) {
       />
       <VestingInfoBoxRow primary="Start Date" secondary={startDate} />
       <VestingInfoBoxRow primary="End Date" secondary={endDate} />
-      <Button mode="strong" label="Wrap" />
+      <Button label="Wrap" />
     </Box>
   );
 }

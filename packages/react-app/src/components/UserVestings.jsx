@@ -8,7 +8,7 @@ function UserVestings({ vestings }) {
       fields={["Token Vested", "Start Date", "End Date", ""]}
       entries={vestings}
       renderEntry={({ token, startDate, endDate }) => {
-        return [<IdentityBadge entity={token} />, startDate, endDate, <Button mode="strong" label="Redeem" />];
+        return [<IdentityBadge entity={token} />, startDate, endDate, <Button label="Redeem" />];
       }}
     />
   );

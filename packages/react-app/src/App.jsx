@@ -64,11 +64,11 @@ const USE_NETWORK_SELECTOR = false;
 const web3Modal = Web3ModalSetup();
 
 // 🛰 providers
-const providers = [
-  "https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406",
-  `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
-  "https://rpc.scaffoldeth.io:48544",
-];
+// const providers = [
+//   "https://eth-mainnet.gateway.pokt.network/v1/lb/611156b4a585a20035148406",
+//   `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
+//   "https://rpc.scaffoldeth.io:48544",
+// ];
 
 function App(props) {
   // specify all the chains your app is available on. Eg: ['localhost', 'mainnet', ...otherNetworks ]
@@ -89,12 +89,12 @@ function App(props) {
   const localProvider = useStaticJsonRPC([
     process.env.REACT_APP_PROVIDER ? process.env.REACT_APP_PROVIDER : targetNetwork.rpcUrl,
   ]);
-  const mainnetProvider = useStaticJsonRPC(providers);
+  // const mainnetProvider = useStaticJsonRPC(providers);
 
   if (DEBUG) console.log(`Using ${selectedNetwork} network`);
 
   // 🛰 providers
-  if (DEBUG) console.log("📡 Connecting to Mainnet Ethereum");
+  // if (DEBUG) console.log("📡 Connecting to Mainnet Ethereum");
 
   const logoutOfWeb3Modal = async () => {
     await web3Modal.clearCachedProvider();
@@ -107,7 +107,7 @@ function App(props) {
   };
 
   /* 💵 This hook will get the price of ETH from 🦄 Uniswap: */
-  const price = useExchangeEthPrice(targetNetwork, mainnetProvider);
+  // const price = useExchangeEthPrice(targetNetwork, mainnetProvider);
 
   /* 🔥 This hook will get the price of Gas from ⛽️ EtherGasStation */
   const gasPrice = useGasPrice(targetNetwork, "fast");
@@ -155,7 +155,7 @@ function App(props) {
   useEffect(() => {
     if (
       DEBUG &&
-      mainnetProvider &&
+      // mainnetProvider &&
       address &&
       selectedChainId &&
       yourLocalBalance &&
@@ -165,7 +165,7 @@ function App(props) {
       // mainnetContracts
     ) {
       console.log("_____________________________________ 🏗 scaffold-eth _____________________________________");
-      console.log("🌎 mainnetProvider", mainnetProvider);
+      console.log("🌎 provider", localProvider);
       console.log("🏠 localChainId", localChainId);
       console.log("👩‍💼 selected address:", address);
       console.log("🕵🏻‍♂️ selectedChainId:", selectedChainId);
@@ -177,7 +177,7 @@ function App(props) {
       console.log("🔐 writeContracts", writeContracts);
     }
   }, [
-    mainnetProvider,
+    // mainnetProvider,
     address,
     selectedChainId,
     yourLocalBalance,
@@ -256,7 +256,6 @@ function App(props) {
             */}
           <Contract
             name="VestedERC20Factory"
-            price={price}
             signer={userSigner}
             provider={localProvider}
             address={address}
@@ -266,7 +265,6 @@ function App(props) {
           />
           <Contract
             name="VestedERC20"
-            price={price}
             signer={userSigner}
             provider={localProvider}
             address={address}
@@ -276,12 +274,7 @@ function App(props) {
           />
         </Route>
         <Route path="/subgraph">
-          <Subgraph
-            subgraphUri={props.subgraphUri}
-            tx={tx}
-            writeContracts={writeContracts}
-            mainnetProvider={mainnetProvider}
-          />
+          <Subgraph subgraphUri={props.subgraphUri} tx={tx} writeContracts={writeContracts} />
         </Route>
       </Switch>
 
@@ -304,8 +297,6 @@ function App(props) {
             address={address}
             localProvider={localProvider}
             userSigner={userSigner}
-            mainnetProvider={mainnetProvider}
-            price={price}
             web3Modal={web3Modal}
             loadWeb3Modal={loadWeb3Modal}
             logoutOfWeb3Modal={logoutOfWeb3Modal}
@@ -323,11 +314,7 @@ function App(props) {
           <Col span={24}>
             {
               /*  if the local provider has a signer, let's show the faucet:  */
-              faucetAvailable ? (
-                <Faucet localProvider={localProvider} price={price} ensProvider={mainnetProvider} />
-              ) : (
-                ""
-              )
+              faucetAvailable ? <Faucet localProvider={localProvider} /> : ""
             }
           </Col>
         </Row>
