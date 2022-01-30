@@ -231,6 +231,15 @@ function App(props) {
             contractConfig={contractConfig}
             chainId={localChainId}
           />
+          <Contract
+            name="TestERC20"
+            signer={userSigner}
+            provider={localProvider}
+            address={address}
+            blockExplorer={blockExplorer}
+            contractConfig={contractConfig}
+            chainId={localChainId}
+          />
         </Route>
         <Route path="/subgraph">
           <Subgraph subgraphUri={props.subgraphUri} tx={tx} writeContracts={writeContracts} />

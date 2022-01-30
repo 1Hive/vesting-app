@@ -3,7 +3,6 @@ const chalk = require("chalk");
 
 const graphDir = "../subgraph";
 const deploymentsDir = "./deployments";
-const publishDir = "../react-app/src/contracts";
 
 function publishContract(contractName, networkName) {
   try {
@@ -32,26 +31,13 @@ function publishContract(contractName, networkName) {
     }
     fs.writeFileSync(graphConfigPath, JSON.stringify(graphConfig, null, 2));
     if (!fs.existsSync(`${graphDir}/abis`)) fs.mkdirSync(`${graphDir}/abis`);
+    const abiWithoutErrorType = contract.abi.filter(
+      (fragment) => fragment.type !== "error"
+    );
     fs.writeFileSync(
       `${graphDir}/abis/${networkName}_${contractName}.json`,
-      JSON.stringify(contract.abi, null, 2)
+      JSON.stringify(abiWithoutErrorType, null, 2)
     );
-
-    //Hardhat Deploy writes a file with all ABIs in react-app/src/contracts/contracts.json
-    //If you need the bytecodes and/or you want one file per ABIs, un-comment the following block.
-    //Write the contracts ABI, address and bytecodes in case the front-end needs them
-    // fs.writeFileSync(
-    //   `${publishDir}/${contractName}.address.js`,
-    //   `module.exports = "${contract.address}";`
-    // );
-    // fs.writeFileSync(
-    //   `${publishDir}/${contractName}.abi.js`,
-    //   `module.exports = ${JSON.stringify(contract.abi, null, 2)};`
-    // );
-    // fs.writeFileSync(
-    //   `${publishDir}/${contractName}.bytecode.js`,
-    //   `module.exports = "${contract.bytecode}";`
-    // );
 
     return true;
   } catch (e) {
