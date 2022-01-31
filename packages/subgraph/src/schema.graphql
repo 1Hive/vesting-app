@@ -1,4 +1,8 @@
+"""
+Factory that handle new VestedERC20 deployments
+"""
 type VestedERC20Factory @entity {
+  "ID is set to 1"
   id: ID!
   count: Int!
   vestedERC20: [VestedERC20!]!
@@ -16,11 +20,15 @@ type VestedERC20 @entity {
 }
 
 type Vesting @entity {
+  "Concatenation of token ID, and recipient"
   id: ID!
+  "Creation timestamp"
+  createdAt: Int!
   token: VestedERC20!
   recipient: Bytes!
-  wrappedTokenAmount: BigInt!
+  underlyingAmount: BigInt!
   claimedUnderlyingAmount: BigInt!
+  wrappedTokenAmount: BigInt!
 }
 
 type ERC20 @entity {

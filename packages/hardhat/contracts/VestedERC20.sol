@@ -27,6 +27,13 @@ contract VestedERC20 is ERC20 {
     error Error_Wrap_AmountTooLarge();
 
     /// -----------------------------------------------------------------------
+    /// Events
+    /// -----------------------------------------------------------------------
+
+    event Wrap(address indexed recipient, uint256 wrappedAmount, uint256 underlyingAmount);
+    event Redeem(address indexed holder, address indexed recipient, uint256 redeemedAmount);
+
+    /// -----------------------------------------------------------------------
     /// Storage variables
     /// -----------------------------------------------------------------------
 
@@ -125,6 +132,8 @@ contract VestedERC20 is ERC20 {
             address(this),
             underlyingAmount
         );
+
+        emit Wrap(recipient, wrappedTokenAmount, underlyingAmount);
     }
 
     /// @notice Allows a holder of the wrapped token to redeem the vested tokens
@@ -154,6 +163,8 @@ contract VestedERC20 is ERC20 {
         if (redeemedAmount > 0) {
             SolmateERC20 underlyingToken = SolmateERC20(underlying());
             underlyingToken.safeTransfer(recipient, redeemedAmount);
+
+            emit Redeem(msg.sender, recipient, redeemedAmount);
         }
     }
 

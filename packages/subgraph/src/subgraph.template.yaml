@@ -45,6 +45,10 @@ templates:
         - name: VestedERC20
           file: ./abis/localhost_VestedERC20.json
       eventHandlers:
+        - event: Wrap(indexed address,uint256,uint256)
+          handler: handleWrap
+        - event: Redeem(indexed address,indexed address,uint256)
+          handler: handleRedeem
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/mapping.ts
