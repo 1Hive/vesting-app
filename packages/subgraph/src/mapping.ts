@@ -78,7 +78,14 @@ export function handleRedeem(event: Redeem): void {
 }
 
 export function handleTransfer(event: Transfer): void {
-  // TODO: skip _mint and _burn transfers (from and to equals Address(0))
+  // skip _mint and _burn transfers
+  if (
+    event.params.from.equals(Address.zero()) ||
+    event.params.to.equals(Address.zero())
+  ) {
+    return;
+  }
+
   const vestedERC20Contract = VestedERC20Contract.bind(event.address);
   const vestingFrom = loadOrCreateVesting(
     event.address.toHex(),
