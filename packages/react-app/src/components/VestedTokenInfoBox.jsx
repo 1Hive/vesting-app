@@ -1,21 +1,21 @@
 import React from "react";
 import { Button, Box, TokenBadge, useTheme } from "@1hive/1hive-ui";
 
-function VestingInfoBox({ token, startDate, endDate }) {
+function VestedTokenInfoBox({ token, startDate, endDate, onWrapVesting }) {
   return (
     <Box>
-      <VestingInfoBoxRow
+      <VestedTokenInfoBoxRow
         primary="Vested Token"
-        secondary={<TokenBadge address={token.address} name={token.name} symbol={token.symbol} />}
+        secondary={<TokenBadge address={token.id} name={token.name} symbol={token.symbol} />}
       />
-      <VestingInfoBoxRow primary="Start Date" secondary={startDate} />
-      <VestingInfoBoxRow primary="End Date" secondary={endDate} />
-      <Button label="Wrap" />
+      <VestedTokenInfoBoxRow primary="Start Date" secondary={startDate} />
+      <VestedTokenInfoBoxRow primary="End Date" secondary={endDate} />
+      <Button label="Wrap" onClick={onWrapVesting} />
     </Box>
   );
 }
 
-function VestingInfoBoxRow({ primary, secondary }) {
+function VestedTokenInfoBoxRow({ primary, secondary }) {
   const theme = useTheme();
   return (
     <div
@@ -36,4 +36,4 @@ function VestingInfoBoxRow({ primary, secondary }) {
   );
 }
 
-export default VestingInfoBox;
+export default VestedTokenInfoBox;

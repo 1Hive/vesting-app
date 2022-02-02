@@ -1,44 +1,10 @@
-import React, { useState } from "react";
-import {
-  Main,
-  Header,
-  Modal,
-  Tag,
-  Button,
-  IconPlus,
-  textStyle,
-  Split,
-  DataView,
-  Box,
-  EmptyStateCard,
-  GU,
-} from "@1hive/1hive-ui";
-import { Link } from "react-router-dom";
-import { useContractReader } from "eth-hooks";
-import { ethers } from "ethers";
+import React, { useCallback, useState } from "react";
+import { Main, Header, Modal, Tag, Button, IconPlus, textStyle, Split, EmptyStateCard, GU } from "@1hive/1hive-ui";
 import UserVestings from "../components/UserVestings";
-import VestingInfoBox from "../components/VestingInfoBox";
+import VestedTokenInfoBox from "../components/VestedTokenInfoBox";
 
 import { dateFormat } from "../helpers/date-utils";
-
-// Some demo data
-const token = {
-  name: "Honey",
-  symbol: "HNY",
-  address: "0x…",
-};
-
-const vestings = [
-  { token: token.address, startDate: "1643336653", endDate: "1643336653" },
-  { token: token.address, startDate: "1643336653", endDate: "1643336653" },
-  { token: token.address, startDate: "1643336653", endDate: "1643336653" },
-].map(vesting => {
-  return {
-    ...vesting,
-    startDate: dateFormat(vesting.startDate, "onlyDate"),
-    endDate: dateFormat(vesting.endDate, "onlyDate"),
-  };
-});
+import { useUserVestings, useVestedTokens } from "../hooks";
 
 /**
  * web3 props can be passed from '../App.jsx' into your local view component for use
@@ -46,11 +12,35 @@ const vestings = [
  * @param {*} readContracts contracts from current chain already pre-loaded using ethers contract module. More here https://docs.ethers.io/v5/api/contract/contract/
  * @returns react component
  */
-function Home({ yourLocalBalance, readContracts }) {
+function Home({ address, yourLocalBalance, readContracts }) {
   // Modal
   const [opened, setOpened] = useState(false);
-  const open = () => setOpened(true);
-  const close = () => setOpened(false);
+  const [modalMode, setModalMode] = useState(null);
+
+  const { loading: loadingVestedTokens, data: vestedTokenData } = useVestedTokens();
+
+  const { loading: loadingUserVestings, data: userVestingsData } = useUserVestings(address?.toLowerCase());
+
+  const handleShowModal = useCallback(mode => {
+    setOpened(true);
+    setModalMode(mode);
+  }, []);
+
+  const handleHideModal = useCallback(() => {
+    setOpened(false);
+  }, []);
+
+  const handleDeployVestedToken = useCallback(() => {
+    handleShowModal("deploy");
+  }, [handleShowModal]);
+
+  const handleRedeemVesting = useCallback(() => {
+    handleShowModal("redeem");
+  }, [handleShowModal]);
+
+  const handleWrapVesting = useCallback(() => {
+    handleShowModal("wrap");
+  }, [handleShowModal]);
 
   return (
     <Main assetsUrl="/aragon-ui/">
@@ -64,14 +54,19 @@ function Home({ yourLocalBalance, readContracts }) {
             Vestings <Tag mode="identifier">🦺</Tag>
           </div>
         }
-        secondary={<Button onClick={open} mode="strong" label="Add vesting" icon={<IconPlus />} />}
+        secondary={
+          <Button onClick={handleDeployVestedToken} mode="strong" label="Add vested token" icon={<IconPlus />} />
+        }
       />
       <Split
-        invert="horizontal"
-        primary={<UserVestings vestings={vestings} />}
+        primary={
+          !loadingUserVestings && (
+            <UserVestings vestings={userVestingsData?.vestings ?? []} onRedeemVesting={handleRedeemVesting} />
+          )
+        }
         secondary={
           <>
-            {vestings.length ? (
+            {!loadingVestedTokens && vestedTokenData.vestedERC20S.length > 0 ? (
               <div>
                 <div
                   css={`
@@ -81,20 +76,26 @@ function Home({ yourLocalBalance, readContracts }) {
                     margin-bottom: ${2 * GU}px;
                   `}
                 >
-                  {vestings.map(vesting => (
-                    <VestingInfoBox token={token} startDate={vesting.startDate} endDate={vesting.endDate} />
-                    // <GardenCard key={garden.id} garden={garden} />
+                  {vestedTokenData.vestedERC20S.map(vestedERC20 => (
+                    <VestedTokenInfoBox
+                      token={vestedERC20.underlying}
+                      startDate={dateFormat(vestedERC20.startTimestamp)}
+                      endDate={dateFormat(vestedERC20.endTimestamp)}
+                      onWrapVesting={handleWrapVesting}
+                    />
                   ))}
                 </div>
               </div>
             ) : (
-              <EmptyStateCard text="No vesting found" />
+              <EmptyStateCard text="No vested token created" />
             )}
           </>
         }
       />
-      <Modal visible={opened} onClose={close}>
-        {/* modal content */}
+      <Modal visible={opened} onClose={handleHideModal} onClosed={() => setModalMode(null)}>
+        {modalMode === "deploy" && <div />}
+        {modalMode === "redeem" && <div />}
+        {modalMode === "wrap" && <div />}
       </Modal>
     </Main>
   );
