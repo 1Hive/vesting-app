@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from "react";
-import { Main, Header, Modal, Tag, Button, IconPlus, textStyle, Split, EmptyStateCard, GU } from "@1hive/1hive-ui";
+import { Main, Header, Tag, Button, IconPlus, textStyle, Split, EmptyStateCard, GU, Modal } from "@1hive/1hive-ui";
 import UserVestings from "../components/UserVestings";
 import VestedTokenInfoBox from "../components/VestedTokenInfoBox";
+import AddVestedToken from "../components/AddVestedToken";
 
 import { dateFormat } from "../helpers/date-utils";
 import { useUserVestings, useVestedTokens } from "../hooks";
@@ -12,7 +13,7 @@ import { useUserVestings, useVestedTokens } from "../hooks";
  * @param {*} readContracts contracts from current chain already pre-loaded using ethers contract module. More here https://docs.ethers.io/v5/api/contract/contract/
  * @returns react component
  */
-function Home({ address, yourLocalBalance, readContracts }) {
+function Home({ address, chainId, signer, yourLocalBalance, readContracts, writeContracts, tx }) {
   // Modal
   const [opened, setOpened] = useState(false);
   const [modalMode, setModalMode] = useState(null);
@@ -66,7 +67,7 @@ function Home({ address, yourLocalBalance, readContracts }) {
         }
         secondary={
           <>
-            {!loadingVestedTokens && vestedTokenData.vestedERC20S.length > 0 ? (
+            {!loadingVestedTokens && vestedTokenData?.vestedERC20S.length > 0 ? (
               <div>
                 <div
                   css={`
@@ -93,7 +94,7 @@ function Home({ address, yourLocalBalance, readContracts }) {
         }
       />
       <Modal visible={opened} onClose={handleHideModal} onClosed={() => setModalMode(null)}>
-        {modalMode === "deploy" && <div />}
+        {modalMode === "deploy" && <AddVestedToken writeContracts={writeContracts} tx={tx} />}
         {modalMode === "redeem" && <div />}
         {modalMode === "wrap" && <div />}
       </Modal>
