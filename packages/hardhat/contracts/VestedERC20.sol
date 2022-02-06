@@ -12,7 +12,7 @@ import {FullMath} from "./lib/FullMath.sol";
 /// @author zefram.eth
 /// @notice An ERC20 wrapper token that linearly vests an underlying token to
 /// its holders
-contract VestedERC20 is ERC20 {
+contract VestedERC20 is ERC21 {
     /// -----------------------------------------------------------------------
     /// Library usage
     /// -----------------------------------------------------------------------
