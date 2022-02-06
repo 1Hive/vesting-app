@@ -11,7 +11,7 @@ import {ClonesWithCallData} from "./lib/ClonesWithCallData.sol";
 /// @title VestedERC20Factory
 /// @author zefram.eth
 /// @notice Factory for deploying VestedERC20 contracts cheaply
-contract VestedERC20Factory {
+contract VestedERC20Factories {
     /// -----------------------------------------------------------------------
     /// Library usage
     /// -----------------------------------------------------------------------
