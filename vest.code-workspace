@@ -1,0 +1,21 @@
+{
+	"folders": [
+			{ "name": "WebApp", "path": "./packages/react-app" },
+			{ "name": "Hardhat", "path": "./packages/hardhat" },
+			{ "name": "Subgraph", "path": "./packages/subgraph" },
+			{ "name": "Services", "path": "./packages/services" },
+			{ "name": "Root", "path": "." }
+	],
+	"settings": {
+		"solidity.packageDefaultDependenciesDirectory": "node_modules/@scaffold-eth/hardhat/node_modules/"
+	},
+	"extensions": {
+		"recommendations": [
+		  "esbenp.prettier-vscode",
+		  "dsznajder.es7-react-js-snippets",
+		  "dbaeumer.vscode-eslint",
+		  "xabikos.javascriptsnippets",
+		  "styled-components.vscode-styled-components"
+		]
+	  }
+}
