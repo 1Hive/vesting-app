@@ -79,6 +79,7 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
                 >
                   {vestedTokenData.vestedERC20S.map(vestedERC20 => (
                     <VestedTokenInfoBox
+                      name={vestedERC20.name}
                       token={vestedERC20.underlying}
                       startDate={dateFormat(vestedERC20.startTimestamp)}
                       endDate={dateFormat(vestedERC20.endTimestamp)}

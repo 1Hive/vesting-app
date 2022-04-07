@@ -32,7 +32,7 @@
     "ramda": "^0.27.1"
   },
   "scripts": {
-    "chain": "hardhat node --export-all ../react-app/src/contracts/hardhat_contracts.json",
+    "chain": "hardhat node --hostname 0.0.0.0 --export-all ../react-app/src/contracts/hardhat_contracts.json",
     "fork": "hardhat node --fork https://xdai-archive.blockscout.com --export-all ../react-app/src/contracts/hardhat_contracts.json",
     "test": "hardhat test --network hardhat",
     "compile": "hardhat compile",
