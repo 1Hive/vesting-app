@@ -40,7 +40,15 @@ function AddVestedToken({ writeContracts, tx }) {
           </React.Fragment>
         }
       >
-        {({ id }) => <TextInput id={id} onChange={setTokenAddress} placeholder="0x00..." value={tokenAddress} wide />}
+        {({ id }) => (
+          <TextInput
+            id={id}
+            onChange={evt => setTokenAddress(evt.value)}
+            placeholder="0x00..."
+            value={tokenAddress}
+            wide
+          />
+        )}
       </Field>
       {
         // TODO: fetch vested token name, symbol and decimals and diplay a standar name.
