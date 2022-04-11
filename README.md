@@ -35,7 +35,6 @@ Run each on independent process.
 
 ```bash
 yarn chain
-yarn postdeploy
 ```
 
 ### Graph-Node
@@ -54,6 +53,11 @@ yarn create-local
 yarn codegen
 yarn build
 yarn deploy-local
+```
+
+**WARNING:** if `yarn prepare` fails with `Could not find file: config/config.json` do the following:
+```bash
+yarn postdeploy
 ```
 
 ### React-App
