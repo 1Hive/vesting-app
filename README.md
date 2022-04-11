@@ -12,6 +12,7 @@ Application for vesting to earn a right to tokenomics.
 
 - Install [Node v16](https://nodejs.org/dist/latest-v16.x/) locally to avoid possible issues
 - Install Yarn
+- [Install Docker](https://www.docker.com/products/docker-desktop/)
 
 ```bash
 npm install --global yarn
@@ -34,6 +35,7 @@ Run each on independent process.
 
 ```bash
 yarn chain
+yarn postdeploy
 ```
 
 ### Graph-Node
