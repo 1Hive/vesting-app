@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { HardhatUserConfig } from "hardhat/types";
-
+import '@typechain/hardhat'
 import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-ethers";
 import "@tenderly/hardhat-tenderly";

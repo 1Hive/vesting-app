@@ -9,6 +9,7 @@ packages/hardhat/*.txt
 **/node_modules
 
 packages/hardhat/artifacts*
+packages/hardhat/typechain-types*
 packages/hardhat/deployments
 packages/react-app/src/contracts/*
 packages/react-app/public/aragon-ui/*
