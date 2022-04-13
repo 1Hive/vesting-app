@@ -3,6 +3,7 @@ import { Button, DataView, IdentityBadge } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
 import { formatUnits } from "ethers/lib/utils";
 import { Wrapper } from "./index.styled";
+import { memo } from "react";
 
 const USER_VESTINGS_QUERY = gql`
   query UserVestings($recipient: Bytes!) {
@@ -72,4 +73,4 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
   );
 };
 
-export default UserVestingList;
+export default memo(UserVestingList);

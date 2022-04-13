@@ -1,5 +1,6 @@
 import { GU } from "@1hive/1hive-ui";
 import { gql, useQuery } from "@apollo/client";
+import { memo } from "react";
 import { dateFormat } from "../../helpers/date-utils";
 import VestedTokenInfoBox from "../VestedTokenInfoBox";
 import { Wrapper } from "./index.styled";
@@ -60,4 +61,4 @@ const VestedList = ({ handleWrapVesting }) => {
   );
 };
 
-export default VestedList;
+export default memo(VestedList);

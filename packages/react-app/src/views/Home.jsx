@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Main, Tag, Button, IconPlus, GU, Modal, textStyle } from "@1hive/1hive-ui";
 import styled from "styled-components";
-import AddVestedToken from "../components/AddVestedToken";
+import AddVestedToken from "../components/Modals/AddVestedToken";
 import VestedList from "../components/VestedList";
 import UserVestingList from "../components/UserVestingList";
 
@@ -42,14 +42,16 @@ export const SectionTitle = styled.div`
  */
 function Home({ address, chainId, signer, yourLocalBalance, readContracts, writeContracts, tx }) {
   const [opened, setOpened] = useState(false);
-  const [modalMode, setModalMode] = useState(null);
+  const [modalMode, setModalMode] = useState(null); // deploy, redeem, wrap
 
   const handleShowModal = mode => {
     setOpened(true);
     setModalMode(mode);
   };
-
-  const handleHideModal = () => setOpened(false);
+  const handleHideModal = () => {
+    setOpened(false);
+    setModalMode(null);
+  };
   const handleDeployVestedToken = () => handleShowModal("deploy");
   const handleRedeemVesting = () => handleShowModal("redeem");
   const handleWrapVesting = () => handleShowModal("wrap");
@@ -57,10 +59,10 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
   return (
     <Main assetsUrl="/aragon-ui/">
       <Row>
-        <h1>
+        <SectionTitle>
           Vestings <Tag mode="identifier">🦺</Tag>
-        </h1>
-        <Button onClick={handleDeployVestedToken} mode="strong" label="Add vested token" icon={<IconPlus />} />
+        </SectionTitle>
+        <Button onClick={handleDeployVestedToken} label="Add vested token" icon={<IconPlus />} />
       </Row>
 
       <LayoutWrapper>
@@ -74,8 +76,10 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
         </Section>
       </LayoutWrapper>
 
-      <Modal visible={opened} onClose={handleHideModal} onClosed={() => setModalMode(null)}>
-        {modalMode === "deploy" && <AddVestedToken writeContracts={writeContracts} tx={tx} />}
+      <Modal visible={opened} closeButton={false}>
+        {modalMode === "deploy" && (
+          <AddVestedToken writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />
+        )}
         {modalMode === "redeem" && <div />}
         {modalMode === "wrap" && <div />}
       </Modal>
