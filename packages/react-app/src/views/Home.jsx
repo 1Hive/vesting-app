@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Main, Tag, Button, IconPlus, GU, Modal } from "@1hive/1hive-ui";
+import { Main, Tag, Button, IconPlus, GU, Modal, textStyle } from "@1hive/1hive-ui";
 import styled from "styled-components";
 import AddVestedToken from "../components/AddVestedToken";
 import VestedList from "../components/VestedList";
@@ -17,6 +17,21 @@ const LayoutWrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: ${2 * GU}px;
   transition: all 0.2s ease-in-out;
+`;
+
+export const Section = styled.div`
+  padding: ${2 * GU}px;
+  border: 1px solid #f0f0f0;
+  border-radius: ${GU}px;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const SectionTitle = styled.div`
+  ${textStyle("title1")};
 `;
 
 /**
@@ -49,11 +64,14 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
       </Row>
 
       <LayoutWrapper>
-        <VestedList handleWrapVesting={handleWrapVesting} />
-
-        {address?.toLowerCase() && (
-          <UserVestingList address={address?.toLowerCase()} onRedeemVesting={handleRedeemVesting} />
-        )}
+        <Section>
+          <SectionTitle>Vested list</SectionTitle>
+          <VestedList handleWrapVesting={handleWrapVesting} />
+        </Section>
+        <Section>
+          <SectionTitle>User vesting list</SectionTitle>
+          <UserVestingList address={address} onRedeemVesting={handleRedeemVesting} />
+        </Section>
       </LayoutWrapper>
 
       <Modal visible={opened} onClose={handleHideModal} onClosed={() => setModalMode(null)}>

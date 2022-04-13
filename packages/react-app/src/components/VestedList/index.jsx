@@ -21,17 +21,17 @@ const VESTED_TOKENS_GRAPHQL = `
       }
     }
   }
-  `;
+`;
 
 const VESTED_TOKENS_GQL = gql(VESTED_TOKENS_GRAPHQL);
 
 const VestedList = ({ handleWrapVesting }) => {
   const { loading, error, data } = useQuery(VESTED_TOKENS_GQL, { pollInterval: 2500 });
 
-  console.log(`Data`, data);
+  console.log(`VestedList`, data);
 
-  if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error</div>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error</p>;
 
   return (
     <Wrapper>

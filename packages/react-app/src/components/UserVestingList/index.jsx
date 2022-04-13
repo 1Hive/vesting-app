@@ -31,38 +31,42 @@ const USER_VESTINGS_QUERY = gql`
   }
 `;
 
-const UserVestingList = ({ account, onRedeemVesting }) => {
+const UserVestingList = ({ address, onRedeemVesting }) => {
   const { loading, data, error } = useQuery(USER_VESTINGS_QUERY, {
     pollInterval: 2500,
-    variables: { recipient: account },
+    variables: { recipient: address },
   });
 
-  console.log(`Data`, data);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error...</p>;
 
-  if (loading) return <div>Loading...</div>;
-  //if (error) return <div>Error</div>;
+  console.log(`UserVestingList`, data, error);
 
   return (
     <Wrapper>
-      <h1>UserVestingList</h1>
-
-      {data?.vestings.length > 0 ? (
-        <DataView
-          display="list"
-          fields={["Token Vested", "Start Date", "End Date", "Claimed", ""]}
-          entries={data?.vestings}
-          renderEntry={({ token, claimedUnderlyingAmount }) => {
-            return [
-              <IdentityBadge entity={token.symbol} />,
-              dateFormat(token.startTimestamp),
-              dateFormat(token.endTimestamp),
-              formatUnits(claimedUnderlyingAmount),
-              <Button label="Redeem" onClick={onRedeemVesting} />,
-            ];
-          }}
-        />
+      {address === undefined ? (
+        <p>No address provided</p>
       ) : (
-        <p>No vestings available</p>
+        <>
+          {address !== undefined && data?.vestings.length > 0 ? (
+            <DataView
+              display="list"
+              fields={["Token Vested", "Start Date", "End Date", "Claimed", ""]}
+              entries={data?.vestings}
+              renderEntry={({ token, claimedUnderlyingAmount }) => {
+                return [
+                  <IdentityBadge entity={token.symbol} />,
+                  dateFormat(token.startTimestamp),
+                  dateFormat(token.endTimestamp),
+                  formatUnits(claimedUnderlyingAmount),
+                  <Button label="Redeem" onClick={onRedeemVesting} />,
+                ];
+              }}
+            />
+          ) : (
+            <p>No vestings available</p>
+          )}
+        </>
       )}
     </Wrapper>
   );
