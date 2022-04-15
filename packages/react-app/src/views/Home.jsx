@@ -19,15 +19,6 @@ const LayoutWrapper = styled.div`
   transition: all 0.2s ease-in-out;
 `;
 
-export const Section = styled.div`
-  padding: ${2.5 * GU}px;
-  border: 1px solid #f0f0f0;
-  border-radius: ${GU}px;
-  min-height: 300px;
-  background: #fff;
-  text-align: initial;
-`;
-
 export const SectionTitle = styled.div`
   ${textStyle("title1")};
   margin-bottom: ${2 * GU}px;
@@ -72,14 +63,8 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
       </Row>
 
       <LayoutWrapper>
-        <Section>
-          <SectionTitle small>Vested list</SectionTitle>
-          <VestedList handleWrapVesting={handleWrapVesting} />
-        </Section>
-        <Section>
-          <SectionTitle small>User vesting list</SectionTitle>
-          <UserVestingList address={address} onRedeemVesting={handleRedeemVesting} />
-        </Section>
+        <VestedList handleWrapVesting={handleWrapVesting} />
+        <UserVestingList address={address} onRedeemVesting={handleRedeemVesting} />
       </LayoutWrapper>
 
       <Modal visible={opened} closeButton={false} width={modalWidth[modalMode]}>

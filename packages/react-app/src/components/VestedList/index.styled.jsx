@@ -1,4 +1,4 @@
-import { GU } from "@1hive/1hive-ui";
+import { GU, textStyle } from "@1hive/1hive-ui";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -18,4 +18,19 @@ export const Item = styled.div`
   gap: ${GU * 2}px;
 
   text-align: center;
+`;
+
+export const Section = styled.div`
+  padding: ${2.5 * GU}px;
+  border: 1px solid #f0f0f0;
+  border-radius: ${GU}px;
+  min-height: 300px;
+  background: #fff;
+  text-align: initial;
+`;
+
+export const SectionTitle = styled.div`
+  ${textStyle("title1")};
+  margin-bottom: ${2 * GU}px;
+  ${props => props.small && `font-size: 26px;`};
 `;

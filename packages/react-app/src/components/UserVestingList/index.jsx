@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Button, IdentityBadge, useTheme } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
-import { Wrapper, Item } from "./index.styled";
+import { Wrapper, Item, Section, SectionTitle } from "./index.styled";
 import useUserVestings from "../../hooks/useUserVestings";
 
 import { vestings as mockData } from "../../mocks/vestings";
@@ -18,43 +18,47 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
   const data = mockData;
 
   return (
-    <Wrapper>
-      {address === undefined ? (
-        <p>No address provided</p>
-      ) : (
-        <>
-          {address !== undefined && data?.vestings.length > 0 ? (
-            data?.vestings.map((vest, index) => {
-              const token = vest.token;
-              const createdAt = dateFormat(vest.createdAt);
+    <Section>
+      <SectionTitle small>My vesting</SectionTitle>
 
-              return (
-                <Item isDarkMode={currentTheme === "dark"} key={index}>
-                  <div>
-                    <div
-                      css={`
-                        color: ${theme.surfaceContentSecondary};
-                      `}
-                    >
-                      <strong>Vested Token</strong>
-                    </div>
+      <Wrapper>
+        {address === undefined ? (
+          <p>No address provided</p>
+        ) : (
+          <>
+            {address !== undefined && data?.vestings.length > 0 ? (
+              data?.vestings.map((vest, index) => {
+                const token = vest.token;
+                const createdAt = dateFormat(vest.createdAt);
+
+                return (
+                  <Item isDarkMode={currentTheme === "dark"} key={index}>
                     <div>
-                      <IdentityBadge entity={token.id} />
+                      <div
+                        css={`
+                          color: ${theme.surfaceContentSecondary};
+                        `}
+                      >
+                        <strong>Vested Token</strong>
+                      </div>
+                      <div>
+                        <IdentityBadge entity={token.id} />
+                      </div>
                     </div>
-                  </div>
 
-                  <div>Created At: {createdAt}</div>
+                    <div>Created At: {createdAt}</div>
 
-                  <Button label="Redeem" onClick={onRedeemVesting} />
-                </Item>
-              );
-            })
-          ) : (
-            <p>No vestings available</p>
-          )}
-        </>
-      )}
-    </Wrapper>
+                    <Button label="Redeem" onClick={onRedeemVesting} />
+                  </Item>
+                );
+              })
+            ) : (
+              <p>No vestings available</p>
+            )}
+          </>
+        )}
+      </Wrapper>
+    </Section>
   );
 };
 
