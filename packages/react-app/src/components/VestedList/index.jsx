@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Button, useTheme, TokenBadge } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
-import useVestedTokens from "../../hooks/useVestedTokens";
+import { useVestedTokens } from "../../hooks";
 import { Wrapper, Item, Section, SectionTitle, Empty } from "./index.styled";
 
 import { vestedERC20S as mockData } from "../../mocks/vestedERC20S";

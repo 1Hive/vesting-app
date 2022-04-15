@@ -2,7 +2,7 @@ import { memo } from "react";
 import { Button, IdentityBadge, useTheme } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
 import { Wrapper, Item, Section, SectionTitle, Empty } from "./index.styled";
-import useUserVestings from "../../hooks/useUserVestings";
+import { useUserVestings } from "../../hooks";
 
 import { vestings as mockData } from "../../mocks/vestings";
 import { useThemeSwitcher } from "react-css-theme-switcher";
