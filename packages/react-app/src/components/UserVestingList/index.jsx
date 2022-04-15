@@ -24,12 +24,12 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
       ) : (
         <>
           {address !== undefined && data?.vestings.length > 0 ? (
-            data?.vestings.map(vest => {
+            data?.vestings.map((vest, index) => {
               const token = vest.token;
               const createdAt = dateFormat(vest.createdAt);
 
               return (
-                <Item isDarkMode={currentTheme === "dark"}>
+                <Item isDarkMode={currentTheme === "dark"} key={index}>
                   <div>
                     <div
                       css={`

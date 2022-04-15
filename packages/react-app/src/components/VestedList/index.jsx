@@ -18,13 +18,13 @@ const VestedList = ({ handleWrapVesting }) => {
   return (
     <Wrapper>
       {data?.vestedERC20S.length > 0 ? (
-        data.vestedERC20S.map(vestedERC20 => {
+        data.vestedERC20S.map((vestedERC20, index) => {
           const token = vestedERC20.underlying;
           const startDate = dateFormat(vestedERC20.startTimestamp);
           const endDate = dateFormat(vestedERC20.endTimestamp);
 
           return (
-            <Item>
+            <Item key={index}>
               <div>
                 <div
                   css={`

@@ -25,7 +25,7 @@ const FieldElement = ({ name, element, hint, state, setState, ...rest }) => {
   );
 };
 
-function AddVestedToken({ writeContracts, tx, closeModal }) {
+function Add({ writeContracts, tx, closeModal }) {
   const [state, setState] = useState({
     tokenAddress: "",
     name: "",
@@ -90,4 +90,4 @@ function AddVestedToken({ writeContracts, tx, closeModal }) {
   );
 }
 
-export default AddVestedToken;
+export default Add;

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Main, Tag, Button, IconPlus, GU, Modal, textStyle } from "@1hive/1hive-ui";
 import styled from "styled-components";
-import AddVestedToken from "../components/Modals/AddVestedToken";
 import VestedList from "../components/VestedList";
 import UserVestingList from "../components/UserVestingList";
+import { Add, Wrap, Redeem } from "../components/Modals";
 
 const Row = styled.div`
   display: flex;
@@ -33,6 +33,12 @@ export const SectionTitle = styled.div`
   margin-bottom: ${2 * GU}px;
   ${props => props.small && `font-size: 26px;`};
 `;
+
+const modalWidth = {
+  deploy: "500px",
+  redeem: "350px",
+  wrap: "350px",
+};
 
 /**
  * web3 props can be passed from '../App.jsx' into your local view component for use
@@ -76,12 +82,10 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
         </Section>
       </LayoutWrapper>
 
-      <Modal visible={opened} closeButton={false}>
-        {modalMode === "deploy" && (
-          <AddVestedToken writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />
-        )}
-        {modalMode === "redeem" && <div />}
-        {modalMode === "wrap" && <div />}
+      <Modal visible={opened} closeButton={false} width={modalWidth[modalMode]}>
+        {modalMode === "deploy" && <Add writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
+        {modalMode === "redeem" && <Redeem writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
+        {modalMode === "wrap" && <Wrap writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
       </Modal>
     </Main>
   );
