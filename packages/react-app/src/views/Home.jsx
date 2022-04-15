@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Main, Tag, Button, IconPlus, GU, Modal, textStyle } from "@1hive/1hive-ui";
+import { Main, Tag, Button, IconPlus, GU, Modal, textStyle, EmptyStateCard, Split } from "@1hive/1hive-ui";
 import styled from "styled-components";
 import VestedList from "../components/VestedList";
 import UserVestingList from "../components/UserVestingList";
@@ -10,13 +10,6 @@ const Row = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 15px 0;
-`;
-
-const LayoutWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: ${2 * GU}px;
-  transition: all 0.2s ease-in-out;
 `;
 
 export const SectionTitle = styled.div`
@@ -62,10 +55,10 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
         <Button onClick={handleDeployVestedToken} label="Add vested token" icon={<IconPlus />} />
       </Row>
 
-      <LayoutWrapper>
-        <VestedList handleWrapVesting={handleWrapVesting} />
-        <UserVestingList address={address} onRedeemVesting={handleRedeemVesting} />
-      </LayoutWrapper>
+      <Split
+        primary={<VestedList handleWrapVesting={handleWrapVesting} />}
+        secondary={<UserVestingList address={address} onRedeemVesting={handleRedeemVesting} />}
+      />
 
       <Modal visible={opened} closeButton={false} width={modalWidth[modalMode]}>
         {modalMode === "deploy" && <Add writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}

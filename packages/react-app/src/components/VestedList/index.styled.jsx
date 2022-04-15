@@ -1,10 +1,10 @@
-import { GU, textStyle } from "@1hive/1hive-ui";
+import { EmptyStateCard, GU, textStyle } from "@1hive/1hive-ui";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: ${GU}px;
 `;
 
@@ -33,4 +33,9 @@ export const SectionTitle = styled.div`
   ${textStyle("title1")};
   margin-bottom: ${2 * GU}px;
   ${props => props.small && `font-size: 26px;`};
+`;
+
+export const Empty = styled(EmptyStateCard)`
+  border: none;
+  width: 100%;
 `;

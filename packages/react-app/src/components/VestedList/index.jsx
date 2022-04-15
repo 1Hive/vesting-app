@@ -2,7 +2,7 @@ import { memo } from "react";
 import { Button, useTheme, TokenBadge } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
 import useVestedTokens from "../../hooks/useVestedTokens";
-import { Wrapper, Item, Section, SectionTitle } from "./index.styled";
+import { Wrapper, Item, Section, SectionTitle, Empty } from "./index.styled";
 
 import { vestedERC20S as mockData } from "../../mocks/vestedERC20S";
 
@@ -18,9 +18,10 @@ const VestedList = ({ handleWrapVesting }) => {
   return (
     <Section>
       <SectionTitle small>Vested list</SectionTitle>
-      <Wrapper>
-        {data?.vestedERC20S.length > 0 ? (
-          data.vestedERC20S.map((vestedERC20, index) => {
+
+      {data?.vestedERC20S.length > 0 ? (
+        <Wrapper>
+          {data.vestedERC20S.map((vestedERC20, index) => {
             const token = vestedERC20.underlying;
             const startDate = dateFormat(vestedERC20.startTimestamp);
             const endDate = dateFormat(vestedERC20.endTimestamp);
@@ -48,11 +49,11 @@ const VestedList = ({ handleWrapVesting }) => {
                 <Button label="Wrap" onClick={handleWrapVesting} />
               </Item>
             );
-          })
-        ) : (
-          <p>No vested token created</p>
-        )}
-      </Wrapper>
+          })}
+        </Wrapper>
+      ) : (
+        <Empty text="No vested token created" />
+      )}
     </Section>
   );
 };

@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Button, IdentityBadge, useTheme } from "@1hive/1hive-ui";
+import { Button, EmptyStateCard, IdentityBadge, useTheme } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
 import { Wrapper, Item, Section, SectionTitle } from "./index.styled";
 import useUserVestings from "../../hooks/useUserVestings";
@@ -53,7 +53,7 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
                 );
               })
             ) : (
-              <p>No vestings available</p>
+              <EmptyStateCard text="No vestings available" />
             )}
           </>
         )}
