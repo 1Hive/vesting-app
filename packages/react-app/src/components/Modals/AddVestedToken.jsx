@@ -56,9 +56,6 @@ function AddVestedToken({ writeContracts, tx, closeModal }) {
     [state, range, tx, writeContracts.VestedERC20Factory],
   );
 
-  console.log(`state`, state);
-  console.log(`range`, range);
-
   return (
     <div>
       <ModalHeader>

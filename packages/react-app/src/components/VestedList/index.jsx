@@ -1,38 +1,52 @@
 import { memo } from "react";
-import { GU } from "@1hive/1hive-ui";
+import { Button, useTheme, TokenBadge } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
 import useVestedTokens from "../../hooks/useVestedTokens";
-import VestedTokenInfoBox from "../VestedTokenInfoBox";
-import { Wrapper } from "./index.styled";
+import { Wrapper, Item } from "./index.styled";
+
+import { vestedERC20S as mockData } from "../../mocks/vestedERC20S";
 
 const VestedList = ({ handleWrapVesting }) => {
-  const { loading, error, data } = useVestedTokens();
+  const { loading, error } = useVestedTokens();
+  const theme = useTheme();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
-  console.log(`VestedList`, data);
+  const data = mockData;
 
   return (
     <Wrapper>
       {data?.vestedERC20S.length > 0 ? (
-        <div
-          css={`
-            display: grid;
-            grid-gap: ${2 * GU}px;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            margin-bottom: ${2 * GU}px;
-          `}
-        >
-          {data.vestedERC20S.map(vestedERC20 => (
-            <VestedTokenInfoBox
-              token={vestedERC20.underlying}
-              startDate={dateFormat(vestedERC20.startTimestamp)}
-              endDate={dateFormat(vestedERC20.endTimestamp)}
-              onWrapVesting={handleWrapVesting}
-            />
-          ))}
-        </div>
+        data.vestedERC20S.map(vestedERC20 => {
+          const token = vestedERC20.underlying;
+          const startDate = dateFormat(vestedERC20.startTimestamp);
+          const endDate = dateFormat(vestedERC20.endTimestamp);
+
+          return (
+            <Item>
+              <div>
+                <div
+                  css={`
+                    color: ${theme.surfaceContentSecondary};
+                  `}
+                >
+                  <strong>Vested Token</strong>
+                </div>
+                <div>
+                  <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
+                </div>
+              </div>
+
+              <div>
+                <div>Start Date: {startDate}</div>
+                <div>End Date: {endDate}</div>
+              </div>
+
+              <Button label="Wrap" onClick={handleWrapVesting} />
+            </Item>
+          );
+        })
       ) : (
         <p>No vested token created</p>
       )}

@@ -20,18 +20,18 @@ const LayoutWrapper = styled.div`
 `;
 
 export const Section = styled.div`
-  padding: ${2 * GU}px;
+  padding: ${2.5 * GU}px;
   border: 1px solid #f0f0f0;
   border-radius: ${GU}px;
   min-height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  background: #fff;
+  text-align: initial;
 `;
 
 export const SectionTitle = styled.div`
   ${textStyle("title1")};
+  margin-bottom: ${2 * GU}px;
+  ${props => props.small && `font-size: 26px;`};
 `;
 
 /**
@@ -67,11 +67,11 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
 
       <LayoutWrapper>
         <Section>
-          <SectionTitle>Vested list</SectionTitle>
+          <SectionTitle small>Vested list</SectionTitle>
           <VestedList handleWrapVesting={handleWrapVesting} />
         </Section>
         <Section>
-          <SectionTitle>User vesting list</SectionTitle>
+          <SectionTitle small>User vesting list</SectionTitle>
           <UserVestingList address={address} onRedeemVesting={handleRedeemVesting} />
         </Section>
       </LayoutWrapper>
