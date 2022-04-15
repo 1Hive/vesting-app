@@ -3,11 +3,12 @@ import { useCallback } from "react";
 import { ModalHeader } from "./index.styled";
 
 const Wrap = ({ writeContracts, tx, closeModal }) => {
-  console.log(writeContracts);
+  console.log(`writeContracts`, writeContracts);
 
+  // Needs to be tested
   const handleWrap = useCallback(
     async onComplete => {
-      tx(writeContracts.VestedERC20Factory.createVestedERC20());
+      tx(writeContracts.VestedERC20Factory.createVestedERC20()); // need to check what the real method is
       onComplete();
     },
     [tx, writeContracts.VestedERC20Factory],

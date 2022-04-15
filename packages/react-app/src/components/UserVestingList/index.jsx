@@ -1,7 +1,7 @@
 import { memo } from "react";
-import { Button, EmptyStateCard, IdentityBadge, useTheme } from "@1hive/1hive-ui";
+import { Button, IdentityBadge, useTheme } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
-import { Wrapper, Item, Section, SectionTitle } from "./index.styled";
+import { Wrapper, Item, Section, SectionTitle, Empty } from "./index.styled";
 import useUserVestings from "../../hooks/useUserVestings";
 
 import { vestings as mockData } from "../../mocks/vestings";
@@ -13,7 +13,7 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
   const { currentTheme } = useThemeSwitcher();
 
   if (loading) return <p>Loading...</p>;
-  //if (error) return <p>Error...</p>;
+  if (error) return <p>Error...</p>;
 
   const data = mockData;
 
@@ -53,7 +53,7 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
                 );
               })
             ) : (
-              <EmptyStateCard text="No vestings available" />
+              <Empty text="No vestings available" />
             )}
           </>
         )}

@@ -38,4 +38,6 @@ export const SectionTitle = styled.div`
 export const Empty = styled(EmptyStateCard)`
   border: none;
   width: 100%;
+  grid-template-rows: auto 40px;
+  border: none;
 `;

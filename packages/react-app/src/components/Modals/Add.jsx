@@ -39,6 +39,7 @@ function Add({ writeContracts, tx, closeModal }) {
 
   console.log(`writeContracts`, writeContracts);
 
+  // Needs to be tested
   const deployVestedToken = useCallback(
     async onComplete => {
       tx(

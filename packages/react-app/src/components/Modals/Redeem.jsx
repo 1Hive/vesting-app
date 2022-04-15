@@ -3,6 +3,9 @@ import { IconCross, Button } from "@1hive/1hive-ui";
 import { ModalHeader } from "./index.styled";
 
 const Reddem = ({ writeContracts, tx, closeModal }) => {
+  console.log(`writeContracts`, writeContracts);
+
+  // Needs to be tested
   const handleReddem = useCallback(
     async onComplete => {
       tx(writeContracts.VestedERC20.getRedeemableAmount());
