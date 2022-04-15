@@ -1,38 +1,17 @@
-import { GU } from "@1hive/1hive-ui";
-import { gql, useQuery } from "@apollo/client";
 import { memo } from "react";
+import { GU } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
+import useVestedTokens from "../../hooks/useVestedTokens";
 import VestedTokenInfoBox from "../VestedTokenInfoBox";
 import { Wrapper } from "./index.styled";
 
-const VESTED_TOKENS_GRAPHQL = `
-  {
-     vestedERC20S{
-      id
-      name
-      symbol
-      decimals
-      startTimestamp
-      endTimestamp
-      underlying{
-        id
-        name
-        symbol
-        decimals
-      }
-    }
-  }
-`;
-
-const VESTED_TOKENS_GQL = gql(VESTED_TOKENS_GRAPHQL);
-
 const VestedList = ({ handleWrapVesting }) => {
-  const { loading, error, data } = useQuery(VESTED_TOKENS_GQL, { pollInterval: 2500 });
-
-  console.log(`VestedList`, data);
+  const { loading, error, data } = useVestedTokens();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
+
+  console.log(`VestedList`, data);
 
   return (
     <Wrapper>

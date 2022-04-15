@@ -1,42 +1,12 @@
-import { gql, useQuery } from "@apollo/client";
+import { memo } from "react";
 import { Button, DataView, IdentityBadge } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
 import { formatUnits } from "ethers/lib/utils";
 import { Wrapper } from "./index.styled";
-import { memo } from "react";
-
-const USER_VESTINGS_QUERY = gql`
-  query UserVestings($recipient: Bytes!) {
-    vestings(where: { recipient: $recipient }) {
-      id
-      token {
-        id
-        name
-        symbol
-        decimals
-        underlying {
-          id
-          name
-          symbol
-          decimals
-        }
-        startTimestamp
-        endTimestamp
-      }
-      createdAt
-      recipient
-      underlyingAmount
-      claimedUnderlyingAmount
-      wrappedTokenAmount
-    }
-  }
-`;
+import useUserVestings from "../../hooks/useUserVestings";
 
 const UserVestingList = ({ address, onRedeemVesting }) => {
-  const { loading, data, error } = useQuery(USER_VESTINGS_QUERY, {
-    pollInterval: 2500,
-    variables: { recipient: address },
-  });
+  const { loading, data, error } = useUserVestings(address);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error...</p>;
