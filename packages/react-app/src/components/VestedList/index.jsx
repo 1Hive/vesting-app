@@ -1,15 +1,15 @@
 import { memo } from "react";
-import { Button, useTheme, TokenBadge } from "@1hive/1hive-ui";
+import { Button, TokenBadge } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
 import { useVestedTokens } from "../../hooks";
-import { Wrapper, Section, SectionTitle, Empty } from "./index.styled";
+import { Wrapper, Section, Empty } from "./index.styled";
 
 import { vestedERC20S as mockData } from "../../mocks/vestedERC20S";
 import ListItems from "../List";
+import { SectionTitle } from "../../views/home.styled";
 
 const VestedList = ({ handleWrapVesting }) => {
   const { loading, error } = useVestedTokens();
-  const theme = useTheme();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
@@ -30,20 +30,7 @@ const VestedList = ({ handleWrapVesting }) => {
             return (
               <ListItems
                 key={index}
-                renderHeader={
-                  <>
-                    <div
-                      css={`
-                        color: ${theme.surfaceContentSecondary};
-                      `}
-                    >
-                      <strong>Vested Token</strong>
-                    </div>
-                    <div>
-                      <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
-                    </div>
-                  </>
-                }
+                renderHeader={<TokenBadge address={token.id} name={token.name} symbol={token.symbol} />}
                 renderContent={
                   <>
                     <div>Start Date: {startDate}</div>

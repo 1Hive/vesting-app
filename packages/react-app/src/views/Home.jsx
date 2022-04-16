@@ -1,24 +1,11 @@
 import React, { useState } from "react";
-import { Main, Tag, Button, IconPlus, GU, Modal, textStyle, EmptyStateCard, Split } from "@1hive/1hive-ui";
-import styled from "styled-components";
+import { Main, Tag, Button, IconPlus, Modal, Split } from "@1hive/1hive-ui";
 import VestedList from "../components/VestedList";
 import UserVestingList from "../components/UserVestingList";
 import { Add, Wrap, Redeem } from "../components/Modals";
+import { Row, SectionTitle } from "./home.styled";
 
-const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 15px 0;
-`;
-
-export const SectionTitle = styled.div`
-  ${textStyle("title1")};
-  margin-bottom: ${2 * GU}px;
-  ${props => props.small && `font-size: 26px;`};
-`;
-
-const modalWidth = {
+const MODAL_WIDTH = {
   deploy: "500px",
   redeem: "350px",
   wrap: "350px",
@@ -60,7 +47,7 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
         secondary={<UserVestingList address={address} onRedeemVesting={handleRedeemVesting} />}
       />
 
-      <Modal visible={opened} closeButton={false} width={modalWidth[modalMode]}>
+      <Modal visible={opened} closeButton={false} width={MODAL_WIDTH[modalMode]}>
         {modalMode === "deploy" && <Add writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
         {modalMode === "redeem" && <Redeem writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
         {modalMode === "wrap" && <Wrap writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}

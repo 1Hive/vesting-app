@@ -1,4 +1,4 @@
-import { EmptyStateCard, GU, textStyle } from "@1hive/1hive-ui";
+import { EmptyStateCard, GU } from "@1hive/1hive-ui";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -14,12 +14,6 @@ export const Section = styled.div`
   border-radius: ${GU}px;
   min-height: 300px;
   background: #fff;
-`;
-
-export const SectionTitle = styled.div`
-  ${textStyle("title1")};
-  margin-bottom: ${GU}px;
-  ${props => props.small && `font-size: 26px;`};
 `;
 
 export const Empty = styled(EmptyStateCard)`

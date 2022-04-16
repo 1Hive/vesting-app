@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const Item = styled.div`
   width: 100%;
   border: 1px solid #eee;
-  padding: ${2 * GU}px;
+  padding: ${3 * GU}px ${2 * GU}px;
   border-radius: ${GU}px;
 
   display: grid;

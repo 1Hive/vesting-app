@@ -1,15 +1,15 @@
 import { memo } from "react";
-import { Button, IdentityBadge, useTheme } from "@1hive/1hive-ui";
+import { Button, IdentityBadge } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
-import { Wrapper, Section, SectionTitle, Empty } from "./index.styled";
+import { Wrapper, Section, Empty } from "./index.styled";
 import { useUserVestings } from "../../hooks";
 
 import { vestings as mockData } from "../../mocks/vestings";
 import ListItems from "../List";
+import { SectionTitle } from "../../views/home.styled";
 
 const UserVestingList = ({ address, onRedeemVesting }) => {
   const { loading, error } = useUserVestings(address);
-  const theme = useTheme();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error...</p>;
@@ -33,20 +33,7 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
                 return (
                   <ListItems
                     key={index}
-                    renderHeader={
-                      <>
-                        <div
-                          css={`
-                            color: ${theme.surfaceContentSecondary};
-                          `}
-                        >
-                          <strong>Vested Token</strong>
-                        </div>
-                        <div>
-                          <IdentityBadge entity={token.id} />
-                        </div>
-                      </>
-                    }
+                    renderHeader={<IdentityBadge entity={token.id} />}
                     renderContent={<>Created At: {createdAt}</>}
                     renderAction={<Button label="Redeem" onClick={onRedeemVesting} />}
                   />

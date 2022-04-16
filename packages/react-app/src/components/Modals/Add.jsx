@@ -1,4 +1,4 @@
-import { Button, DateRangePicker, Field, GU, Help, IconCross, TextInput, textStyle } from "@1hive/1hive-ui";
+import { Button, DateRangePicker, Field, Help, IconCross, TextInput } from "@1hive/1hive-ui";
 import React, { useCallback, useState } from "react";
 import { RangeElement, ModalHeader } from "./index.styled";
 
