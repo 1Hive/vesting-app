@@ -20,32 +20,24 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
   //const data = mockData;
   console.log(`data`, data, error);
 
-  return (
+  return data?.vestings.length > 0 ? (
     <Wrapper>
-      {address === undefined ? (
-        <p>No address provided</p>
-      ) : (
-        <>
-          {address !== undefined && data?.vestings.length > 0 ? (
-            data?.vestings.map((vest, index) => {
-              const token = vest.token;
-              const createdAt = dateFormat(vest.createdAt);
+      {data?.vestings.map((vest, index) => {
+        const token = vest.token;
+        const createdAt = dateFormat(vest.createdAt);
 
-              return (
-                <ListItems
-                  key={index}
-                  renderHeader={<IdentityBadge entity={token.id} />}
-                  renderContent={<>Created At: {createdAt}</>}
-                  renderAction={<Button label="Redeem" onClick={onRedeemVesting} />}
-                />
-              );
-            })
-          ) : (
-            <Empty text="No vestings available" />
-          )}
-        </>
-      )}
+        return (
+          <ListItems
+            key={index}
+            renderHeader={<IdentityBadge entity={token.id} />}
+            renderContent={<>Created At: {createdAt}</>}
+            renderAction={<Button label="Redeem" onClick={onRedeemVesting} />}
+          />
+        );
+      })}
     </Wrapper>
+  ) : (
+    <Empty text="No vestings available" />
   );
 };
 
