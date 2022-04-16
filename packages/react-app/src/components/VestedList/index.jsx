@@ -1,12 +1,12 @@
 import { memo } from "react";
+import { Skeleton, Empty } from "antd";
 import { Button, TokenBadge } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
 import { useVestedTokens } from "../../hooks";
-import { Wrapper, Empty } from "./index.styled";
+import { Wrapper } from "./index.styled";
 
 import { vestedERC20S as mockData } from "../../mocks/vestedERC20S";
 import ListItems from "../List";
-import { Skeleton } from "antd";
 
 const VestedList = ({ handleWrapVesting }) => {
   const { loading, error } = useVestedTokens();
@@ -41,7 +41,7 @@ const VestedList = ({ handleWrapVesting }) => {
       })}
     </Wrapper>
   ) : (
-    <Empty text="No vested token created" />
+    <Empty />
   );
 };
 

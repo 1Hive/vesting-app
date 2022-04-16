@@ -1,12 +1,12 @@
 import { memo } from "react";
+import { Skeleton, Empty } from "antd";
 import { Button, IdentityBadge } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
-import { Wrapper, Empty } from "./index.styled";
+import { Wrapper } from "./index.styled";
 import { useUserVestings } from "../../hooks";
 
 import { vestings as mockData } from "../../mocks/vestings";
 import ListItems from "../List";
-import { Skeleton } from "antd";
 
 const UserVestingList = ({ address, onRedeemVesting }) => {
   const { loading, error, data } = useUserVestings(address);
@@ -38,7 +38,7 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
       })}
     </Wrapper>
   ) : (
-    <Empty text="No vestings available" />
+    <Empty />
   );
 };
 
