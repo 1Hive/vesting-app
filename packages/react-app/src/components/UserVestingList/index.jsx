@@ -1,16 +1,15 @@
 import { memo } from "react";
 import { Button, IdentityBadge, useTheme } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
-import { Wrapper, Item, Section, SectionTitle, Empty } from "./index.styled";
+import { Wrapper, Section, SectionTitle, Empty } from "./index.styled";
 import { useUserVestings } from "../../hooks";
 
 import { vestings as mockData } from "../../mocks/vestings";
-import { useThemeSwitcher } from "react-css-theme-switcher";
+import ListItems from "../List";
 
 const UserVestingList = ({ address, onRedeemVesting }) => {
   const { loading, error } = useUserVestings(address);
   const theme = useTheme();
-  const { currentTheme } = useThemeSwitcher();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error...</p>;
@@ -32,24 +31,25 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
                 const createdAt = dateFormat(vest.createdAt);
 
                 return (
-                  <Item isDarkMode={currentTheme === "dark"} key={index}>
-                    <div>
-                      <div
-                        css={`
-                          color: ${theme.surfaceContentSecondary};
-                        `}
-                      >
-                        <strong>Vested Token</strong>
-                      </div>
-                      <div>
-                        <IdentityBadge entity={token.id} />
-                      </div>
-                    </div>
-
-                    <div>Created At: {createdAt}</div>
-
-                    <Button label="Redeem" onClick={onRedeemVesting} />
-                  </Item>
+                  <ListItems
+                    key={index}
+                    renderHeader={
+                      <>
+                        <div
+                          css={`
+                            color: ${theme.surfaceContentSecondary};
+                          `}
+                        >
+                          <strong>Vested Token</strong>
+                        </div>
+                        <div>
+                          <IdentityBadge entity={token.id} />
+                        </div>
+                      </>
+                    }
+                    renderContent={<>Created At: {createdAt}</>}
+                    renderAction={<Button label="Redeem" onClick={onRedeemVesting} />}
+                  />
                 );
               })
             ) : (
