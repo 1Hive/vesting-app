@@ -6,6 +6,7 @@ import { useUserVestings } from "../../hooks";
 
 import { vestings as mockData } from "../../mocks/vestings";
 import ListItems from "../List";
+import { Skeleton } from "antd";
 
 const UserVestingList = ({ address, onRedeemVesting }) => {
   const { loading, error, data } = useUserVestings(address);
@@ -14,7 +15,7 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
     return <p>No address provided</p>;
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Skeleton paragraph={{ rows: 2 }} />;
   if (error) return <p>Error...</p>;
 
   //const data = mockData;

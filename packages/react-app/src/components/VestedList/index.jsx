@@ -6,14 +6,15 @@ import { Wrapper, Empty } from "./index.styled";
 
 import { vestedERC20S as mockData } from "../../mocks/vestedERC20S";
 import ListItems from "../List";
+import { Skeleton } from "antd";
 
 const VestedList = ({ handleWrapVesting }) => {
-  const { loading, error, data } = useVestedTokens();
+  const { loading, error } = useVestedTokens();
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Skeleton paragraph={{ rows: 2 }} />;
   if (error) return <p>Error</p>;
 
-  //const data = mockData;
+  const data = mockData;
 
   console.log(`data`, data, error);
 

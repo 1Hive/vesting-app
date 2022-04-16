@@ -1,15 +1,12 @@
 import { GU } from "@1hive/1hive-ui";
+import { Card } from "antd";
 import styled from "styled-components";
 
-export const Item = styled.div`
-  width: 100%;
-  border: 1px solid #eee;
-  padding: ${3 * GU}px ${2 * GU}px;
-  border-radius: ${GU}px;
-
-  display: grid;
-  gap: ${GU * 2}px;
-  text-align: center;
+export const Item = styled(Card)`
+  > div {
+    display: grid;
+    gap: ${GU * 2}px;
+  }
 `;
 
 const ListItems = ({ renderHeader, renderContent, renderAction }) => {
