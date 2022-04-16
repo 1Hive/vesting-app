@@ -21,6 +21,8 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
   const [opened, setOpened] = useState(false);
   const [modalMode, setModalMode] = useState(null); // deploy, redeem, wrap
 
+  console.log(`writeContracts`, writeContracts);
+
   const handleShowModal = mode => {
     setOpened(true);
     setModalMode(mode);
@@ -36,9 +38,7 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
   return (
     <Main assetsUrl="/aragon-ui/">
       <Row>
-        <SectionTitle>
-          Vestings <Tag mode="identifier">🦺</Tag>
-        </SectionTitle>
+        <SectionTitle>Vestings</SectionTitle>
         <Button onClick={handleDeployVestedToken} label="Add vested token" icon={<IconPlus />} />
       </Row>
 

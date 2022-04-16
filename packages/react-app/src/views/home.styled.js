@@ -10,7 +10,6 @@ export const Row = styled.div`
 
 export const SectionTitle = styled.div`
   ${textStyle("title1")};
-  margin-bottom: ${2 * GU}px;
   ${props => props.small && `font-size: 20px; text-transform: uppercase; margin-bottom: ${4 * GU}px`};
 `;
 
