@@ -3,7 +3,7 @@ import { Main, Tag, Button, IconPlus, Modal, Split } from "@1hive/1hive-ui";
 import VestedList from "../components/VestedList";
 import UserVestingList from "../components/UserVestingList";
 import { Add, Wrap, Redeem } from "../components/Modals";
-import { Row, SectionTitle } from "./home.styled";
+import { Row, SectionTitle, Section } from "./home.styled";
 
 const MODAL_WIDTH = {
   deploy: "500px",
@@ -43,8 +43,18 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
       </Row>
 
       <Split
-        primary={<VestedList handleWrapVesting={handleWrapVesting} />}
-        secondary={<UserVestingList address={address} onRedeemVesting={handleRedeemVesting} />}
+        primary={
+          <Section>
+            <SectionTitle small>Vesting tokens</SectionTitle>
+            <VestedList handleWrapVesting={handleWrapVesting} />
+          </Section>
+        }
+        secondary={
+          <Section>
+            <SectionTitle small>My vesting</SectionTitle>
+            <UserVestingList address={address} onRedeemVesting={handleRedeemVesting} />
+          </Section>
+        }
       />
 
       <Modal visible={opened} closeButton={false} width={MODAL_WIDTH[modalMode]}>

@@ -13,3 +13,11 @@ export const SectionTitle = styled.div`
   margin-bottom: ${2 * GU}px;
   ${props => props.small && `font-size: 20px; text-transform: uppercase; margin-bottom: ${4 * GU}px`};
 `;
+
+export const Section = styled.div`
+  padding: ${2.5 * GU}px;
+  border: 1px solid #f0f0f0;
+  border-radius: ${GU}px;
+  min-height: 300px;
+  background: #fff;
+`;

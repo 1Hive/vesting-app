@@ -1,51 +1,51 @@
 import { memo } from "react";
 import { Button, IdentityBadge } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
-import { Wrapper, Section, Empty } from "./index.styled";
+import { Wrapper, Empty } from "./index.styled";
 import { useUserVestings } from "../../hooks";
 
 import { vestings as mockData } from "../../mocks/vestings";
 import ListItems from "../List";
-import { SectionTitle } from "../../views/home.styled";
 
 const UserVestingList = ({ address, onRedeemVesting }) => {
-  const { loading, error } = useUserVestings(address);
+  const { loading, error, data } = useUserVestings(address);
+
+  if (!address) {
+    return <p>No address provided</p>;
+  }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error...</p>;
 
-  const data = mockData;
+  //const data = mockData;
+  console.log(`data`, data, error);
 
   return (
-    <Section>
-      <SectionTitle small>My vesting</SectionTitle>
+    <Wrapper>
+      {address === undefined ? (
+        <p>No address provided</p>
+      ) : (
+        <>
+          {address !== undefined && data?.vestings.length > 0 ? (
+            data?.vestings.map((vest, index) => {
+              const token = vest.token;
+              const createdAt = dateFormat(vest.createdAt);
 
-      <Wrapper>
-        {address === undefined ? (
-          <p>No address provided</p>
-        ) : (
-          <>
-            {address !== undefined && data?.vestings.length > 0 ? (
-              data?.vestings.map((vest, index) => {
-                const token = vest.token;
-                const createdAt = dateFormat(vest.createdAt);
-
-                return (
-                  <ListItems
-                    key={index}
-                    renderHeader={<IdentityBadge entity={token.id} />}
-                    renderContent={<>Created At: {createdAt}</>}
-                    renderAction={<Button label="Redeem" onClick={onRedeemVesting} />}
-                  />
-                );
-              })
-            ) : (
-              <Empty text="No vestings available" />
-            )}
-          </>
-        )}
-      </Wrapper>
-    </Section>
+              return (
+                <ListItems
+                  key={index}
+                  renderHeader={<IdentityBadge entity={token.id} />}
+                  renderContent={<>Created At: {createdAt}</>}
+                  renderAction={<Button label="Redeem" onClick={onRedeemVesting} />}
+                />
+              );
+            })
+          ) : (
+            <Empty text="No vestings available" />
+          )}
+        </>
+      )}
+    </Wrapper>
   );
 };
 

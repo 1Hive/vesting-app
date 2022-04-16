@@ -8,14 +8,6 @@ export const Wrapper = styled.div`
   gap: ${GU}px;
 `;
 
-export const Section = styled.div`
-  padding: ${2.5 * GU}px;
-  border: 1px solid #f0f0f0;
-  border-radius: ${GU}px;
-  min-height: 300px;
-  background: #fff;
-`;
-
 export const Empty = styled(EmptyStateCard)`
   padding: 0;
   width: 100%;
