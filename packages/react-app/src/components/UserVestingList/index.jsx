@@ -5,7 +5,7 @@ import { dateFormat } from "../../helpers/date-utils";
 import { Wrapper } from "./index.styled";
 import { useUserVestings } from "../../hooks";
 
-import { vestings as mockData } from "../../mocks/vestings";
+// import { vestings as mockData } from "../../mocks/vestings";
 import ListItems from "../List";
 
 const UserVestingList = ({ address, onRedeemVesting }) => {
@@ -19,7 +19,7 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
   if (error) return <p>Error...</p>;
 
   //const data = mockData;
-  console.log(`data`, data, error);
+  console.log(`dataUserVestingList`, data, error);
 
   return data?.vestings.length > 0 ? (
     <Wrapper>

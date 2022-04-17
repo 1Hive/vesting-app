@@ -5,16 +5,16 @@ import { dateFormat } from "../../helpers/date-utils";
 import { useVestedTokens } from "../../hooks";
 import { Wrapper } from "./index.styled";
 
-import { vestedERC20S as mockData } from "../../mocks/vestedERC20S";
+// import { vestedERC20S as mockData } from "../../mocks/vestedERC20S";
 import ListItems from "../List";
 
 const VestedList = ({ handleWrapVesting }) => {
-  const { loading, error } = useVestedTokens();
+  const { loading, error, data } = useVestedTokens();
 
   if (loading) return <Skeleton paragraph={{ rows: 2 }} />;
   if (error) return <p>Error</p>;
 
-  const data = mockData;
+  // const data = mockData;
 
   console.log(`data`, data, error);
 
@@ -24,13 +24,16 @@ const VestedList = ({ handleWrapVesting }) => {
         const token = vestedERC20.underlying;
         const startDate = dateFormat(vestedERC20.startTimestamp);
         const endDate = dateFormat(vestedERC20.endTimestamp);
-
+        const tokenName = vestedERC20.name;
         return (
           <ListItems
             key={index}
-            renderHeader={<TokenBadge address={token.id} name={token.name} symbol={token.symbol} />}
+            renderHeader={`Name: ${tokenName}`}
             renderContent={
               <>
+                <p>
+                  <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
+                </p>
                 <div>Start Date: {startDate}</div>
                 <div>End Date: {endDate}</div>
               </>

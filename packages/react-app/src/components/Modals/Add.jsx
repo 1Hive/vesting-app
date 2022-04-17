@@ -1,6 +1,8 @@
 import { Button, DateRangePicker, Field, Help, IconCross, TextInput } from "@1hive/1hive-ui";
 import React, { useCallback, useState } from "react";
 import { RangeElement, ModalHeader } from "./index.styled";
+import { ethers } from "ethers";
+import dayjs from "dayjs";
 
 const FieldElement = ({ name, element, hint, state, setState, ...rest }) => {
   return (
@@ -25,6 +27,9 @@ const FieldElement = ({ name, element, hint, state, setState, ...rest }) => {
   );
 };
 
+const formatStringToBytes32 = fromString => ethers.utils.formatBytes32String(fromString);
+const formatStringDateToUnixstamp = fromStringDate => dayjs(fromStringDate).unix();
+
 function Add({ writeContracts, tx, closeModal }) {
   const [state, setState] = useState({
     tokenAddress: "",
@@ -40,22 +45,18 @@ function Add({ writeContracts, tx, closeModal }) {
   console.log(`writeContracts`, writeContracts);
 
   // Needs to be tested
-  const deployVestedToken = useCallback(
-    async onComplete => {
-      tx(
-        writeContracts.VestedERC20Factory.createVestedERC20(
-          state.name,
-          state.symbol,
-          state.decimals,
-          state.tokenAddress,
-          range.start,
-          range.end,
-        ),
-      );
-      onComplete();
-    },
-    [state, range, tx, writeContracts.VestedERC20Factory],
-  );
+  const deployVestedToken = useCallback(async () => {
+    tx(
+      writeContracts.VestedERC20Factory.createVestedERC20(
+        formatStringToBytes32(state.name),
+        formatStringToBytes32(state.symbol),
+        state.decimals,
+        state.tokenAddress,
+        formatStringDateToUnixstamp(range.start),
+        formatStringDateToUnixstamp(range.end),
+      ),
+    );
+  }, [state, range, tx, writeContracts.VestedERC20Factory]);
 
   return (
     <div>
