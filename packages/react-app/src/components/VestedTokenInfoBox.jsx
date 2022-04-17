@@ -1,11 +1,11 @@
 import React from "react";
 import { Button, Box, TokenBadge, useTheme } from "@1hive/1hive-ui";
 
-function VestedTokenInfoBox({ token, startDate, endDate, onWrapVesting }) {
+function VestedTokenInfoBox({ name, token, startDate, endDate, onWrapVesting }) {
   return (
     <Box>
       <VestedTokenInfoBoxRow
-        primary="Vested Token"
+        primary={`${name ?? "Vested Token"}`}
         secondary={<TokenBadge address={token.id} name={token.name} symbol={token.symbol} />}
       />
       <VestedTokenInfoBoxRow primary="Start Date" secondary={startDate} />

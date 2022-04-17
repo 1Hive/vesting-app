@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Main, Tag, Button, IconPlus, Modal, Split } from "@1hive/1hive-ui";
+import { Main, Button, IconPlus, Modal, Split } from "@1hive/1hive-ui";
 import VestedList from "../components/VestedList";
 import UserVestingList from "../components/UserVestingList";
 import { Add, Wrap, Redeem } from "../components/Modals";
