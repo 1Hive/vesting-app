@@ -21,8 +21,6 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
   const [opened, setOpened] = useState(false);
   const [modalMode, setModalMode] = useState(null); // deploy, redeem, wrap
 
-  console.log(`writeContracts`, writeContracts);
-
   const handleShowModal = mode => {
     setOpened(true);
     setModalMode(mode);
@@ -60,7 +58,9 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
       <Modal visible={opened} closeButton={false} width={MODAL_WIDTH[modalMode]}>
         {modalMode === "deploy" && <Add writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
         {modalMode === "redeem" && <Redeem writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
-        {modalMode === "wrap" && <Wrap writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
+        {modalMode === "wrap" && (
+          <Wrap address={address} writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />
+        )}
       </Modal>
     </Main>
   );

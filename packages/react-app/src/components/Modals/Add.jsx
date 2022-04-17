@@ -1,6 +1,6 @@
 import { Button, DateRangePicker, Field, Help, IconCross, TextInput } from "@1hive/1hive-ui";
 import React, { useCallback, useState } from "react";
-import { RangeElement, ModalHeader } from "./index.styled";
+import { ModalHeader, Row } from "./index.styled";
 import { ethers } from "ethers";
 import dayjs from "dayjs";
 
@@ -42,8 +42,6 @@ function Add({ writeContracts, tx, closeModal }) {
     end: null,
   });
 
-  console.log(`writeContracts`, writeContracts);
-
   // Needs to be tested
   const deployVestedToken = useCallback(async () => {
     tx(
@@ -83,11 +81,14 @@ function Add({ writeContracts, tx, closeModal }) {
       <FieldElement name="Decimals" element="decimals" state={state} setState={setState} />
 
       <Field label="Vesting duration">
-        <RangeElement>
+        <Row>
           <DateRangePicker startDate={range.start} endDate={range.end} onChange={setRange} />
-        </RangeElement>
+        </Row>
       </Field>
-      <Button onClick={deployVestedToken}>Create</Button>
+
+      <Row>
+        <Button onClick={deployVestedToken}>Create</Button>
+      </Row>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { GU, textStyle } from "@1hive/1hive-ui";
 import styled from "styled-components";
 
-export const RangeElement = styled.div`
+export const Row = styled.div`
   display: flex;
   align-items: start;
   margin-top: ${GU}px;

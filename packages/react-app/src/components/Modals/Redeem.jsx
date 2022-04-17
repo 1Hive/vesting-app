@@ -1,10 +1,8 @@
 import { useCallback } from "react";
 import { IconCross, Button } from "@1hive/1hive-ui";
-import { ModalHeader } from "./index.styled";
+import { ModalHeader, Row } from "./index.styled";
 
 const Reddem = ({ writeContracts, tx, closeModal }) => {
-  console.log(`writeContracts`, writeContracts);
-
   // Needs to be tested
   const handleReddem = useCallback(
     async onComplete => {
@@ -21,7 +19,9 @@ const Reddem = ({ writeContracts, tx, closeModal }) => {
         <IconCross onClick={closeModal} />
       </ModalHeader>
 
-      <Button onClick={handleReddem}>Claim</Button>
+      <Row>
+        <Button onClick={handleReddem}>Claim</Button>
+      </Row>
     </div>
   );
 };
