@@ -8,7 +8,7 @@ import { Row, SectionTitle, Section } from "./home.styled";
 const MODAL_WIDTH = {
   deploy: "500px",
   redeem: "350px",
-  wrap: "350px",
+  wrap: "450px",
 };
 
 /**
@@ -20,6 +20,7 @@ const MODAL_WIDTH = {
 function Home({ address, chainId, signer, yourLocalBalance, readContracts, writeContracts, tx }) {
   const [opened, setOpened] = useState(false);
   const [modalMode, setModalMode] = useState(null); // deploy, redeem, wrap
+  const [wrapContract, setWrapContract] = useState(null);
 
   const handleShowModal = mode => {
     setOpened(true);
@@ -28,10 +29,14 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
   const handleHideModal = () => {
     setOpened(false);
     setModalMode(null);
+    setWrapContract(null);
   };
   const handleDeployVestedToken = () => handleShowModal("deploy");
   const handleRedeemVesting = () => handleShowModal("redeem");
-  const handleWrapVesting = () => handleShowModal("wrap");
+  const handleWrapVesting = id => {
+    setWrapContract(id);
+    handleShowModal("wrap");
+  };
 
   return (
     <Main assetsUrl="/aragon-ui/">
@@ -59,7 +64,7 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
         {modalMode === "deploy" && <Add writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
         {modalMode === "redeem" && <Redeem writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
         {modalMode === "wrap" && (
-          <Wrap address={address} writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />
+          <Wrap vestedId={wrapContract} writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />
         )}
       </Modal>
     </Main>

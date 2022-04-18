@@ -14,12 +14,12 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
   if (!address) {
     return <p>No address provided</p>;
   }
+  console.log(`dataUserVestingList`, data, error);
 
   if (loading) return <Skeleton paragraph={{ rows: 2 }} />;
   if (error) return <p>Error...</p>;
 
   //const data = mockData;
-  console.log(`dataUserVestingList`, data, error);
 
   return data?.vestings.length > 0 ? (
     <Wrapper>

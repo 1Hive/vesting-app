@@ -4,7 +4,7 @@ import { ModalHeader, Row } from "./index.styled";
 import { ethers } from "ethers";
 import dayjs from "dayjs";
 
-const FieldElement = ({ name, element, hint, state, setState, ...rest }) => {
+export const FieldElement = ({ name, element, hint, state, setState, ...rest }) => {
   return (
     <Field
       label={
@@ -35,20 +35,18 @@ function Add({ writeContracts, tx, closeModal }) {
     tokenAddress: "",
     name: "",
     symbol: "",
-    decimals: "",
   });
   const [range, setRange] = useState({
     start: null,
     end: null,
   });
 
-  // Needs to be tested
   const deployVestedToken = useCallback(async () => {
     tx(
       writeContracts.VestedERC20Factory.createVestedERC20(
         formatStringToBytes32(state.name),
         formatStringToBytes32(state.symbol),
-        state.decimals,
+        18,
         state.tokenAddress,
         formatStringDateToUnixstamp(range.start),
         formatStringDateToUnixstamp(range.end),
@@ -78,7 +76,6 @@ function Add({ writeContracts, tx, closeModal }) {
 
       <FieldElement name="Name" element="name" state={state} setState={setState} />
       <FieldElement name="Symbol" element="symbol" state={state} setState={setState} />
-      <FieldElement name="Decimals" element="decimals" state={state} setState={setState} />
 
       <Field label="Vesting duration">
         <Row>

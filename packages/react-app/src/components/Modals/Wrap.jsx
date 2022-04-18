@@ -1,15 +1,22 @@
 import { Button, IconCross } from "@1hive/1hive-ui";
+import { BigNumber } from "ethers";
 import { useCallback, useState } from "react";
+import { FieldElement } from "./Add";
 import { ModalHeader, Row } from "./index.styled";
 
-const Wrap = ({ address, writeContracts, tx, closeModal }) => {
+const Wrap = ({ vestedId, writeContracts, tx, closeModal }) => {
   console.log(`writeContracts`, writeContracts);
-  const [underlyingAmount, setUnderlyingAmount] = useState(10); // this need to be a field
+  const [state, setState] = useState({
+    underlyingAmount: 10,
+    address: "0xdF3e18d64BC6A983f673Ab319CCaE4f1a57C7097",
+  });
 
-  // Needs to be tested
   const handleWrap = useCallback(async () => {
-    tx(writeContracts.VestedERC20.wrap(underlyingAmount, address));
-  }, [tx, writeContracts.VestedERC20, underlyingAmount, address]);
+    // allow
+    await tx(writeContracts.TestERC20.approve(vestedId, BigNumber.from(state.underlyingAmount).pow(18)));
+
+    await tx(writeContracts.VestedERC20.wrap(BigNumber.from(state.underlyingAmount).pow(18), state.address));
+  }, [tx, writeContracts.TestERC20, writeContracts.VestedERC20, vestedId, state.underlyingAmount, state.address]);
 
   return (
     <div>
@@ -17,6 +24,11 @@ const Wrap = ({ address, writeContracts, tx, closeModal }) => {
         <h1>Wrap Token</h1>
         <IconCross onClick={closeModal} />
       </ModalHeader>
+
+      {/*Add fields*/}
+
+      <FieldElement name="Amount" element="underlyingAmount" state={state} setState={setState} />
+      <FieldElement name="Address" element="address" state={state} setState={setState} />
 
       <Row>
         <Button onClick={handleWrap}>Wrap</Button>
