@@ -20,10 +20,10 @@ const Wrap = ({ contractLoader, accountAddress, vestedId, writeContracts, tx, cl
 
   const handleWrap = useCallback(async () => {
     // allow
-    const result = await tx(writeContracts.TestERC20.approve(vestedId, BigNumber.from(state.underlyingAmount).pow(18)));
+    const result = await tx(contract.TestERC20.approve(vestedId, BigNumber.from(state.underlyingAmount).pow(18)));
     console.log("resultApprove", result);
     await tx(contract.VestedERC20.wrap(BigNumber.from(state.underlyingAmount).pow(18), state.address));
-  }, [tx, writeContracts.TestERC20, vestedId, state.underlyingAmount, state.address, contract.VestedERC20]);
+  }, [tx, contract.TestERC20, contract.VestedERC20, vestedId, state.underlyingAmount, state.address]);
 
   return (
     <div>
