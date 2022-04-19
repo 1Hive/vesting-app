@@ -3,7 +3,7 @@ import { BigNumber } from "ethers";
 import { useCallback, useState } from "react";
 import { FieldElement } from "./Add";
 import { ModalHeader, Row } from "./index.styled";
-import { useBalance, useContractLoader, useGasPrice, useUserProviderAndSigner } from "eth-hooks";
+import { useContractLoader } from "eth-hooks";
 
 const Wrap = ({contractLoader, accountAddress, vestedId, writeContracts, tx, closeModal }) => {
   console.log(`writeContracts`, writeContracts);
