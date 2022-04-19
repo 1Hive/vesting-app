@@ -6,7 +6,7 @@ import { ModalHeader, Row } from "./index.styled";
 import { useContractLoader } from "eth-hooks";
 
 const Wrap = ({ contractLoader, accountAddress, vestedId, writeContracts, tx, closeModal }) => {
-  console.log(`writeContracts`, writeContracts);
+  // console.log(`writeContracts`, writeContracts);
   const [state, setState] = useState({
     underlyingAmount: 10,
     address: accountAddress,

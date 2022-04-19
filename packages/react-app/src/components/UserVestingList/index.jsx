@@ -14,7 +14,7 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
   if (!address) {
     return <p>No address provided</p>;
   }
-  console.log(`dataUserVestingList`, data, error);
+  // console.log(`dataUserVestingList`, data, error);
 
   if (loading) return <Skeleton paragraph={{ rows: 2 }} />;
   if (error) return <p>Error...</p>;
