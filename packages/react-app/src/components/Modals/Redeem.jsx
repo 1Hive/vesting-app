@@ -1,12 +1,20 @@
 import { useCallback } from "react";
 import { IconCross, Button } from "@1hive/1hive-ui";
 import { ModalHeader, Row } from "./index.styled";
+import { useContractLoader } from "eth-hooks";
 
-const Reddem = ({ writeContracts, tx, closeModal, address }) => {
+const Reddem = ({contractLoader, vestedId, writeContracts, tx, closeModal, address }) => {
   // Needs to be tested
+
+  const contract = useContractLoader(
+    contractLoader.userSigner,
+    { ...contractLoader.contractConfig, customAddresses: { VestedERC20: vestedId } },
+    contractLoader.localChainId,
+  );
+
   const handleReddem = useCallback(async () => {
-    tx(writeContracts.VestedERC20.getRedeemableAmount(address));
-  }, [address, tx, writeContracts.VestedERC20]);
+    tx(contract.VestedERC20.getRedeemableAmount(address));
+  }, [address, contract.VestedERC20, tx]);
 
   return (
     <div>

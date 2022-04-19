@@ -63,7 +63,14 @@ function Home({ contractLoader, address, chainId, signer, yourLocalBalance, read
       <Modal visible={opened} closeButton={false} width={MODAL_WIDTH[modalMode]}>
         {modalMode === "deploy" && <Add writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
         {modalMode === "redeem" && (
-          <Redeem writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} address={address} />
+          <Redeem
+            contractLoader={contractLoader}
+            vestedId={wrapContract}
+            writeContracts={writeContracts}
+            tx={tx}
+            closeModal={handleHideModal}
+            address={address}
+          />
         )}
         {modalMode === "wrap" && (
           <Wrap
