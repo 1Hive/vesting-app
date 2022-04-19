@@ -32,7 +32,10 @@ function Home({ contractLoader, address, chainId, signer, yourLocalBalance, read
     setWrapContract(null);
   };
   const handleDeployVestedToken = () => handleShowModal("deploy");
-  const handleRedeemVesting = () => handleShowModal("redeem");
+  const handleRedeemVesting = id => {
+    setWrapContract(id);
+    handleShowModal("redeem");
+  };
   const handleWrapVesting = id => {
     setWrapContract(id);
     handleShowModal("wrap");
@@ -64,9 +67,8 @@ function Home({ contractLoader, address, chainId, signer, yourLocalBalance, read
         {modalMode === "deploy" && <Add writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
         {modalMode === "redeem" && (
           <Redeem
-            contractLoader={contractLoader}
             vestedId={wrapContract}
-            writeContracts={writeContracts}
+            contractLoader={contractLoader}
             tx={tx}
             closeModal={handleHideModal}
             address={address}
@@ -76,7 +78,6 @@ function Home({ contractLoader, address, chainId, signer, yourLocalBalance, read
           <Wrap
             contractLoader={contractLoader}
             vestedId={wrapContract}
-            writeContracts={writeContracts}
             tx={tx}
             closeModal={handleHideModal}
             accountAddress={address}

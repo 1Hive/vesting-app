@@ -5,7 +5,7 @@ import { FieldElement } from "./Add";
 import { ModalHeader, Row } from "./index.styled";
 import { useContractLoader } from "eth-hooks";
 
-const Wrap = ({contractLoader, accountAddress, vestedId, writeContracts, tx, closeModal }) => {
+const Wrap = ({ contractLoader, accountAddress, vestedId, writeContracts, tx, closeModal }) => {
   console.log(`writeContracts`, writeContracts);
   const [state, setState] = useState({
     underlyingAmount: 10,
@@ -20,8 +20,8 @@ const Wrap = ({contractLoader, accountAddress, vestedId, writeContracts, tx, clo
 
   const handleWrap = useCallback(async () => {
     // allow
-    await tx(writeContracts.TestERC20.approve(vestedId, BigNumber.from(state.underlyingAmount).pow(18)));
-
+    const result = await tx(writeContracts.TestERC20.approve(vestedId, BigNumber.from(state.underlyingAmount).pow(18)));
+    console.log("resultApprove", result);
     await tx(contract.VestedERC20.wrap(BigNumber.from(state.underlyingAmount).pow(18), state.address));
   }, [tx, writeContracts.TestERC20, vestedId, state.underlyingAmount, state.address, contract.VestedERC20]);
 

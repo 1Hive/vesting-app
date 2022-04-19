@@ -28,7 +28,7 @@ const VestedList = ({ handleWrapVesting }) => {
         return (
           <ListItems
             key={index}
-            renderHeader={`Name: ${tokenName}`}
+            renderHeader={<TokenBadge address={vestedERC20.id} name={vestedERC20.name} symbol={vestedERC20.symbol} />}
             renderContent={
               <>
                 <p>

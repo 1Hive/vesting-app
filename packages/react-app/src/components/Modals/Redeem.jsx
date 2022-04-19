@@ -3,9 +3,9 @@ import { IconCross, Button } from "@1hive/1hive-ui";
 import { ModalHeader, Row } from "./index.styled";
 import { useContractLoader } from "eth-hooks";
 
-const Reddem = ({contractLoader, vestedId, writeContracts, tx, closeModal, address }) => {
+const Redeem = ({ contractLoader, vestedId, tx, closeModal, address }) => {
   // Needs to be tested
-
+  
   const contract = useContractLoader(
     contractLoader.userSigner,
     { ...contractLoader.contractConfig, customAddresses: { VestedERC20: vestedId } },
@@ -13,7 +13,8 @@ const Reddem = ({contractLoader, vestedId, writeContracts, tx, closeModal, addre
   );
 
   const handleReddem = useCallback(async () => {
-    tx(contract.VestedERC20.getRedeemableAmount(address));
+    const value = await tx(contract.VestedERC20.getRedeemableAmount(address));
+    console.log("Redeem::value", value);
   }, [address, contract.VestedERC20, tx]);
 
   return (
@@ -30,4 +31,4 @@ const Reddem = ({contractLoader, vestedId, writeContracts, tx, closeModal, addre
   );
 };
 
-export default Reddem;
+export default Redeem;

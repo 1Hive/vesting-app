@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Skeleton, Empty } from "antd";
-import { Button, IdentityBadge } from "@1hive/1hive-ui";
+import { Button, TokenBadge } from "@1hive/1hive-ui";
 import { dateFormat } from "../../helpers/date-utils";
 import { Wrapper } from "./index.styled";
 import { useUserVestings } from "../../hooks";
@@ -30,9 +30,21 @@ const UserVestingList = ({ address, onRedeemVesting }) => {
         return (
           <ListItems
             key={index}
-            renderHeader={<IdentityBadge entity={token.id} />}
-            renderContent={<>Created At: {createdAt}</>}
-            renderAction={<Button label="Redeem" onClick={onRedeemVesting} />}
+            renderHeader={<TokenBadge address={token.id} name={token.name} symbol={token.symbol} />}
+            renderContent={
+              <>
+                <p>
+                  Underlying:{" "}
+                  <TokenBadge
+                    address={token.underlying?.id}
+                    name={token.underlying?.name}
+                    symbol={token.underlying?.symbol}
+                  />
+                </p>
+                <p>Created At: {createdAt}</p>
+              </>
+            }
+            renderAction={<Button label="Redeem" onClick={() => onRedeemVesting(token.id)} />}
           />
         );
       })}
