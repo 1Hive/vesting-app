@@ -24,16 +24,26 @@ const Redeem = ({ contractLoader, vestedId, tx, closeModal, address }) => {
       if (contract.VestedERC20) {
         const value = await tx(contract.VestedERC20.getRedeemableAmount(address));
         if (isMounted()) setRedeemableAmount(ethers.utils.formatEther(value));
-        console.log("Redeem::value", value);
       }
     };
     void loadAmount();
   }, [address, contract.VestedERC20, isMounted, tx]);
 
   const handleReddem = useCallback(async () => {
-    // const value = await tx(contract.VestedERC20.getRedeemableAmount(address));
-    // console.log("Redeem::value", value);
-  }, []);
+    const result = await tx(contract.VestedERC20.redeem(address));
+    if (result && "wait" in result && result.wait) {
+      const rc = await result.wait();
+
+      if (rc && "events" in rc && rc.events) {
+        const event = rc.events.find(event => event.event === "Redeem");
+        // event Redeem(address indexed holder, address indexed recipient, uint256 redeemedAmount);
+        const [_holder, _recipient, redeemedAmount] = event.args;
+        console.log("Redeem::redeemedAmount", ethers.utils.formatEther(redeemedAmount));
+      } else {
+        console.log("No Transfer and Redeem event emitted");
+      }
+    }
+  }, [address, contract.VestedERC20, tx]);
 
   return (
     <div>
