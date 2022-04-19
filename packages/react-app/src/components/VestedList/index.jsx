@@ -24,7 +24,6 @@ const VestedList = ({ handleWrapVesting }) => {
         const token = vestedERC20.underlying;
         const startDate = dateFormat(vestedERC20.startTimestamp);
         const endDate = dateFormat(vestedERC20.endTimestamp);
-        const tokenName = vestedERC20.name;
         return (
           <ListItems
             key={index}
