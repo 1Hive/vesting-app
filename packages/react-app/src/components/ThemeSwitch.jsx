@@ -6,6 +6,7 @@ export default function ThemeSwitcher() {
   const theme = window.localStorage.getItem("theme");
   const [isDarkMode, setIsDarkMode] = useState(!(!theme || theme === "light"));
   const { switcher, currentTheme, themes } = useThemeSwitcher();
+  const inactive = true;
 
   useEffect(() => {
     window.localStorage.setItem("theme", currentTheme);
@@ -17,9 +18,11 @@ export default function ThemeSwitcher() {
   };
 
   return (
-    <div className="main fade-in" style={{ position: "fixed", right: 8, bottom: 8 }}>
-      <span style={{ padding: 8 }}>{currentTheme === "light" ? "☀️" : "🌜"}</span>
-      <Switch checked={isDarkMode} onChange={toggleTheme} />
-    </div>
+    inactive === "false" && (
+      <div className="main fade-in" style={{ position: "fixed", right: 8, bottom: 8 }}>
+        <span style={{ padding: 8 }}>{currentTheme === "light" ? "☀️" : "🌜"}</span>
+        <Switch checked={isDarkMode} onChange={toggleTheme} />
+      </div>
+    )
   );
 }

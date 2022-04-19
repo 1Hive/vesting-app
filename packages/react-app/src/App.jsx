@@ -130,7 +130,7 @@ function App(props) {
   const readContracts = useContractLoader(localProvider, contractConfig, localChainId);
 
   // If you want to make 🔐 write transactions to your contracts, use the userSigner:
-  const writeContracts = useContractLoader(userSigner, { contractConfig }, localChainId);
+  const writeContracts = useContractLoader(userSigner, contractConfig, localChainId);
 
   //
   // 🧫 DEBUG 👨🏻‍🔬
@@ -206,6 +206,7 @@ function App(props) {
         <Route exact path="/">
           {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
           <Home
+            contractLoader={{ userSigner, contractConfig, localChainId }}
             address={address}
             yourLocalBalance={yourLocalBalance}
             readContracts={readContracts}
