@@ -17,7 +17,7 @@ const MODAL_WIDTH = {
  * @param {*} readContracts contracts from current chain already pre-loaded using ethers contract module. More here https://docs.ethers.io/v5/api/contract/contract/
  * @returns react component
  */
-function Home({ address, chainId, signer, yourLocalBalance, readContracts, writeContracts, tx }) {
+function Home({ contractLoader, address, chainId, signer, yourLocalBalance, readContracts, writeContracts, tx }) {
   const [opened, setOpened] = useState(false);
   const [modalMode, setModalMode] = useState(null); // deploy, redeem, wrap
   const [wrapContract, setWrapContract] = useState(null);
@@ -67,6 +67,7 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
         )}
         {modalMode === "wrap" && (
           <Wrap
+            contractLoader={contractLoader}
             vestedId={wrapContract}
             writeContracts={writeContracts}
             tx={tx}
