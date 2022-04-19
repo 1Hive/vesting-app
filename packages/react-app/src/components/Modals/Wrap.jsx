@@ -4,11 +4,11 @@ import { useCallback, useState } from "react";
 import { FieldElement } from "./Add";
 import { ModalHeader, Row } from "./index.styled";
 
-const Wrap = ({ vestedId, writeContracts, tx, closeModal }) => {
+const Wrap = ({ accountAddress, vestedId, writeContracts, tx, closeModal }) => {
   console.log(`writeContracts`, writeContracts);
   const [state, setState] = useState({
     underlyingAmount: 10,
-    address: "0xdF3e18d64BC6A983f673Ab319CCaE4f1a57C7097",
+    address: accountAddress,
   });
 
   const handleWrap = useCallback(async () => {

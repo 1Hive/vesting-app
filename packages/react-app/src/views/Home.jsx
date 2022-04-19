@@ -62,9 +62,17 @@ function Home({ address, chainId, signer, yourLocalBalance, readContracts, write
 
       <Modal visible={opened} closeButton={false} width={MODAL_WIDTH[modalMode]}>
         {modalMode === "deploy" && <Add writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
-        {modalMode === "redeem" && <Redeem writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} address={address} />}
+        {modalMode === "redeem" && (
+          <Redeem writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} address={address} />
+        )}
         {modalMode === "wrap" && (
-          <Wrap vestedId={wrapContract} writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />
+          <Wrap
+            vestedId={wrapContract}
+            writeContracts={writeContracts}
+            tx={tx}
+            closeModal={handleHideModal}
+            accountAddress={address}
+          />
         )}
       </Modal>
     </Main>
