@@ -48,7 +48,7 @@ const Redeem = ({ contractLoader, vestedId, tx, closeModal, address }) => {
   return (
     <div>
       <ModalHeader>
-        <h1>Reddem vested tokens</h1>
+        <h1>Redeem vested tokens</h1>
         <IconCross onClick={closeModal} />
       </ModalHeader>
 
