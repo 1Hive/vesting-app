@@ -48,11 +48,11 @@ const Redeem = ({ contractLoader, vestedId, tx, closeModal, address }) => {
   return (
     <div>
       <ModalHeader>
-        <h1>Reddem vested Token</h1>
+        <h1>Reddem vested tokens</h1>
         <IconCross onClick={closeModal} />
       </ModalHeader>
 
-      <Field label={"Redeemable Amount"} required={false}>
+      <Field label={"Redeemable amount"} required={false}>
         {redeemableAmount}
       </Field>
 
