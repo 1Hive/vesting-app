@@ -20,6 +20,7 @@ export const FieldElement = ({ name, element, hint, state, setState, ...rest }) 
           onChange={e => setState(prev => ({ ...prev, [element]: e.target.value }))}
           value={state[element]}
           wide
+          placeholder={element === "address" ? "0x00..." : ""}
           {...rest}
         />
       )}
@@ -57,17 +58,13 @@ function Add({ writeContracts, tx, closeModal }) {
   return (
     <div>
       <ModalHeader>
-        <h1>Add vested Token</h1>
+        <h1>Add new vesting</h1>
         <IconCross onClick={closeModal} />
       </ModalHeader>
 
       <FieldElement
         name="Vested token"
-        hint={
-          <Help hint="What is Token Address?">
-            <strong>Token Address</strong> is the address of an existent ERC-20 token to use within your garden.
-          </Help>
-        }
+        hint={<Help hint="What is Vested Token?">Address of underlying token that will be vested.</Help>}
         element="tokenAddress"
         state={state}
         setState={setState}
@@ -84,7 +81,9 @@ function Add({ writeContracts, tx, closeModal }) {
       </Field>
 
       <Row>
-        <Button onClick={deployVestedToken}>Create</Button>
+        <Button mode="strong" onClick={deployVestedToken}>
+          Create
+        </Button>
       </Row>
     </div>
   );

@@ -43,25 +43,31 @@ function Home({ contractLoader, address, chainId, signer, yourLocalBalance, read
 
   return (
     <Main assetsUrl="/aragon-ui/">
-      <Row>
-        <SectionTitle>Vestings</SectionTitle>
-        <Button onClick={handleDeployVestedToken} label="Add vested token" icon={<IconPlus />} />
+      <Row style={{ display: "flex", justifyContent: "center" }}>
+        <Button mode="strong" onClick={handleDeployVestedToken} label="Add new vesting" icon={<IconPlus />} />
       </Row>
 
-      <Split
-        primary={
-          <Section>
-            <SectionTitle small>Vesting tokens</SectionTitle>
-            <VestedList handleWrapVesting={handleWrapVesting} />
-          </Section>
-        }
-        secondary={
-          <Section>
-            <SectionTitle small>My vesting</SectionTitle>
-            <UserVestingList address={address} onRedeemVesting={handleRedeemVesting} />
-          </Section>
-        }
-      />
+      {address ? (
+        <Split
+          primary={
+            <Section>
+              <SectionTitle small>My vestings</SectionTitle>
+              <UserVestingList address={address} onRedeemVesting={handleRedeemVesting} />
+            </Section>
+          }
+          secondary={
+            <Section>
+              <SectionTitle small>Vesting tokens</SectionTitle>
+              <VestedList handleWrapVesting={handleWrapVesting} />
+            </Section>
+          }
+        />
+      ) : (
+        <Section>
+          <SectionTitle small>Vesting tokens</SectionTitle>
+          <VestedList handleWrapVesting={handleWrapVesting} />
+        </Section>
+      )}
 
       <Modal visible={opened} closeButton={false} width={MODAL_WIDTH[modalMode]}>
         {modalMode === "deploy" && <Add writeContracts={writeContracts} tx={tx} closeModal={handleHideModal} />}
