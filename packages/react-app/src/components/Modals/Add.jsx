@@ -28,7 +28,7 @@ export const FieldElement = ({ name, element, hint, state, setState, ...rest }) 
   );
 };
 
-const formatStringToBytes32 = fromString => ethers.utils.hexlify(ethers.utils.toUtf8Bytes(fromString));
+const formatStringToBytes32 = fromString => ethers.utils.formatBytes32String(fromString);
 const formatStringDateToUnixstamp = fromStringDate => dayjs(fromStringDate).unix();
 
 function Add({ writeContracts, tx, closeModal }) {
