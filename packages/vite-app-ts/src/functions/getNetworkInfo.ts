@@ -2,9 +2,9 @@ import { getNetwork } from '@ethersproject/networks';
 
 import { NETWORKS, TNetworkNames } from '../models/constants/networks';
 
-import { TNetworkInfo } from '~~/models/NetworkTypes';
+import { TypeNetworkInfo } from '~~/models/NetworkTypes';
 
-export const getNetworkInfo = (chainId: number | undefined): TNetworkInfo | undefined => {
+export const getNetworkInfo = (chainId: number | undefined): TypeNetworkInfo | undefined => {
   if (!chainId) return;
 
   for (const n in NETWORKS) {

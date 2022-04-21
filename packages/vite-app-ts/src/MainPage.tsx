@@ -69,17 +69,17 @@ export const Main: FC = () => {
   // -----------------------------
 
   // init contracts
-  const vestedERC20Factory = useAppContracts('VestedERC20Factory', ethersContext.chainId);
-  const vestedERC20 = useAppContracts('VestedERC20', ethersContext.chainId);
+  // const vestedERC20Factory = useAppContracts('VestedERC20Factory', ethersContext.chainId);
+  // const vestedERC20 = useAppContracts('VestedERC20', ethersContext.chainId);
   // const mainnetDai = useAppContracts('DAI', NETWORKS.mainnet.chainId);
 
   // keep track of a variable from the contract in the local React state:
-  const [redeemableAmount, update] = useContractReader(
-    vestedERC20,
-    vestedERC20?.getRedeemableAmount,
-    ['0xHolderAdress'],
-    vestedERC20?.filters.Transfer()
-  );
+  // const [redeemableAmount, update] = useContractReader(
+  //   vestedERC20,
+  //   vestedERC20?.getRedeemableAmount,
+  //   ['0xHolderAdress'],
+  //   vestedERC20?.filters.Transfer()
+  // );
 
   // 📟 Listen for broadcast events
   // const [setPurposeEvents] = useEventListener(yourContract, 'SetPurpose', 0);

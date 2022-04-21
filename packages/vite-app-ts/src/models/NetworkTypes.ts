@@ -1,4 +1,4 @@
-export type TNetworkInfo = {
+export type TypeNetworkInfo = {
   name: string;
   color: string;
   chainId: number;
