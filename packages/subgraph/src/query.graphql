@@ -1,0 +1,13 @@
+# Use on https://www.graphql-code-generator.com/
+scalar Bytes
+scalar BigInt
+
+schema {
+  query: Query
+}
+
+type Query {
+  vestings: [Vesting!]! @derivedFrom(field: "token")
+}
+
+{{schema.graphql}}
