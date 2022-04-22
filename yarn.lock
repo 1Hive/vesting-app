@@ -2070,9 +2070,9 @@ __metadata:
     "@types/node": ^16.11.25
     "@types/pretty-time": ^1.1.2
     "@types/qrcode.react": ^1.0.2
-    "@types/react": ^17.0.38
+    "@types/react": =17.0.38
     "@types/react-blockies": ^1.4.1
-    "@types/react-dom": ^17.0.11
+    "@types/react-dom": =17.0.11
     "@types/react-qr-reader": ^2.1.4
     "@types/react-router-dom": ^5.3.3
     "@types/react-stack-grid": ^0.7.3
@@ -2886,7 +2886,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:17.0.15":
+"@types/react-dom@npm:<18.0.0":
   version: 17.0.15
   resolution: "@types/react-dom@npm:17.0.15"
   dependencies:
@@ -2934,14 +2934,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:17.0.38":
-  version: 17.0.38
-  resolution: "@types/react@npm:17.0.38"
+"@types/react@npm:<18.0.0":
+  version: 17.0.44
+  resolution: "@types/react@npm:17.0.44"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 4079f4f959cd4a4bfaeda8b89fe8a1b1f8bdc9d87acfdc5f74a0b39cec9ec6a470724357c62778c0f063180b360c250e920c5a142f1dbcda67d9cc25a6d43a85
+  checksum: ebee02778ca08f954c316dc907802264e0121c87b8fa2e7e0156ab0ef2a1b0a09d968c016a3600ec4c9a17dc09b4274f292d9b15a1a5369bb7e4072def82808f
   languageName: node
   linkType: hard
 
