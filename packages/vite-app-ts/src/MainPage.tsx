@@ -1,9 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import '~~/styles/main-page.css';
+import '~~/styles/css/app.css';
 
-import {  useBalance } from 'eth-hooks';
 import { useEthersContext } from 'eth-hooks/context';
 import { useDexEthPrice } from 'eth-hooks/dapps';
 import { asEthersAdaptor } from 'eth-hooks/functions';
@@ -14,8 +13,8 @@ import { useBurnerFallback } from '~~/components/main/hooks/useBurnerFallback';
 import { useScaffoldProviders as useScaffoldAppProviders } from '~~/components/main/hooks/useScaffoldAppProviders';
 import { BURNER_FALLBACK_ENABLED, SUBGRAPH_URI } from '~~/config/appConfig';
 import { useConnectAppContracts, useLoadAppContracts } from '~~/config/contractContext';
-import { Subgraph } from './components/pages';
-import Home from './components/pages/home/Home';
+import { Subgraph } from './pages';
+import Home from './pages/home';
 
 /**
  * ⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️

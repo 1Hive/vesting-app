@@ -5,25 +5,26 @@ import { dateFormat } from '../../helpers/date-utils';
 import { Wrapper } from './index.styled';
 import { useUserVestings } from '../../hooks';
 
-// import { vestings as mockData } from "../../mocks/vestings";
 import ListItems from '../List';
 
-export const UserVestingList = memo(({ address, onRedeemVesting }: { address: string; onRedeemVesting: any }) => {
+type UserVestingListProps = {
+  address: string;
+  onRedeemVesting: (id: string) => void;
+};
+
+const UserVestingList = ({ address, onRedeemVesting }: UserVestingListProps) => {
   const { loading, error, data } = useUserVestings(address);
 
   if (!address) {
     return <p>No address provided</p>;
   }
-  // console.log(`dataUserVestingList`, data, error);
 
   if (loading) return <Skeleton paragraph={{ rows: 2 }} />;
   if (error) return <p>Error...</p>;
 
-  // const data = mockData;
-
-  return data?.vestings.length > 0 ? (
+  return data?.vestings !== undefined && data?.vestings.length > 0 ? (
     <Wrapper>
-      {data?.vestings.map((vest: any, index: any) => {
+      {data?.vestings.map((vest, index: number) => {
         const token = vest.token;
         const createdAt = dateFormat(vest.createdAt);
 
@@ -36,9 +37,9 @@ export const UserVestingList = memo(({ address, onRedeemVesting }: { address: st
                 <p>
                   Underlying:{' '}
                   <TokenBadge
-                    address={token.underlying?.id}
-                    name={token.underlying?.name}
-                    symbol={token.underlying?.symbol}
+                    address={token.underlying.id}
+                    name={token.underlying.name}
+                    symbol={token.underlying.symbol}
                   />
                 </p>
                 <p>Created At: {createdAt}</p>
@@ -52,4 +53,6 @@ export const UserVestingList = memo(({ address, onRedeemVesting }: { address: st
   ) : (
     <Empty />
   );
-});
+};
+
+export default memo(UserVestingList);

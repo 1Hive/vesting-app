@@ -25,6 +25,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     return json.data;
   };
 }
+
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -94,15 +95,7 @@ export type VestingsQuery = {
     recipient: any;
     underlyingAmount: any;
     wrappedTokenAmount: any;
-    token: {
-      __typename?: 'VestedERC20';
-      decimals: number;
-      name: string;
-      id: string;
-      endTimestamp: any;
-      startTimestamp: any;
-      symbol: string;
-    };
+    token: VestedErc20;
   }>;
 };
 

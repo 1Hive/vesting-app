@@ -5,20 +5,21 @@ import { dateFormat } from '../../helpers/date-utils';
 import { useVestedTokens } from '../../hooks';
 import { Wrapper } from './index.styled';
 
-// import { vestedERC20S as mockData } from "../../mocks/vestedERC20S";
 import ListItems from '../List/index';
 
-const VestedList = ({ handleWrapVesting }: { handleWrapVesting: any }) => {
+type VestedListProps = {
+  handleWrapVesting: (id: string) => void;
+};
+
+const VestedList = ({ handleWrapVesting }: VestedListProps) => {
   const { loading, error, data } = useVestedTokens();
 
   if (loading) return <Skeleton paragraph={{ rows: 2 }} />;
   if (error) return <p>Error</p>;
 
-  // const data = mockData;
-
-  return data?.vestedERC20S.length > 0 ? (
+  return data?.vestedERC20S !== undefined && data?.vestedERC20S?.length > 0 ? (
     <Wrapper>
-      {data.vestedERC20S.map((vestedERC20: any, index: any) => {
+      {data?.vestedERC20S.map((vestedERC20, index: number) => {
         const token = vestedERC20.underlying;
         const startDate = dateFormat(vestedERC20.startTimestamp);
         const endDate = dateFormat(vestedERC20.endTimestamp);

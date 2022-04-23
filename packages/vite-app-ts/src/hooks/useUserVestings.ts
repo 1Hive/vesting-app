@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-
+import { VestingsQuery } from '~~/types-and-hooks';
 const USER_VESTINGS_QUERY = gql`
   query UserVestings($recipient: Bytes!) {
     vestings(where: { recipient: $recipient }) {
@@ -27,5 +27,5 @@ const USER_VESTINGS_QUERY = gql`
 `;
 
 export const useUserVestings = (account: string) => {
-  return useQuery(USER_VESTINGS_QUERY, { pollInterval: 2500, variables: { recipient: account } });
+  return useQuery<VestingsQuery>(USER_VESTINGS_QUERY, { pollInterval: 2500, variables: { recipient: account } });
 };
