@@ -4,6 +4,7 @@ import { useEthersContext } from 'eth-hooks/context';
 import { ethers } from 'ethers';
 import React, { useCallback, useState } from 'react';
 import { useAppContracts } from '~~/config/contractContext';
+import { AddType } from '.';
 
 import { ModalHeader, Row } from './index.styled';
 
@@ -34,7 +35,7 @@ const formatStringToBytes32 = (fromString: string) => ethers.utils.formatBytes32
 const formatStringDateToUnixstamp = (fromStringDate: string | number | Date | dayjs.Dayjs | null | undefined) =>
   dayjs(fromStringDate).unix();
 
-export const Add = ({ closeModal }: { closeModal: any }) => {
+export const Add = ({ closeModal }: AddType) => {
   const [state, setState] = useState({
     tokenAddress: '',
     name: '',

@@ -5,9 +5,9 @@ import { ethers } from 'ethers';
 import { useIsMounted } from '../../hooks';
 import { useEthersContext } from 'eth-hooks/context';
 import { useAppContracts } from '~~/config/contractContext';
+import { RedeemType } from '.';
 
-export const Redeem = ({ vestedId, closeModal, address }: { vestedId: string; closeModal: any; address: string }) => {
-  // Needs to be tested
+export const Redeem = ({ vestedId, closeModal, address }: RedeemType) => {
   const isMounted = useIsMounted();
   const [redeemableAmount, setRedeemableAmount] = useState('');
 
