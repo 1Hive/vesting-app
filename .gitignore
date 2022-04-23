@@ -1,3 +1,8 @@
+#Old packages
+packages/react-app
+packages/hardhat
+
+#Generated
 packages/subgraph/subgraph.yaml
 packages/subgraph/generated
 packages/subgraph/abis/*
