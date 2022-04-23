@@ -1,10 +1,9 @@
 import { getNetwork } from '@ethersproject/networks';
 
 import { NETWORKS, TNetworkNames } from '../models/constants/networks';
+import { TNetworkInfo } from 'eth-hooks/models';
 
-import { TypeNetworkInfo } from '~~/models/NetworkTypes';
-
-export const getNetworkInfo = (chainId: number | undefined): TypeNetworkInfo | undefined => {
+export const getNetworkInfo = (chainId: number | undefined): TNetworkInfo | undefined => {
   if (!chainId) return;
 
   for (const n in NETWORKS) {
