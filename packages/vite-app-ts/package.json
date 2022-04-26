@@ -13,7 +13,6 @@
     "lint": "eslint --config ./.eslintrc --ignore-path ./.eslintignore ./src/**/*.(ts|tsx)",
     "format": "yarn prettier -w ./src ",
     "format:check": "yarn prettier -c ./src ",
-    "ipfs": "node ./scripts/ipfs.js",
     "surge": "surge ./dist",
     "s3": "node ./scripts/s3.js",
     "ship": "yarn surge",
