@@ -65,7 +65,8 @@
   "resolutions": {
     "styled-components": "^5",
     "@types/react": "<18.0.0",
-    "@types/react-dom": "<18.0.0"
+    "@types/react-dom": "<18.0.0",
+    "@apollo/client": "3.5.9"
   },
   "engines": {
     "yarn": ">=1.22.0",
