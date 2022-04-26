@@ -66,4 +66,5 @@ yarn-error.log*
 .idea
 
 
+!packages/vite-app-ts/src/generated
 
