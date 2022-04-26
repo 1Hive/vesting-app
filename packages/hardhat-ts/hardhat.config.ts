@@ -27,8 +27,6 @@ import { Provider, TransactionRequest, TransactionResponse } from '@ethersprojec
 import { HardhatUserConfig, task } from 'hardhat/config';
 import { HttpNetworkUserConfig } from 'hardhat/types';
 import { THardhatDeployEthers } from 'helpers/types/hardhat-type-extensions';
-import { create } from 'ipfs-http-client';
-
 import { config as envConfig } from 'dotenv';
 envConfig({ path: '../vite-app-ts/.env' });
 
