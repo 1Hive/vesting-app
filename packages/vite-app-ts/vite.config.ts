@@ -38,7 +38,7 @@ const externalPlugin = viteExternalsPlugin({
 /**
  * These libraries should not be egarly bundled by vite.  They have strange dependencies and are not needed for the app.
  */
-const excludeDeps = ['@apollo/client', `graphql`, 'electron', 'electron-fetch'];
+const excludeDeps = [`graphql`, 'electron', 'electron-fetch'];
 
 export default defineConfig({
   plugins: [reactPlugin(), macrosPlugin(), tsconfigPaths(), externalPlugin],
@@ -59,7 +59,7 @@ export default defineConfig({
     jsxInject: `import {jsx, css} from '@emotion/react'`,
   },
   define: {
-    '__DEV__': (isDev).toString()
+    __DEV__: isDev.toString(),
   },
   optimizeDeps: {
     exclude: excludeDeps,
