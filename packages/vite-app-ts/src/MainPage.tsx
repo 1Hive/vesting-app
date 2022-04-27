@@ -92,18 +92,13 @@ export const Main: FC = () => {
   // 💰 this hook will get your balance
   // const [yourCurrentBalance] = useBalance(ethersContext.account);
 
-  const [route, setRoute] = useState<string>('');
-  useEffect(() => {
-    setRoute(window.location.pathname);
-  }, [setRoute]);
-
   return (
     <div className="App">
       <MainPageHeader scaffoldAppProviders={scaffoldAppProviders} price={ethPrice} />
 
       {/* Routes should be added between the <Switch> </Switch> as seen below */}
       <BrowserRouter>
-        <MainPageMenu route={route} setRoute={setRoute} />
+        <MainPageMenu />
         <Switch>
           <Route exact path="/">
             <Home />

@@ -1,34 +1,34 @@
 import { Menu } from 'antd';
-import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { FC } from 'react';
+import { useHistory } from 'react-router-dom';
 
-export interface IMainPageMenuProps {
-  route: string;
-  setRoute: React.Dispatch<React.SetStateAction<string>>;
-}
+export interface IMainPageMenuProps {}
 
-export const MainPageMenu: FC<IMainPageMenuProps> = (props) => (
-  <Menu
-    style={{
-      textAlign: 'center',
-    }}
-    selectedKeys={[props.route]}
-    items={[
-      {
-        label: 'Debug',
-        key: '/debug',
-        onClick: () => {
-          props.setRoute('//debug');
+export const MainPageMenu: FC<IMainPageMenuProps> = (props) => {
+  const history = useHistory();
+  return (
+    <Menu
+      style={{
+        textAlign: 'center',
+      }}
+      selectedKeys={[history.location.pathname]}
+      items={[
+        {
+          label: 'Home',
+          key: '/',
+          onClick: () => {
+            history.push('/');
+          },
         },
-      },
-      {
-        label: 'Subgraph',
-        key: '/subgraph',
-        onClick: () => {
-          props.setRoute('/subgraph');
+        {
+          label: 'Subgraph',
+          key: '/subgraph',
+          onClick: () => {
+            history.push('/subgraph');
+          },
         },
-      },
-    ]}
-    mode="horizontal"
-  />
-);
+      ]}
+      mode="horizontal"
+    />
+  );
+};
