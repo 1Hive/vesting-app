@@ -15,7 +15,7 @@
     "send": "hardhat send",
     "generate": "hardhat generate",
     "account": "hardhat account",
-    "etherscan-verify": "hardhat etherscan-verify --api-key PSW8C433Q667DVEX5BCRMGNAH9FSGFZ7Q8",
+    "etherscan-verify": "hardhat etherscan-verify --api-key QMRM6VT582IBNY8GPI9XB1N5DSFRJ4YHTP",
     "lint": "eslint --config ./.eslintrc --ignore-path ./.eslintignore ./deploy/**/*.ts ./scripts/**/*.ts ./test/**/*.ts ./helpers/**/*.ts",
     "solhint": "solhint ./contracts/**/*.sol",
     "format": "yarn prettier -w ./deploy/**/*.ts ./scripts/**/*.ts ./test/**/*.ts ./helpers/**/*.ts contracts/**/*.sol ",

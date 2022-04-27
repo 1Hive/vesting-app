@@ -22,7 +22,7 @@ invariant(NETWORKS[targetNetwork] != null, `Invalid target network: ${targetNetw
 export const TARGET_NETWORK_INFO: TNetworkInfo = NETWORKS[targetNetwork];
 if (DEBUG) console.log(`📡 Connecting to ${TARGET_NETWORK_INFO.name}`);
 
-/** ******************************
+/** **************************  ****
  * APP CONFIG:
  ****************************** */
 /**

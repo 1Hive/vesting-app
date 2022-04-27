@@ -12,40 +12,60 @@ import {
   PopulatedTransaction,
   Signer,
   utils,
-} from 'ethers';
-import { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
-import { Listener, Provider } from '@ethersproject/providers';
-import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+} from "ethers";
+import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import { Listener, Provider } from "@ethersproject/providers";
+import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface VestedERC20FactoryInterface extends utils.Interface {
-  contractName: 'VestedERC20Factory';
+  contractName: "VestedERC20Factory";
   functions: {
-    'createVestedERC20(bytes32,bytes32,uint8,address,uint64,uint64)': FunctionFragment;
-    'implementation()': FunctionFragment;
+    "createVestedERC20(bytes32,bytes32,uint8,address,uint64,uint64)": FunctionFragment;
+    "implementation()": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: 'createVestedERC20',
-    values: [BytesLike, BytesLike, BigNumberish, string, BigNumberish, BigNumberish]
+    functionFragment: "createVestedERC20",
+    values: [
+      BytesLike,
+      BytesLike,
+      BigNumberish,
+      string,
+      BigNumberish,
+      BigNumberish
+    ]
   ): string;
-  encodeFunctionData(functionFragment: 'implementation', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "implementation",
+    values?: undefined
+  ): string;
 
-  decodeFunctionResult(functionFragment: 'createVestedERC20', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'implementation', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "createVestedERC20",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "implementation",
+    data: BytesLike
+  ): Result;
 
   events: {
-    'DeployVestedERC20(address)': EventFragment;
+    "DeployVestedERC20(address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'DeployVestedERC20'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DeployVestedERC20"): EventFragment;
 }
 
-export type DeployVestedERC20Event = TypedEvent<[string], { vestedERC0: string }>;
+export type DeployVestedERC20Event = TypedEvent<
+  [string],
+  { vestedERC0: string }
+>;
 
-export type DeployVestedERC20EventFilter = TypedEventFilter<DeployVestedERC20Event>;
+export type DeployVestedERC20EventFilter =
+  TypedEventFilter<DeployVestedERC20Event>;
 
 export interface VestedERC20Factory extends BaseContract {
-  contractName: 'VestedERC20Factory';
+  contractName: "VestedERC20Factory";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -58,9 +78,13 @@ export interface VestedERC20Factory extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(
+    eventFilter?: TypedEventFilter<TEvent>
+  ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+  removeAllListeners<TEvent extends TypedEvent>(
+    eventFilter: TypedEventFilter<TEvent>
+  ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -108,7 +132,9 @@ export interface VestedERC20Factory extends BaseContract {
   };
 
   filters: {
-    'DeployVestedERC20(address)'(vestedERC0?: null): DeployVestedERC20EventFilter;
+    "DeployVestedERC20(address)"(
+      vestedERC0?: null
+    ): DeployVestedERC20EventFilter;
     DeployVestedERC20(vestedERC0?: null): DeployVestedERC20EventFilter;
   };
 

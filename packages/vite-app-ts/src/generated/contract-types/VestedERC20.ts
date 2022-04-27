@@ -12,77 +12,128 @@ import {
   PopulatedTransaction,
   Signer,
   utils,
-} from 'ethers';
-import { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
-import { Listener, Provider } from '@ethersproject/providers';
-import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+} from "ethers";
+import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import { Listener, Provider } from "@ethersproject/providers";
+import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface VestedERC20Interface extends utils.Interface {
-  contractName: 'VestedERC20';
+  contractName: "VestedERC20";
   functions: {
-    'allowance(address,address)': FunctionFragment;
-    'approve(address,uint256)': FunctionFragment;
-    'balanceOf(address)': FunctionFragment;
-    'claimedUnderlyingAmount(address)': FunctionFragment;
-    'decimals()': FunctionFragment;
-    'endTimestamp()': FunctionFragment;
-    'getRedeemableAmount(address)': FunctionFragment;
-    'name()': FunctionFragment;
-    'redeem(address)': FunctionFragment;
-    'startTimestamp()': FunctionFragment;
-    'symbol()': FunctionFragment;
-    'totalSupply()': FunctionFragment;
-    'transfer(address,uint256)': FunctionFragment;
-    'transferFrom(address,address,uint256)': FunctionFragment;
-    'underlying()': FunctionFragment;
-    'wrap(uint256,address)': FunctionFragment;
+    "allowance(address,address)": FunctionFragment;
+    "approve(address,uint256)": FunctionFragment;
+    "balanceOf(address)": FunctionFragment;
+    "claimedUnderlyingAmount(address)": FunctionFragment;
+    "decimals()": FunctionFragment;
+    "endTimestamp()": FunctionFragment;
+    "getRedeemableAmount(address)": FunctionFragment;
+    "name()": FunctionFragment;
+    "redeem(address)": FunctionFragment;
+    "startTimestamp()": FunctionFragment;
+    "symbol()": FunctionFragment;
+    "totalSupply()": FunctionFragment;
+    "transfer(address,uint256)": FunctionFragment;
+    "transferFrom(address,address,uint256)": FunctionFragment;
+    "underlying()": FunctionFragment;
+    "wrap(uint256,address)": FunctionFragment;
   };
 
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'claimedUnderlyingAmount', values: [string]): string;
-  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'endTimestamp', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getRedeemableAmount', values: [string]): string;
-  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'redeem', values: [string]): string;
-  encodeFunctionData(functionFragment: 'startTimestamp', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'underlying', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'wrap', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: "allowance",
+    values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "approve",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "claimedUnderlyingAmount",
+    values: [string]
+  ): string;
+  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "endTimestamp",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getRedeemableAmount",
+    values: [string]
+  ): string;
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "redeem", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "startTimestamp",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transfer",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferFrom",
+    values: [string, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "underlying",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "wrap",
+    values: [BigNumberish, string]
+  ): string;
 
-  decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimedUnderlyingAmount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'endTimestamp', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getRedeemableAmount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'redeem', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'startTimestamp', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'underlying', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'wrap', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "claimedUnderlyingAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "endTimestamp",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRedeemableAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "redeem", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "startTimestamp",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferFrom",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "underlying", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "wrap", data: BytesLike): Result;
 
   events: {
-    'Approval(address,address,uint256)': EventFragment;
-    'Redeem(address,address,uint256)': EventFragment;
-    'Transfer(address,address,uint256)': EventFragment;
-    'Wrap(address,uint256,uint256)': EventFragment;
+    "Approval(address,address,uint256)": EventFragment;
+    "Redeem(address,address,uint256)": EventFragment;
+    "Transfer(address,address,uint256)": EventFragment;
+    "Wrap(address,uint256,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Redeem'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Wrap'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Redeem"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Wrap"): EventFragment;
 }
 
 export type ApprovalEvent = TypedEvent<
@@ -99,7 +150,10 @@ export type RedeemEvent = TypedEvent<
 
 export type RedeemEventFilter = TypedEventFilter<RedeemEvent>;
 
-export type TransferEvent = TypedEvent<[string, string, BigNumber], { from: string; to: string; amount: BigNumber }>;
+export type TransferEvent = TypedEvent<
+  [string, string, BigNumber],
+  { from: string; to: string; amount: BigNumber }
+>;
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
@@ -111,7 +165,7 @@ export type WrapEvent = TypedEvent<
 export type WrapEventFilter = TypedEventFilter<WrapEvent>;
 
 export interface VestedERC20 extends BaseContract {
-  contractName: 'VestedERC20';
+  contractName: "VestedERC20";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -124,9 +178,13 @@ export interface VestedERC20 extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(
+    eventFilter?: TypedEventFilter<TEvent>
+  ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+  removeAllListeners<TEvent extends TypedEvent>(
+    eventFilter: TypedEventFilter<TEvent>
+  ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -134,7 +192,11 @@ export interface VestedERC20 extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      arg0: string,
+      arg1: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     approve(
       spender: string,
@@ -144,13 +206,23 @@ export interface VestedERC20 extends BaseContract {
 
     balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claimedUnderlyingAmount(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimedUnderlyingAmount(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
-    decimals(overrides?: CallOverrides): Promise<[number] & { _decimals: number }>;
+    decimals(
+      overrides?: CallOverrides
+    ): Promise<[number] & { _decimals: number }>;
 
-    endTimestamp(overrides?: CallOverrides): Promise<[BigNumber] & { _endTimestamp: BigNumber }>;
+    endTimestamp(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { _endTimestamp: BigNumber }>;
 
-    getRedeemableAmount(holder: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRedeemableAmount(
+      holder: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -159,7 +231,9 @@ export interface VestedERC20 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    startTimestamp(overrides?: CallOverrides): Promise<[BigNumber] & { _startTimestamp: BigNumber }>;
+    startTimestamp(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { _startTimestamp: BigNumber }>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
@@ -178,7 +252,9 @@ export interface VestedERC20 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    underlying(overrides?: CallOverrides): Promise<[string] & { _underlying: string }>;
+    underlying(
+      overrides?: CallOverrides
+    ): Promise<[string] & { _underlying: string }>;
 
     wrap(
       underlyingAmount: BigNumberish,
@@ -187,7 +263,11 @@ export interface VestedERC20 extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    arg0: string,
+    arg1: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   approve(
     spender: string,
@@ -197,17 +277,26 @@ export interface VestedERC20 extends BaseContract {
 
   balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  claimedUnderlyingAmount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimedUnderlyingAmount(
+    arg0: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   endTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRedeemableAmount(holder: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getRedeemableAmount(
+    holder: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  redeem(recipient: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  redeem(
+    recipient: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   startTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -237,19 +326,33 @@ export interface VestedERC20 extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: string,
+      arg1: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: string,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimedUnderlyingAmount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimedUnderlyingAmount(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
     endTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRedeemableAmount(holder: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRedeemableAmount(
+      holder: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -261,43 +364,80 @@ export interface VestedERC20 extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: string,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
-    transferFrom(from: string, to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: string,
+      to: string,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     underlying(overrides?: CallOverrides): Promise<string>;
 
-    wrap(underlyingAmount: BigNumberish, recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+    wrap(
+      underlyingAmount: BigNumberish,
+      recipient: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   filters: {
-    'Approval(address,address,uint256)'(
+    "Approval(address,address,uint256)"(
       owner?: string | null,
       spender?: string | null,
       amount?: null
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, amount?: null): ApprovalEventFilter;
+    Approval(
+      owner?: string | null,
+      spender?: string | null,
+      amount?: null
+    ): ApprovalEventFilter;
 
-    'Redeem(address,address,uint256)'(
+    "Redeem(address,address,uint256)"(
       holder?: string | null,
       recipient?: string | null,
       redeemedAmount?: null
     ): RedeemEventFilter;
-    Redeem(holder?: string | null, recipient?: string | null, redeemedAmount?: null): RedeemEventFilter;
+    Redeem(
+      holder?: string | null,
+      recipient?: string | null,
+      redeemedAmount?: null
+    ): RedeemEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, amount?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, amount?: null): TransferEventFilter;
+    "Transfer(address,address,uint256)"(
+      from?: string | null,
+      to?: string | null,
+      amount?: null
+    ): TransferEventFilter;
+    Transfer(
+      from?: string | null,
+      to?: string | null,
+      amount?: null
+    ): TransferEventFilter;
 
-    'Wrap(address,uint256,uint256)'(
+    "Wrap(address,uint256,uint256)"(
       recipient?: string | null,
       wrappedAmount?: null,
       underlyingAmount?: null
     ): WrapEventFilter;
-    Wrap(recipient?: string | null, wrappedAmount?: null, underlyingAmount?: null): WrapEventFilter;
+    Wrap(
+      recipient?: string | null,
+      wrappedAmount?: null,
+      underlyingAmount?: null
+    ): WrapEventFilter;
   };
 
   estimateGas: {
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: string,
+      arg1: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     approve(
       spender: string,
@@ -307,17 +447,26 @@ export interface VestedERC20 extends BaseContract {
 
     balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimedUnderlyingAmount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimedUnderlyingAmount(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     endTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRedeemableAmount(holder: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRedeemableAmount(
+      holder: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    redeem(recipient: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    redeem(
+      recipient: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     startTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -348,7 +497,11 @@ export interface VestedERC20 extends BaseContract {
   };
 
   populateTransaction: {
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      arg0: string,
+      arg1: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     approve(
       spender: string,
@@ -356,15 +509,24 @@ export interface VestedERC20 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    claimedUnderlyingAmount(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimedUnderlyingAmount(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     endTimestamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRedeemableAmount(holder: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRedeemableAmount(
+      holder: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
