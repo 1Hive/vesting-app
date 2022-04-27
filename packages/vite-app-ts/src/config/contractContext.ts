@@ -1,5 +1,7 @@
 import { contractsContextFactory } from 'eth-hooks/context';
-import { contractConnectorConfig } from '~~/config/contractConnectorConfig';
+import { TTypedContract } from 'eth-hooks/models';
+
+import { contractConnectorConfig, TAppConnectorList } from '~~/config/contractConnectorConfig';
 
 /**
  * This file initalises the contractContextFactory and exports the types
@@ -21,4 +23,8 @@ export const {
   useAppContracts,
   useLoadAppContracts,
   useConnectAppContracts,
-} = contractsContextFactory(contractConnectorConfig);
+} = contractsContextFactory<
+  keyof TAppConnectorList,
+  TAppConnectorList,
+  TTypedContract<keyof TAppConnectorList, TAppConnectorList>
+>(contractConnectorConfig);
