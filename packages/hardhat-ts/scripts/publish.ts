@@ -1,15 +1,15 @@
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-waffle';
 import * as fs from 'fs';
-import path from 'path';
+// import path from 'path';
 
 import * as chalk from 'chalk';
-import * as hre from 'hardhat';
+// import * as hre from 'hardhat';
 
-const publishGenerated = '../vite-app-ts/src/generated/contracts';
-const publishDir = `${publishGenerated}/contracts`;
+// const publishGenerated = '../vite-app-ts/src/generated/contracts';
+// const publishDir = `${publishGenerated}/contracts`;
 const deploymentsDir = './generated/deployments';
-const typechainDir = './generated/typechain';
+// const typechainDir = './generated/typechain';
 const graphDir = '../subgraph';
 
 const publishContract = (contractName: string, networkName: string): boolean => {
@@ -28,7 +28,11 @@ const publishContract = (contractName: string, networkName: string): boolean => 
 
     const graphConfig = JSON.parse(graphConfigStr);
     graphConfig[`${networkName}_${contractName}Address`] = contractJson.address;
+    const networkENV = process.env.HARDHAT_TARGET_NETWORK;
 
+    if (networkENV !== undefined && graphConfig?.network === undefined) {
+      graphConfig.network = networkENV;
+    }
     const folderPath = graphConfigPath.replace('/config.json', '');
     if (!fs.existsSync(folderPath)) {
       fs.mkdirSync(folderPath);

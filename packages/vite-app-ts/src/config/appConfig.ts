@@ -54,7 +54,8 @@ if (DEBUG)
     `CONNECT_TO_BURNER_AUTOMATICALLY: ${CONNECT_TO_BURNER_AUTOMATICALLY}`
   );
 
-export const SUBGRAPH_URI = 'http://localhost:8000/subgraphs/name/scaffold-eth/your-contract';
+// export const SUBGRAPH_URI = 'http://localhost:8000/subgraphs/name/scaffold-eth/your-contract';
+export const SUBGRAPH_URI = 'https://api.thegraph.com/subgraphs/name/kamikazebr/onehivevestingrinkeby';
 
 /** ******************************
  * OTHER FILES

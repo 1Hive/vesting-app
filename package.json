@@ -51,7 +51,8 @@
     "theme": "yarn workspace @scaffold-eth/react-app theme",
     "watch-theme": "yarn workspace @scaffold-eth/react-app watch",
     "prepare": "husky install",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "deploy-rinkeby": "yarn workspace @scaffold-eth/hardhat postdeploy && yarn graph-prepare && yarn graph-codegen"
   },
   "workspaces": {
     "packages": [

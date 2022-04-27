@@ -13,33 +13,22 @@ export const MainPageMenu: FC<IMainPageMenuProps> = (props) => (
       textAlign: 'center',
     }}
     selectedKeys={[props.route]}
-    mode="horizontal">
-    <Menu.Item key="/">
-      <Link
-        onClick={(): void => {
-          props.setRoute('/');
-        }}
-        to="/">
-        Contracts
-      </Link>
-    </Menu.Item>
-    <Menu.Item key="/debug">
-      <Link
-        onClick={(): void => {
-          props.setRoute('/debug');
-        }}
-        to="/mainnetdai">
-        Mainnet DAI
-      </Link>
-    </Menu.Item>
-    <Menu.Item key="/subgraph">
-      <Link
-        onClick={() => {
+    items={[
+      {
+        label: 'Debug',
+        key: '/debug',
+        onClick: () => {
+          props.setRoute('//debug');
+        },
+      },
+      {
+        label: 'Subgraph',
+        key: '/subgraph',
+        onClick: () => {
           props.setRoute('/subgraph');
-        }}
-        to="/subgraph">
-        Subgraph
-      </Link>
-    </Menu.Item>
-  </Menu>
+        },
+      },
+    ]}
+    mode="horizontal"
+  />
 );
