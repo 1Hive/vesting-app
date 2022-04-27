@@ -17,7 +17,8 @@ export type MODAL_MODES = 'deploy' | 'wrap' | 'redeem' | null;
 function Home() {
   const [opened, setOpened] = useState(false);
   const [modalMode, setModalMode] = useState<MODAL_MODES>(null); // deploy, redeem, wrap
-  const [wrapContract, setWrapContract] = useState<string | null>(null);
+  const [vestedAddress, setVestedAddress] = useState<string | null>(null);
+  const [underTokenAddress, setUnderTokenAddress] = useState<string | null>(null);
 
   const ethersContext = useEthersContext();
 
@@ -28,15 +29,17 @@ function Home() {
   const handleHideModal = () => {
     setOpened(false);
     setModalMode(null);
-    setWrapContract(null);
+    setVestedAddress(null);
+    setUnderTokenAddress(null);
   };
   const handleDeployVestedToken = () => handleShowModal('deploy');
   const handleRedeemVesting = (id: string | null) => {
-    setWrapContract(id);
+    setVestedAddress(id);
     handleShowModal('redeem');
   };
-  const handleWrapVesting = (id: string | null) => {
-    setWrapContract(id);
+  const handleWrapVesting = (vestedAddress: string, underTokenAddress: string) => {
+    setVestedAddress(vestedAddress);
+    setUnderTokenAddress(underTokenAddress);
     handleShowModal('wrap');
   };
 
@@ -70,10 +73,12 @@ function Home() {
 
       <Modal visible={opened} closeButton={false} width={modalMode && MODAL_WIDTH[modalMode]}>
         {modalMode === 'deploy' && <Add closeModal={handleHideModal} />}
-        {modalMode === 'redeem' && ethersContext.account && wrapContract && (
-          <Redeem vestedId={wrapContract} closeModal={handleHideModal} address={ethersContext.account} />
+        {modalMode === 'redeem' && ethersContext.account && vestedAddress && (
+          <Redeem vestedAdress={vestedAddress} closeModal={handleHideModal} address={ethersContext.account} />
         )}
-        {modalMode === 'wrap' && wrapContract && <Wrap vestedId={wrapContract} closeModal={handleHideModal} />}
+        {modalMode === 'wrap' && vestedAddress && underTokenAddress && (
+          <Wrap underlyingTokenAddress={underTokenAddress} vestedAdress={vestedAddress} closeModal={handleHideModal} />
+        )}
       </Modal>
     </Main>
   );

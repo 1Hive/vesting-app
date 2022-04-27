@@ -8,7 +8,7 @@ import { Wrapper } from './index.styled';
 import ListItems from '../List/index';
 
 type VestedListProps = {
-  handleWrapVesting: (id: string) => void;
+  handleWrapVesting: (vestedAddress: string, underTokenAddress: string) => void;
 };
 
 const VestedList = ({ handleWrapVesting }: VestedListProps) => {
@@ -36,7 +36,7 @@ const VestedList = ({ handleWrapVesting }: VestedListProps) => {
                 <div>End Date: {endDate}</div>
               </>
             }
-            renderAction={<Button label="Wrap" onClick={() => handleWrapVesting(vestedERC20.id)} />}
+            renderAction={<Button label="Wrap" onClick={() => handleWrapVesting(vestedERC20.id, token.id)} />}
           />
         );
       })}

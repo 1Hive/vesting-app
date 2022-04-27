@@ -7,27 +7,27 @@ import { useEthersContext } from 'eth-hooks/context';
 import { useAppContracts } from '~~/config/contractContext';
 import { RedeemType } from '.';
 
-export const Redeem = ({ vestedId, closeModal, address }: RedeemType) => {
+export const Redeem = ({ vestedAdress, closeModal, address }: RedeemType) => {
   const isMounted = useIsMounted();
   const [redeemableAmount, setRedeemableAmount] = useState('');
 
   const ethersContext = useEthersContext();
   const vestedERC20 = useAppContracts('VestedERC20', ethersContext.chainId);
 
-  console.log('vestedId', vestedId);
+  console.log('vestedAdress', vestedAdress);
   useEffect(() => {
     const loadAmount = async () => {
       if (vestedERC20) {
-        const value = await vestedERC20.attach(vestedId).getRedeemableAmount(address);
+        const value = await vestedERC20.attach(vestedAdress).getRedeemableAmount(address);
         if (isMounted()) setRedeemableAmount(ethers.utils.formatEther(value));
       }
     };
     void loadAmount();
-  }, [address, isMounted, vestedERC20, vestedId]);
+  }, [address, isMounted, vestedERC20, vestedAdress]);
 
   const handleReddem = useCallback(async () => {
     if (vestedERC20) {
-      const result = await vestedERC20.attach(vestedId).redeem(address);
+      const result = await vestedERC20.attach(vestedAdress).redeem(address);
       if (result?.wait) {
         const rc = await result.wait();
         if (rc?.events) {
@@ -42,7 +42,7 @@ export const Redeem = ({ vestedId, closeModal, address }: RedeemType) => {
         }
       }
     }
-  }, [address, vestedERC20, vestedId]);
+  }, [address, vestedERC20, vestedAdress]);
 
   return (
     <div>

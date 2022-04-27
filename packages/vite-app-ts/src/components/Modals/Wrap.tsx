@@ -1,15 +1,17 @@
 import { Button, IconCross } from '@1hive/1hive-ui';
 // import { BigNumber } from 'ethers';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FieldElement } from './Add';
 import { ModalHeader, Row } from './index.styled';
 import { useEthersContext } from 'eth-hooks/context';
 import { useAppContracts } from '~~/config/contractContext';
-import { BigNumber } from 'ethers';
+import { BigNumber, ContractFactory } from 'ethers';
 import { toDecimals } from '~~/helpers/math-utils';
 import { WrapType } from '.';
+import { useContractExistsAtAddress } from 'eth-hooks';
+import { ERC20__factory } from '~~/generated/contract-types';
 
-export const Wrap = ({ vestedId, closeModal }: WrapType) => {
+export const Wrap = ({ vestedAdress, closeModal, underlyingTokenAddress }: WrapType) => {
   const [state, setState] = useState({
     underlyingAmount: '',
     address: '',
@@ -17,14 +19,29 @@ export const Wrap = ({ vestedId, closeModal }: WrapType) => {
 
   const ethersContext = useEthersContext();
   const vestedERC20 = useAppContracts('VestedERC20', ethersContext.chainId);
-  const testERC20 = useAppContracts('TestERC20', ethersContext.chainId);
+  const underlyingTokenERC20 = ContractFactory.getContract(
+    underlyingTokenAddress,
+    ERC20__factory.createInterface(),
+    ethersContext.signer
+  );
+
+  const [isErcExist, _update, queryStatus] = useContractExistsAtAddress(underlyingTokenERC20);
+
+  useEffect(() => {
+    console.log('isErcExist', isErcExist);
+    console.log('queryStatus', queryStatus);
+  }, [isErcExist, queryStatus]);
 
   const handleWrap = useCallback(async () => {
-    const amount = BigNumber.from(toDecimals(state.underlyingAmount, 18));
-    const r = await testERC20?.approve(vestedId, amount); // TODO use .attach to point the other diferent underlying token than default one
-    await r?.wait();
-    await vestedERC20?.attach(vestedId).wrap(amount, state.address);
-  }, [state.address, state.underlyingAmount, testERC20, vestedERC20, vestedId]);
+    if (isErcExist && queryStatus === 'success') {
+      const amount = BigNumber.from(toDecimals(state.underlyingAmount, 18));
+      const r = await underlyingTokenERC20.approve(vestedAdress, amount);
+      await r?.wait();
+      await vestedERC20?.attach(vestedAdress).wrap(amount, state.address);
+    } else {
+      console.log('Do something if it not exist, or not found if without internet'); // TODO: Replace for propper Logger.
+    }
+  }, [isErcExist, queryStatus, state.address, state.underlyingAmount, underlyingTokenERC20, vestedERC20, vestedAdress]);
 
   return (
     <div>

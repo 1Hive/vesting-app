@@ -3,13 +3,14 @@ export * from './Redeem';
 export * from './Wrap';
 
 export type ModalType = {
-  vestedId: string;
+  underlyingTokenAddress: string;
+  vestedAdress: string;
   address: string;
   closeModal: () => void;
 };
 
-export type RedeemType = ModalType;
+export type RedeemType = Omit<ModalType, 'underlyingTokenAddress'>;
 
 export type AddType = Pick<ModalType, 'closeModal'>;
 
-export type WrapType = Pick<ModalType, 'vestedId' | 'closeModal'>;
+export type WrapType = Pick<ModalType, 'vestedAdress' | 'closeModal' | 'underlyingTokenAddress'>;
