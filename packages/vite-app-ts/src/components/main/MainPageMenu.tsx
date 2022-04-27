@@ -2,7 +2,9 @@ import { Menu } from 'antd';
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 
-export const MainPageMenu: FC = () => {
+export interface IMainPageMenuProps {}
+
+export const MainPageMenu: FC<IMainPageMenuProps> = (props) => {
   const history = useHistory();
   return (
     <Menu
