@@ -4,8 +4,6 @@
   "version": "1.0.0",
   "scripts": {
     "prepare": "mustache config/config.json src/subgraph.template.yaml > subgraph.yaml",
-    "prepare-rinkeby": "network=rinkeby mustache ENV src/subgraph.template.yaml --overrrides=config/config.json > subgraph.yaml",
-    "prepare-rinkeby2": "network=rinkeby npx ts-node src/musta.ts config/config.json src/subgraph.template.yaml  > subgraph.yaml",
     "codegen": "graph codegen",
     "build": "graph build",
     "auth": "graph auth --product hosted-service",
