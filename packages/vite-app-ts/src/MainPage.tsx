@@ -11,9 +11,8 @@ import { MainPageMenu, MainPageFooter, MainPageHeader } from './components/main'
 
 import { useBurnerFallback } from '~~/components/main/hooks/useBurnerFallback';
 import { useScaffoldProviders as useScaffoldAppProviders } from '~~/components/main/hooks/useScaffoldAppProviders';
-import { BURNER_FALLBACK_ENABLED, SUBGRAPH_URI } from '~~/config/appConfig';
+import { BURNER_FALLBACK_ENABLED } from '~~/config/appConfig';
 import { useConnectAppContracts, useLoadAppContracts } from '~~/config/contractContext';
-import { Subgraph } from './pages';
 import Home from './pages/home';
 
 /**
@@ -103,9 +102,9 @@ export const Main: FC = () => {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/subgraph">
+          {/* <Route path="/subgraph">
             <Subgraph subgraphUri={SUBGRAPH_URI} mainnetProvider={scaffoldAppProviders.mainnetAdaptor?.provider} />
-          </Route>
+          </Route> */}
         </Switch>
       </BrowserRouter>
 

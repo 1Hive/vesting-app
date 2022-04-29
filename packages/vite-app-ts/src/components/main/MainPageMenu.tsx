@@ -12,22 +12,24 @@ export const MainPageMenu: FC<IMainPageMenuProps> = (props) => {
         textAlign: 'center',
       }}
       selectedKeys={[history.location.pathname]}
-      items={[
-        {
-          label: 'Home',
-          key: '/',
-          onClick: () => {
-            history.push('/');
-          },
-        },
-        {
-          label: 'Subgraph',
-          key: '/subgraph',
-          onClick: () => {
-            history.push('/subgraph');
-          },
-        },
-      ]}
+      items={
+        [
+          // {
+          //   label: 'Home',
+          //   key: '/',
+          //   onClick: () => {
+          //     history.push('/');
+          //   },
+          // },
+          // {
+          //   label: 'Subgraph',
+          //   key: '/subgraph',
+          //   onClick: () => {
+          //     history.push('/subgraph');
+          //   },
+          // },
+        ]
+      }
       mode="horizontal"
     />
   );
