@@ -15,8 +15,6 @@ export const SectionTitle = styled.div<{ small?: boolean }>`
 
 export const Section = styled.div`
   padding: ${2.5 * GU}px;
-  border: 1px solid #f0f0f0;
   border-radius: ${GU}px;
   min-height: 300px;
-  background: #fff;
 `;
