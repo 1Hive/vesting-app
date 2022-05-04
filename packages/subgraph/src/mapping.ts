@@ -51,12 +51,11 @@ export function handleWrap(event: Wrap): void {
     event.params.recipient,
     event.block.timestamp
   );
-  vesting.underlyingAmount = vesting.underlyingAmount.plus(
-    event.params.underlyingAmount
-  );
+  vesting.underlyingAmount = event.params.underlyingAmount;
   vesting.claimedUnderlyingAmount = vestedERC20Contract.claimedUnderlyingAmount(
     event.params.recipient
   );
+  vesting.wrappedTokenAmount = event.params.wrappedAmount;
 
   vesting.save();
 }
@@ -87,18 +86,23 @@ export function handleTransfer(event: Transfer): void {
     return;
   }
 
-  // No need to update the underlyingAmount as the contract already consider
-  // claimedUnderlyingAmountToTransfer and we update that instead
-
   const vestedERC20Contract = VestedERC20Contract.bind(event.address);
   const vestingFrom = loadOrCreateVesting(
     event.address.toHex(),
     event.params.from,
     event.block.timestamp
   );
-
+  // TODO: calculate underlyingAmount
+  // vestingFrom.underlyingAmount = vestingFrom.underlyingAmount.minus(
+  //   vestingFrom.claimedUnderlyingAmount.minus(
+  //     vestedERC20Contract.claimedUnderlyingAmount(event.params.from)
+  //   )
+  // );
   vestingFrom.claimedUnderlyingAmount =
     vestedERC20Contract.claimedUnderlyingAmount(event.params.from);
+  vestingFrom.wrappedTokenAmount = vestingFrom.wrappedTokenAmount.minus(
+    event.params.amount
+  );
 
   vestingFrom.save();
 
@@ -107,9 +111,11 @@ export function handleTransfer(event: Transfer): void {
     event.params.to,
     event.block.timestamp
   );
-
-  vestingTo.claimedUnderlyingAmount =
+  vestingTo.underlyingAmount = vestingTo.claimedUnderlyingAmount =
     vestedERC20Contract.claimedUnderlyingAmount(event.params.to);
+  vestingTo.wrappedTokenAmount = vestingTo.wrappedTokenAmount.plus(
+    event.params.amount
+  );
 
   vestingTo.save();
 }
@@ -142,7 +148,7 @@ function loadOrCreateVesting(
     vesting.token = tokenID;
     vesting.recipient = recipient;
     vesting.createdAt = timestamp.toI32();
-    vesting.underlyingAmount = BigInt.fromI32(0);
+    vesting.wrappedTokenAmount = BigInt.fromI32(0);
     vesting.claimedUnderlyingAmount = BigInt.fromI32(0);
 
     vesting.save();

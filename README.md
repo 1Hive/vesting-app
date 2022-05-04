@@ -2,15 +2,15 @@
 
 ## Introduction
 
-Application for vesting to earn a right to tokenomics. 
+Application for vesting to earn a right to tokenomics.
 
 ## Running Development Mode
 
 ## Installation
 
-### Pre-requirements 
+### Pre-requirements
 
-- Install [Node v16](https://nodejs.org/dist/latest-v16.x/) locally to avoid possible issues
+- Install [Node v14](https://nodejs.org/dist/latest-v14.x/) locally to avoid possible issues
 - Install Yarn
 - [Install Docker](https://www.docker.com/products/docker-desktop/)
 
@@ -25,6 +25,7 @@ Install the dependencies
 ```bash
 yarn install
 ```
+
 ![homepage](docs/img/app_homepage.png)
 
 ## Run dependencies & Start App
@@ -56,17 +57,19 @@ yarn deploy-local
 ```
 
 **WARNING:** if `yarn prepare` fails with `Could not find file: config/config.json` do the following:
+
 ```bash
 yarn postdeploy
 ```
 
 ### React-App
+
 ```bash
 yarn start
 ```
 
-
 ### Metamask Setup
+
 For the metamask setup, after [Hardhat](#hardhat) is running
 
 ![setup](docs/img/00_metamask_setup_network_info.png)

@@ -1,0 +1,34 @@
+{
+  "folders": [
+    { "name": "WebApp", "path": "./packages/vite-app-ts" },
+    { "name": "Hardhat", "path": "./packages/hardhat-ts" },
+    { "name": "Subgraph", "path": "./packages/subgraph" },
+    { "name": "Services", "path": "./packages/services" },
+    { "name": "Root", "path": "." }
+  ],
+  "settings": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "prettier.enable": true,
+    "eslint.enable": true,
+    "eslint.codeActionsOnSave.mode": "all",
+    "eslint.run": "onSave"
+  },
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "JuanBlanco.solidity",
+      "GraphQL.vscode-graphql",
+      "dsznajder.es7-react-js-snippets",
+      "xabikos.javascriptsnippets",
+      "styled-components.vscode-styled-components",
+      "eamodio.gitlens",
+      "GitHub.vscode-pull-request-github",
+      "donjayamanne.githistory",
+      "mhutchie.git-graph",
+      "ms-azuretools.vscode-docker",
+      "redhat.vscode-yaml"
+    ]
+  }
+}

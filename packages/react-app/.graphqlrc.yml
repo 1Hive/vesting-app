@@ -1,6 +1,0 @@
-schema: "../subgraph/src/schema.graphql"
-extensions:
-  endpoints:
-    default:
-      url: "http://localhost:8000/subgraphs/name/scaffold-eth/your-contract"
-  

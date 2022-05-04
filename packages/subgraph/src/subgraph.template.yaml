@@ -4,9 +4,9 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: VestedERC20Factory
-    network: localhost
+    network: "{{network}}"
     source:
-      address: "{{localhost_VestedERC20FactoryAddress}}"
+      address: "{{VestedERC20FactoryAddress}}"
       abi: VestedERC20Factory
       startBlock: 1
     mapping:
@@ -19,9 +19,9 @@ dataSources:
         - ERC20
       abis:
         - name: VestedERC20Factory
-          file: ./abis/localhost_VestedERC20Factory.json
+          file: ./abis/{{network}}_VestedERC20Factory.json
         - name: VestedERC20
-          file: ./abis/localhost_VestedERC20.json
+          file: ./abis/{{network}}_VestedERC20.json
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
@@ -31,7 +31,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: VestedERC20
-    network: localhost
+    network: "{{network}}"
     source:
       abi: VestedERC20
     mapping:
@@ -43,7 +43,7 @@ templates:
         - Vesting
       abis:
         - name: VestedERC20
-          file: ./abis/localhost_VestedERC20.json
+          file: ./abis/{{network}}_VestedERC20.json
       eventHandlers:
         - event: Wrap(indexed address,uint256,uint256)
           handler: handleWrap

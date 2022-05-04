@@ -1,72 +1,70 @@
+#Old packages
+packages/react-app
+packages/hardhat
+
+#Generated
 packages/subgraph/subgraph.yaml
 packages/subgraph/generated
 packages/subgraph/abis/*
-!packages/subgraph/abis/ERC20.json
 packages/hardhat/*.txt
 **/aws.json
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 **/node_modules
 
-packages/hardhat/artifacts*
-packages/hardhat/typechain-types*
-packages/hardhat/deployments
-packages/react-app/src/contracts/*
-packages/react-app/public/aragon-ui/*
-!packages/react-app/src/contracts/external_contracts.js
-packages/hardhat/cache*
-packages/**/data
-!packages/react-app/src/contracts/contracts.js
+packages/subgraph/config/config.json
+tenderly.yaml
 
+#build
+*.tsbuildinfo
+*.stackdump
+.yalc
+yalc.lock
+packages/vite-app-ts/dist
+packages/vite-app-ts/public/aragon-ui/*
+packages/hardhat-ts/mnemonic.secret
+packages/**/data
 
 # ts
 packages/hardhat-ts/cache
 # secrets
 .secret
 
-packages/subgraph/config/config.json
-tenderly.yaml
-
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
-
-# testing
-coverage
-
-# production
-build
 # yarn / eslint
-.yarn/cache
-.yarn/install-state.gz
-.yarn/build-state.yml
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 .eslintcache
+
 # testing
 coverage
 
 # production
 build
+dist
 
-# Hardhat files
+#Hardhat files
 cache
 artifacts
 
 # misc
 .DS_Store
-.env*
+.netlify
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
 .idea
 
-# Local Netlify folder
-.netlify
-*.tsbuildinfo
-*.stackdump
 
-# doc directory
-/doc
+!packages/vite-app-ts/src/generated
+

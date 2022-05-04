@@ -1,0 +1,18 @@
+query vestings {
+  vestings {
+    claimedUnderlyingAmount
+    createdAt
+    id
+    recipient
+    underlyingAmount
+    wrappedTokenAmount
+    token {
+      decimals
+      name
+      id
+      endTimestamp
+      startTimestamp
+      symbol
+    }
+  }
+}

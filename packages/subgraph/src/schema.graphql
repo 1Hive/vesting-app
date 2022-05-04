@@ -28,6 +28,7 @@ type Vesting @entity {
   recipient: Bytes!
   underlyingAmount: BigInt!
   claimedUnderlyingAmount: BigInt!
+  wrappedTokenAmount: BigInt!
 }
 
 type ERC20 @entity {
