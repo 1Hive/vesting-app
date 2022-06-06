@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import { Main, Button, IconPlus, Modal, Split } from '@1hive/1hive-ui';
-import VestedList from '../../components/VestedList/index';
-import UserVestingList from '../../components/UserVestingList';
-import { Add, Wrap, Redeem } from '../../components/Modals';
-import { Row, SectionTitle, Section } from './index.styled';
+import { Wrapper } from './index.styled';
 import { useEthersContext } from 'eth-hooks/context';
+import VestingList from './vesting-list';
 
 const MODAL_WIDTH = {
   deploy: '500px',
@@ -44,43 +41,20 @@ function Home() {
   };
 
   return (
-    <Main assetsUrl="/aragon-ui/">
-      <Row>
-        <Button mode="strong" onClick={handleDeployVestedToken} label="Add new vesting" icon={<IconPlus />} />
-      </Row>
+    <Wrapper>
+      <div className="flex items-center justify-between text-sm space-x-6">
+        <h1 className="mb-0 text-4xl font-extrabold tracking-tight text-center text-slate-900 sm:text-5xl lg:text-6xl dark:text-white">
+          Vesting List
+        </h1>
+        <a
+          href="/"
+          className="flex items-center justify-center w-full h-12 px-6 font-semibold text-white rounded-lg bg-slate-900 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 sm:w-auto dark:bg-sky-500 dark:highlight-white/20 dark:hover:bg-sky-400">
+          Home
+        </a>
+      </div>
 
-      {ethersContext.account ? (
-        <Split
-          primary={
-            <Section>
-              <SectionTitle small>My vestings</SectionTitle>
-              <UserVestingList address={ethersContext.account} onRedeemVesting={handleRedeemVesting} />
-            </Section>
-          }
-          secondary={
-            <Section>
-              <SectionTitle small>Vesting tokens</SectionTitle>
-              <VestedList handleWrapVesting={handleWrapVesting} />
-            </Section>
-          }
-        />
-      ) : (
-        <Section>
-          <SectionTitle small>Vesting tokens</SectionTitle>
-          <VestedList handleWrapVesting={handleWrapVesting} />
-        </Section>
-      )}
-
-      <Modal visible={opened} closeButton={false} width={modalMode && MODAL_WIDTH[modalMode]}>
-        {modalMode === 'deploy' && <Add closeModal={handleHideModal} />}
-        {modalMode === 'redeem' && ethersContext.account && vestedAddress && (
-          <Redeem vestedAdress={vestedAddress} closeModal={handleHideModal} address={ethersContext.account} />
-        )}
-        {modalMode === 'wrap' && vestedAddress && underTokenAddress && (
-          <Wrap underlyingTokenAddress={underTokenAddress} vestedAdress={vestedAddress} closeModal={handleHideModal} />
-        )}
-      </Modal>
-    </Main>
+      {!ethersContext.account ? <VestingList handleWrapVesting={handleWrapVesting} /> : null}
+    </Wrapper>
   );
 }
 

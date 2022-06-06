@@ -1,6 +1,12 @@
 import { GU, textStyle } from '@1hive/1hive-ui';
 import styled from 'styled-components';
 
+export const Wrapper = styled.main`
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+`;
+
 export const Row = styled.div`
   display: flex;
   justify-content: space-between;
