@@ -16,6 +16,7 @@ import { Account } from 'eth-components/ant';
 import Home from './pages/home';
 import History from './pages/history';
 import { Header, MainWrapper, Sidebar, Content } from './main.styled';
+import FaqView from './pages/faq';
 
 export const Main: FC = () => {
   const scaffoldAppProviders = useScaffoldAppProviders();
@@ -32,7 +33,7 @@ export const Main: FC = () => {
   return (
     <MainWrapper>
       <Header>
-        <h1>Streaming Bee</h1>
+        <h1 className="text-2xl font-bold">Streaming Bee</h1>
 
         <div className="flex">
           <Account
@@ -58,6 +59,9 @@ export const Main: FC = () => {
             </Route>
             <Route exact path="/history">
               <History />
+            </Route>
+            <Route exact path="/faq">
+              <FaqView />
             </Route>
           </Switch>
         </BrowserRouter>

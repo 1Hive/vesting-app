@@ -42,18 +42,18 @@ function Home() {
 
   return (
     <Wrapper>
-      <div className="flex items-center justify-between text-sm space-x-6">
-        <h1 className="mb-0 text-4xl font-extrabold tracking-tight text-center text-slate-900 sm:text-5xl lg:text-6xl dark:text-white">
+      <div className="flex items-center text-sm gap-6 space-x-6">
+        <h1 className="mb-0 text-4xl font-extrabold tracking-tight text-center text-slate-500 sm:text-5xl lg:text-6xl dark:text-white">
           Vesting List
         </h1>
-        <a
-          href="/"
+        <button
+          onClick={handleDeployVestedToken}
           className="flex items-center justify-center w-full h-12 px-6 font-semibold text-white rounded-lg bg-slate-900 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 sm:w-auto dark:bg-sky-500 dark:highlight-white/20 dark:hover:bg-sky-400">
-          Home
-        </a>
+          Add new vesting
+        </button>
       </div>
 
-      {!ethersContext.account ? <VestingList handleWrapVesting={handleWrapVesting} /> : null}
+      {ethersContext.account ? <VestingList handleWrapVesting={handleWrapVesting} /> : null}
     </Wrapper>
   );
 }
