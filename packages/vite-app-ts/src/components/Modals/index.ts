@@ -1,6 +1,6 @@
-export * from './add';
-export * from './redeem';
-export * from './wrap';
+export * from './add-form';
+export * from './redeem-form';
+export * from './wrap-form';
 
 export type ModalType = {
   underlyingTokenAddress: string;

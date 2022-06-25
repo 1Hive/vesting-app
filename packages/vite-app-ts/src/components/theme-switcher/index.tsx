@@ -1,10 +1,11 @@
+import { useEffect, useState } from 'react';
 import { Switch } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
-import React, { FC, useEffect, useState } from 'react';
 import { useThemeSwitcher } from 'react-css-theme-switcher';
 
 const initialTheme = window.localStorage.getItem('theme') ?? 'light';
-export const ThemeSwitcher: FC = () => {
+
+export const ThemeSwitcher = () => {
   const [isDarkMode, setIsDarkMode] = useState(initialTheme === 'dark');
   const { switcher, currentTheme, status, themes } = useThemeSwitcher();
   const ethersContext = useEthersContext();
@@ -14,7 +15,7 @@ export const ThemeSwitcher: FC = () => {
     if (currentTheme === 'light' || currentTheme === 'dark') {
       ethersContext?.setModalTheme?.(currentTheme);
     }
-  }, [currentTheme]);
+  }, [currentTheme, ethersContext]);
 
   const toggleTheme = (isChecked: boolean): void => {
     setIsDarkMode(isChecked);

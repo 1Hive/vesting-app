@@ -21,6 +21,7 @@ import { truncateAddress } from './helpers';
 import { Popover } from './components/popover';
 import { Add } from './components/modals';
 import { useState } from 'react';
+import { ThemeSwitcher } from './components/theme-switcher';
 
 export const MainApp = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -94,6 +95,9 @@ export const MainApp = () => {
               <a href="/faq" className="text-xl text-black">
                 <QuestionCircleOutlined />
               </a>
+            </li>
+            <li>
+              <ThemeSwitcher />
             </li>
           </ul>
         </Sidebar>
