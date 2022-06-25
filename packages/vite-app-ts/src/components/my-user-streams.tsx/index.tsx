@@ -1,7 +1,6 @@
 import { TokenBadge } from '@1hive/1hive-ui';
 import { Skeleton } from 'antd';
 import { useMemo } from 'react';
-import { truncateAddress } from '~~/helpers';
 import { dateFormat } from '~~/helpers/date-utils';
 import { useVestedTokens } from '~~/hooks';
 
@@ -37,7 +36,7 @@ const MyUserVestings = ({ isComplete }: { isComplete?: boolean }) => {
       ) : (
         <>
           {isComplete ? (
-            <div className=" grid grid-cols-5">
+            <div className="mb-4 grid grid-cols-5">
               <p className="uppercase">Address</p>
               <p className="uppercase">Start/End</p>
               <p className="uppercase">Streaming</p>
@@ -52,10 +51,9 @@ const MyUserVestings = ({ isComplete }: { isComplete?: boolean }) => {
               const endDate = dateFormat(vest.endTimestamp);
 
               return isComplete ? (
-                <div className="grid grid-cols-5" key={index}>
+                <div className="mb-4 grid grid-cols-5" key={index}>
                   <p className="mb-0 text-base">
                     <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
-                    {truncateAddress(vest.id)}
                   </p>
                   <p className="mb-0 text-base">
                     {startDate} - {endDate}
@@ -65,7 +63,7 @@ const MyUserVestings = ({ isComplete }: { isComplete?: boolean }) => {
                   <p className="mb-0 text-base">$12.20</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-3" key={index}>
+                <div className="mb-4 grid grid-cols-3" key={index}>
                   <p className="mb-0 text-base">{vest.name}</p>
                   <p className="mb-0 text-base">
                     <>

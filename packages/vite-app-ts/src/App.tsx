@@ -30,7 +30,7 @@ const ethComponentsSettings: IEthComponentsSettings = {
   },
 };
 
-const MainPage = lazier(() => import('./main'), 'Main');
+const MainPage = lazier(() => import('./main'), 'MainApp');
 
 const App: FC = () => {
   return (

@@ -26,7 +26,7 @@ const History = () => {
             <p>No results to show...</p>
           ) : (
             <>
-              <div className="grid grid-cols-5">
+              <div className="mb-4 grid grid-cols-5">
                 <p className="uppercase">Address</p>
                 <p className="uppercase">Start/End</p>
                 <p className="uppercase">Streaming</p>
@@ -39,7 +39,7 @@ const History = () => {
                   const endDate = dateFormat(vest.endTimestamp);
 
                   return (
-                    <div className="grid grid-cols-5" key={index}>
+                    <div className="mb-4 grid grid-cols-5" key={index}>
                       <p className="mb-0 text-base">{truncateAddress(vest.id)}</p>
                       <p className="mb-0 text-base">
                         {startDate} - {endDate}
