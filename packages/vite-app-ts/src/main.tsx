@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Main } from '@1hive/1hive-ui';
 
 import { useEthersContext } from 'eth-hooks/context';
-import { useDexEthPrice } from 'eth-hooks/dapps';
 import { asEthersAdaptor } from 'eth-hooks/functions';
 
 import { MainPageMenu } from './components/main';
@@ -17,10 +16,14 @@ import Home from './pages/home';
 import History from './pages/history';
 import FaqView from './pages/faq';
 import Transactions from './pages/transactions';
-import { DollarOutlined, HomeOutlined, QuestionCircleOutlined, RetweetOutlined } from '@ant-design/icons';
+import { DollarOutlined, HomeOutlined, PlusOutlined, QuestionCircleOutlined, RetweetOutlined } from '@ant-design/icons';
 import { truncateAddress } from './helpers';
+import { Popover } from './components/popover';
+import { Add } from './components/modals';
+import { useState } from 'react';
 
 export const MainApp = () => {
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const scaffoldAppProviders = useScaffoldAppProviders();
   const ethersContext = useEthersContext();
 
@@ -30,19 +33,28 @@ export const MainApp = () => {
 
   useConnectAppContracts(asEthersAdaptor(ethersContext));
 
-  const [ethPrice] = useDexEthPrice(scaffoldAppProviders.mainnetAdaptor?.provider, scaffoldAppProviders.targetNetwork);
-
-  console.log(ethersContext);
-
   return (
     <Main layout={false} scrollView={false}>
       <MainWrapper>
         <Header>
-          <div className="flex items-center">
+          <div className="flex items-center gap-8">
             <a href="/">
-              <h1 className="text-2xl font-bold">Streaming Bee</h1>
-              <button className="flex items-center gap-6"></button>
+              <h1 className="mb-0 text-2xl font-bold">Streaming Bee</h1>
             </a>
+            <div className="flex items-center gap-6">
+              <div>
+                <button
+                  className="flex items-center px-3 py-2  font-semibold text-white bg-green-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-green-500 gap-2"
+                  onClick={() => setIsAddModalVisible(!isAddModalVisible)}>
+                  <PlusOutlined />
+                  Add
+                </button>
+
+                <Popover title="Add Vesting" isOpen={isAddModalVisible}>
+                  <Add />
+                </Popover>
+              </div>
+            </div>
           </div>
 
           <div className="flex">
@@ -70,12 +82,12 @@ export const MainApp = () => {
             </li>
             <li className="py-6 text-center">
               <a href="/transactions" className="text-xl text-black">
-                <DollarOutlined />
+                <RetweetOutlined />
               </a>
             </li>
             <li className="py-6 text-center">
               <a href="/history" className="text-xl text-black">
-                <RetweetOutlined />
+                <DollarOutlined />
               </a>
             </li>
             <li className="py-6 text-center">

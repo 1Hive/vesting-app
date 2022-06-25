@@ -4,7 +4,6 @@ import styled from 'styled-components';
 export const Row = styled.div`
   display: flex;
   align-items: start;
-  margin-top: ${GU}px;
 `;
 
 export const ModalHeader = styled.div`
@@ -16,5 +15,12 @@ export const ModalHeader = styled.div`
 
   > svg {
     cursor: pointer;
+  }
+`;
+
+export const StyledDatePicker = styled.div`
+  button > div {
+    border-color: rgb(55 65 81 / var(--tw-border-opacity));
+    border-radius: 0.375rem;
   }
 `;

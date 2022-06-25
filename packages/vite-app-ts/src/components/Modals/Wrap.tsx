@@ -1,8 +1,5 @@
-import { Button, IconCross } from '@1hive/1hive-ui';
 // import { BigNumber } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
-import { FieldElement } from './Add';
-import { ModalHeader, Row } from './index.styled';
 import { useEthersContext } from 'eth-hooks/context';
 import { useAppContracts } from '~~/config/contractContext';
 import { BigNumber, ContractFactory } from 'ethers';
@@ -11,7 +8,7 @@ import { WrapType } from '.';
 import { useContractExistsAtAddress } from 'eth-hooks';
 import { ERC20__factory } from '~~/generated/contract-types';
 
-export const Wrap = ({ vestedAdress, closeModal, underlyingTokenAddress }: WrapType) => {
+export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
   const [state, setState] = useState({
     underlyingAmount: '',
     address: '',
@@ -45,19 +42,29 @@ export const Wrap = ({ vestedAdress, closeModal, underlyingTokenAddress }: WrapT
 
   return (
     <div>
-      <ModalHeader>
-        <h1>Wrap vesting tokens</h1>
-        <IconCross onClick={closeModal} />
-      </ModalHeader>
+      <input
+        type="text"
+        name="amount"
+        placeholder="Amount"
+        className="block w-full px-2 py-2 mt-4 border border-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        onChange={(e: any) => setState((prev: any) => ({ ...prev, underlyingAmount: e.target.value }))}
+      />
+      <input
+        type="text"
+        name="address"
+        placeholder="Address"
+        className="block w-full px-2 py-2 mt-4 border border-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        onChange={(e: any) => setState((prev: any) => ({ ...prev, address: e.target.value }))}
+      />
 
-      <FieldElement name="Amount" element="underlyingAmount" state={state} setState={setState} />
-      <FieldElement name="Recipient" element="address" state={state} setState={setState} />
-
-      <Row>
-        <Button mode="strong" onClick={handleWrap}>
+      <div className="mt-4">
+        <button
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onClick={handleWrap}
+          className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
           Wrap
-        </Button>
-      </Row>
+        </button>
+      </div>
     </div>
   );
 };

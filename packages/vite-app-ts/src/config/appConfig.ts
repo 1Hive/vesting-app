@@ -4,7 +4,7 @@ import { invariant } from 'ts-invariant';
 
 import { NETWORKS, TNetworkNames } from '../models/constants/networks';
 
-export const DEBUG = true;
+export const DEBUG = false;
 invariant.log('MODE', import.meta.env.MODE, import.meta.env.DEV);
 /** ******************************
  * TARGET NETWORK CONFIG: 📡 What chain are your contracts deployed to?

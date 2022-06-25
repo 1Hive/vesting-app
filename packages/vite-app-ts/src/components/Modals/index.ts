@@ -1,16 +1,15 @@
-export * from './Add';
-export * from './Redeem';
-export * from './Wrap';
+export * from './add';
+export * from './redeem';
+export * from './wrap';
 
 export type ModalType = {
   underlyingTokenAddress: string;
   vestedAdress: string;
   address: string;
-  closeModal: () => void;
 };
 
 export type RedeemType = Omit<ModalType, 'underlyingTokenAddress'>;
 
-export type AddType = Pick<ModalType, 'closeModal'>;
+export type AddType = ModalType;
 
-export type WrapType = Pick<ModalType, 'vestedAdress' | 'closeModal' | 'underlyingTokenAddress'>;
+export type WrapType = Pick<ModalType, 'vestedAdress' | 'underlyingTokenAddress'>;

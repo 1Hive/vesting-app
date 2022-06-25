@@ -1,20 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
-import { IconCross, Button, Field } from '@1hive/1hive-ui';
-import { ModalHeader, Row } from './index.styled';
+import { Field } from '@1hive/1hive-ui';
 import { ethers } from 'ethers';
 import { useIsMounted } from '../../hooks';
 import { useEthersContext } from 'eth-hooks/context';
 import { useAppContracts } from '~~/config/contractContext';
 import { RedeemType } from '.';
 
-export const Redeem = ({ vestedAdress, closeModal, address }: RedeemType) => {
+export const Redeem = ({ vestedAdress, address }: RedeemType) => {
   const isMounted = useIsMounted();
   const [redeemableAmount, setRedeemableAmount] = useState('');
 
   const ethersContext = useEthersContext();
   const vestedERC20 = useAppContracts('VestedERC20', ethersContext.chainId);
 
-  console.log('vestedAdress', vestedAdress);
   useEffect(() => {
     const loadAmount = async () => {
       if (vestedERC20) {
@@ -46,18 +44,18 @@ export const Redeem = ({ vestedAdress, closeModal, address }: RedeemType) => {
 
   return (
     <div>
-      <ModalHeader>
-        <h1>Redeem vested tokens</h1>
-        <IconCross onClick={closeModal} />
-      </ModalHeader>
-
       <Field label={'Redeemable amount'} required={false}>
         {redeemableAmount}
       </Field>
 
-      <Row>
-        <Button onClick={handleReddem}>Claim</Button>
-      </Row>
+      <div className="mt-4">
+        <button
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onClick={handleReddem}
+          className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
+          Claim
+        </button>
+      </div>
     </div>
   );
 };
