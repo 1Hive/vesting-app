@@ -17,6 +17,8 @@ import Home from './pages/home';
 import History from './pages/history';
 import { Header, MainWrapper, Sidebar, Content } from './main.styled';
 import FaqView from './pages/faq';
+import Transactions from './pages/transactions';
+import { DollarOutlined, HomeOutlined, QuestionCircleOutlined, RetweetOutlined } from '@ant-design/icons';
 
 export const Main: FC = () => {
   const scaffoldAppProviders = useScaffoldAppProviders();
@@ -33,7 +35,12 @@ export const Main: FC = () => {
   return (
     <MainWrapper>
       <Header>
-        <h1 className="text-2xl font-bold">Streaming Bee</h1>
+        <div className="flex items-center">
+          <a href="/">
+            <h1 className="text-2xl font-bold">Streaming Bee</h1>
+            <button className="flex items-center gap-6"></button>
+          </a>
+        </div>
 
         <div className="flex">
           <Account
@@ -47,7 +54,28 @@ export const Main: FC = () => {
       </Header>
 
       <Sidebar>
-        <p>Sidebar</p>
+        <ul>
+          <li className="py-6 text-center">
+            <a href="/" className="text-xl text-black">
+              <HomeOutlined />
+            </a>
+          </li>
+          <li className="py-6 text-center">
+            <a href="/transactions" className="text-xl text-black">
+              <DollarOutlined />
+            </a>
+          </li>
+          <li className="py-6 text-center">
+            <a href="/history" className="text-xl text-black">
+              <RetweetOutlined />
+            </a>
+          </li>
+          <li className="py-6 text-center">
+            <a href="/faq" className="text-xl text-black">
+              <QuestionCircleOutlined />
+            </a>
+          </li>
+        </ul>
       </Sidebar>
 
       <Content>
@@ -59,6 +87,9 @@ export const Main: FC = () => {
             </Route>
             <Route exact path="/history">
               <History />
+            </Route>
+            <Route exact path="/transactions">
+              <Transactions />
             </Route>
             <Route exact path="/faq">
               <FaqView />

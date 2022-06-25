@@ -27,11 +27,14 @@ export const Header = styled.header`
 export const Sidebar = styled.nav`
   grid-area: nav;
   box-shadow: rgb(224 232 248) -1px 0px 0px 0px inset;
+  margin-top: 80px;
+
+  ul {
+  }
 `;
 
 export const Content = styled.div`
   grid-area: main;
-  background-color: #fff;
 `;
 
 export const Row = styled.div`
