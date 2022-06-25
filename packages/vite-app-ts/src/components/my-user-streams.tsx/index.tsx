@@ -44,7 +44,7 @@ const MyUserVestings = ({ isComplete }: { isComplete?: boolean }) => {
               <p className="uppercase">$</p>
             </div>
           ) : null}
-          <div className="mb-4">
+          <div className="flex flex-col mt-4">
             {streams?.map((vest, index: number) => {
               const token = vest.underlying;
               const startDate = dateFormat(vest.startTimestamp);
@@ -80,9 +80,13 @@ const MyUserVestings = ({ isComplete }: { isComplete?: boolean }) => {
             })}
           </div>
           {!isComplete ? (
-            <a href="/transactions" className="text-lg">
-              View all transactions
-            </a>
+            <div className="mt-4">
+              <a
+                href="/transactions"
+                className="flex-none px-2 font-medium bg-white pointer-events-auto rounded-md py-[0.3125rem] text-slate-700 shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50">
+                View all transactions
+              </a>
+            </div>
           ) : null}
         </>
       )}

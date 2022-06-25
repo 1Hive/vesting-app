@@ -11,7 +11,6 @@ import { useBurnerFallback } from '~~/components/main/hooks/useBurnerFallback';
 import { useScaffoldProviders as useScaffoldAppProviders } from '~~/components/main/hooks/useScaffoldAppProviders';
 import { BURNER_FALLBACK_ENABLED } from '~~/config/appConfig';
 import { useConnectAppContracts, useLoadAppContracts } from '~~/config/contractContext';
-import { Account } from 'eth-components/ant';
 
 import { Header, MainWrapper, Sidebar, Content } from './main.styled';
 import Home from './pages/home';
@@ -19,6 +18,7 @@ import History from './pages/history';
 import FaqView from './pages/faq';
 import Transactions from './pages/transactions';
 import { DollarOutlined, HomeOutlined, QuestionCircleOutlined, RetweetOutlined } from '@ant-design/icons';
+import { truncateAddress } from './helpers';
 
 export const MainApp = () => {
   const scaffoldAppProviders = useScaffoldAppProviders();
@@ -32,8 +32,10 @@ export const MainApp = () => {
 
   const [ethPrice] = useDexEthPrice(scaffoldAppProviders.mainnetAdaptor?.provider, scaffoldAppProviders.targetNetwork);
 
+  console.log(ethersContext);
+
   return (
-    <Main style={{ width: '100%' }}>
+    <Main layout={false} scrollView={false}>
       <MainWrapper>
         <Header>
           <div className="flex items-center">
@@ -44,13 +46,18 @@ export const MainApp = () => {
           </div>
 
           <div className="flex">
-            <Account
-              createLoginConnector={scaffoldAppProviders.createLoginConnector}
-              ensProvider={scaffoldAppProviders.mainnetAdaptor?.provider}
-              price={ethPrice}
-              blockExplorer={scaffoldAppProviders.targetNetwork.blockExplorer}
-              hasContextConnect={true}
-            />
+            {ethersContext.account ? (
+              <div className="flex flex-col">
+                <p className="font-bold text-black">Personal Wallet</p>
+                <p className="text-xs">{truncateAddress(ethersContext.account)}</p>
+              </div>
+            ) : (
+              <button
+                className="px-3 py-2 ml-8 font-semibold text-white bg-indigo-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-indigo-500"
+                onClick={() => scaffoldAppProviders.createLoginConnector()}>
+                Connect Wallet
+              </button>
+            )}
           </div>
         </Header>
 

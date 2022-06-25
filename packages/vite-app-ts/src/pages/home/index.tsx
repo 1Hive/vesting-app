@@ -46,20 +46,21 @@ function Home() {
         <h1 className="mb-0 text-3xl tracking-tight">Vesting List</h1>
         <button
           onClick={handleDeployVestedToken}
-          className="flex items-center justify-center w-full h-12 px-4 font-semibold text-black bg-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 sm:w-auto dark:bg-sky-500 dark:highlight-white/20 dark:hover:bg-sky-400">
+          className="flex-none px-2 font-medium bg-white pointer-events-auto rounded-md py-[0.3125rem] text-slate-700 shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50">
           Add new vesting
         </button>
       </div>
 
       <div className="mt-6 grid grid-cols-2 gap-6">
-        <div className="p-4">
-          <label className="font-bold">Balance</label>
+        <div className="p-4 bg-white rounded-lg shadow-xl pointer-events-auto text-[0.8125rem] leading-5 shadow-black/5 hover:bg-slate-50 ring-1 ring-slate-700/10">
+          <label className="text-base font-bold text-black">Balance</label>
           <div className="mt-4">
             <p className="text-4xl">$25,999</p>
           </div>
+          <div className="mt-4">Show all balances</div>
         </div>
-        <div className="p-4">
-          <label className="font-bold">Active vesting</label>
+        <div className="p-4 bg-white rounded-lg shadow-xl pointer-events-auto text-[0.8125rem] leading-5 shadow-black/5 hover:bg-slate-50 ring-1 ring-slate-700/10">
+          <label className="text-base font-bold text-black">Active vesting</label>
           <div className="mt-4">{ethersContext.account ? <MyUserVestings /> : null}</div>
         </div>
       </div>
