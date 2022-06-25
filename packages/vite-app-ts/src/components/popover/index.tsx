@@ -10,11 +10,14 @@ const PopoverWrapper = styled.div`
   z-index: 3;
   padding: 16px;
   background: #fff;
-  min-width: 376px;
   margin-top: 30px;
   box-shadow: inset 0 -1px 0 0 #bcc3cf, 0 4px 4px 0 rgb(130 146 173 / 16%);
   border: 1px solid #e0e8f8;
   border-radius: 4px;
+  top: 0;
+  left: 0;
+  min-width: 200px;
+  margin-top: 70px;
 `;
 
 export const Popover = ({ title, isOpen, children }: PopoverProps) => {

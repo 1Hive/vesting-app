@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Switch } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { useThemeSwitcher } from 'react-css-theme-switcher';
 
@@ -24,15 +23,12 @@ export const ThemeSwitcher = () => {
   };
 
   if (status === 'loading' || status === 'idle') {
-    return <></>;
+    return null;
   }
 
   return (
-    <div className="main fade-in" style={{ position: 'fixed', right: 10, bottom: 10 }}>
-      <span style={{ padding: 8 }}>{currentTheme === 'light' ? '☀️' : '🌜'}</span>
-      <Switch checked={isDarkMode} onChange={toggleTheme} />
+    <div className="text-xl text-center text-black" onClick={() => toggleTheme(currentTheme === 'dark')}>
+      {currentTheme === 'light' ? '☀️' : '🌜'}
     </div>
   );
-
-  return null;
 };

@@ -41,7 +41,7 @@ export const Add = () => {
   }, [vestedERC20Factory, state.name, state.symbol, state.tokenAddress, range.start, range.end]);
 
   return (
-    <div>
+    <div style={{ minWidth: '376px' }}>
       <input
         type="text"
         name="token"

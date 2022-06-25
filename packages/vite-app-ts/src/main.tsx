@@ -18,13 +18,15 @@ import FaqView from './pages/faq';
 import Transactions from './pages/transactions';
 import { DollarOutlined, HomeOutlined, PlusOutlined, QuestionCircleOutlined, RetweetOutlined } from '@ant-design/icons';
 import { truncateAddress } from './helpers';
-import { Popover } from './components/popover';
 import { Add } from './components/modals';
 import { useState } from 'react';
 import { ThemeSwitcher } from './components/theme-switcher';
+import { Popover } from './components/popover';
+import { DownArrowIcon, UpArrowIcon } from './components/accordion';
 
 export const MainApp = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [isWalletModal, setIsWalletModal] = useState(false);
   const scaffoldAppProviders = useScaffoldAppProviders();
   const ethersContext = useEthersContext();
 
@@ -42,7 +44,7 @@ export const MainApp = () => {
             <a href="/">
               <h1 className="mb-0 text-2xl font-bold">Streaming Bee</h1>
             </a>
-            <div className="flex items-center gap-6">
+            <div className="relative flex items-center gap-6">
               <div>
                 <button
                   className="flex items-center px-3 py-2  font-semibold text-white bg-green-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-green-500 gap-2"
@@ -58,11 +60,26 @@ export const MainApp = () => {
             </div>
           </div>
 
-          <div className="flex">
+          <div className="relative w-60">
             {ethersContext.account ? (
               <div className="flex flex-col">
-                <p className="font-bold text-black">Personal Wallet</p>
-                <p className="text-xs">{truncateAddress(ethersContext.account)}</p>
+                <div
+                  onClick={() => setIsWalletModal(!isWalletModal)}
+                  className="flex items-center justify-center text-right cursor-pointer gap-6 hover:text-gray-600">
+                  <div>
+                    <p className="font-bold text-black">Personal Wallet</p>
+                    <p className="text-xs">{truncateAddress(ethersContext.account)}</p>
+                  </div>
+                  {!isWalletModal ? <DownArrowIcon /> : <UpArrowIcon />}
+                </div>
+
+                <Popover title="Disconnect Wallet" isOpen={isWalletModal}>
+                  <button
+                    onClick={() => ethersContext.disconnectModal()}
+                    className="px-3 py-2 mt-4 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
+                    Disconnect wallet
+                  </button>
+                </Popover>
               </div>
             ) : (
               <button
