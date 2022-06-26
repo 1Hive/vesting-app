@@ -23,6 +23,7 @@ import { useState } from 'react';
 import { ThemeSwitcher } from './components/theme-switcher';
 import { Popover } from './components/popover';
 import { DownArrowIcon, UpArrowIcon } from './components/accordion';
+import { getNetworkNameByChainID } from './models/constants/networks';
 
 export const MainApp = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -67,7 +68,9 @@ export const MainApp = () => {
                   onClick={() => setIsWalletModal(!isWalletModal)}
                   className="flex items-center justify-center text-right cursor-pointer gap-6 hover:text-gray-600">
                   <div>
-                    <p className="font-bold text-black">Personal Wallet</p>
+                    <p className="font-bold text-black">
+                      Personal Wallet - chain: {getNetworkNameByChainID(ethersContext.chainId)}
+                    </p>
                     <p className="text-xs">{truncateAddress(ethersContext.account)}</p>
                   </div>
                   {!isWalletModal ? <DownArrowIcon /> : <UpArrowIcon />}

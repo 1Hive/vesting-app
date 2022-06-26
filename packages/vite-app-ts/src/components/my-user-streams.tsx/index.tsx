@@ -4,7 +4,7 @@ import { useEthersContext } from 'eth-hooks/context';
 import { BigNumber, ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import { useAppContracts } from '~~/config/contractContext';
-import { getContractERC20 } from '~~/helpers/contract';
+import { getBlockTimestamp, getContractERC20 } from '~~/helpers/contract';
 import { dateFormat } from '~~/helpers/date-utils';
 import { useIsMounted } from '~~/hooks/use-is-mounted';
 import { useVestedTokens } from '~~/hooks/use-vested-tokens';
@@ -15,13 +15,12 @@ const RedeemValue = ({ vestedERCAddress, accountHolder }: { vestedERCAddress: st
   const [startTimestamp, setStartTimestamp] = useState<BigNumber | undefined>();
   const [blockTimestamp, setBlockTimestamp] = useState<BigNumber | undefined>();
   const [endTimestamp, setEndTimestamp] = useState<BigNumber | undefined>();
-  const [initialBalance, setInitialBalance] = useState<BigNumber | undefined>();
+  const [balanceClaimable, setBalanceClaimable] = useState<BigNumber | undefined>();
   const ethersContext = useEthersContext();
   const vestedERC20Contract = useAppContracts('VestedERC20', ethersContext.chainId)?.attach(vestedERCAddress);
 
   const isMounted = useIsMounted();
 
-  // console.log('vestedERCAddress', vestedERCAddress);
   // TODO that use intervalpool maybe its that we dont want, if we want manually initialize
   // const [redeemableAmountBN, _updateRedeemableAmount] = useContractReader(
   //   vestedERC20Contract,
@@ -37,12 +36,11 @@ const RedeemValue = ({ vestedERCAddress, accountHolder }: { vestedERCAddress: st
 
         const vestedStartTimestamp = await vestedERC20Contract?.startTimestamp();
         const vestedEndTimestamp = await vestedERC20Contract?.endTimestamp();
-        const blockNumber = ethersContext.provider?.blockNumber;
-        if (blockNumber) {
-          const block = await ethersContext.provider?.getBlock(blockNumber);
+        const blockTimestamp = await getBlockTimestamp(ethersContext);
 
-          console.log('block?.timestamp');
-          setBlockTimestamp(BigNumber.from(block?.timestamp));
+        if (blockTimestamp) {
+          setBlockTimestamp(BigNumber.from(blockTimestamp));
+          console.log('blockTimestamp', blockTimestamp);
         }
 
         if (vestedStartTimestamp) {
@@ -61,10 +59,10 @@ const RedeemValue = ({ vestedERCAddress, accountHolder }: { vestedERCAddress: st
           const balanceToBeStreamed = await erc20.balanceOf(vestedERCAddress);
           if (balanceToBeStreamed) console.log('balanceToBeStreamed', ethers.utils.formatEther(balanceToBeStreamed));
         }
-        if (balanceClaimable)
-          console.log('balanceClaimable/InitialBalance', ethers.utils.formatEther(balanceClaimable));
-        // if (initialBalance) console.log('initialBalance', ethers.utils.formatEther(initialBalance));
-        setInitialBalance(balanceClaimable);
+        if (balanceClaimable) {
+          console.log('balanceClaimable', ethers.utils.formatEther(balanceClaimable));
+          setBalanceClaimable(balanceClaimable);
+        }
         setRedeemableAmountBN(balanceAbleClaim);
         if (balanceAbleClaim) console.log('balanceAbleClaim', ethers.utils.formatEther(balanceAbleClaim));
         if (claimedWrappedAmount) console.log('claimedWrappedAmount', ethers.utils.formatEther(claimedWrappedAmount));
@@ -85,31 +83,43 @@ const RedeemValue = ({ vestedERCAddress, accountHolder }: { vestedERCAddress: st
           startTimestamp &&
           endTimestamp &&
           claimedUnderlyingAmount &&
-          initialBalance
+          balanceClaimable &&
+          !balanceClaimable.isZero()
         ) {
-          if (blockTimestamp.lte(endTimestamp)) {
-            const flow = initialBalance
-              .mul(blockTimestamp.sub(startTimestamp))
-              .div(claimedUnderlyingAmount.sub(endTimestamp.sub(startTimestamp)));
+          if (blockTimestamp.lte(startTimestamp)) {
+            console.log('Status Stream: Not initiated');
+          } else if (blockTimestamp.gte(endTimestamp)) {
+            const value = balanceClaimable.sub(claimedUnderlyingAmount);
+            if (value) console.log('value', ethers.utils.formatEther(value));
+            // setRedeemableAmountBN(value);
+          } else if (blockTimestamp.lte(endTimestamp)) {
+            const sub1 = blockTimestamp.sub(startTimestamp);
+            const sub2 = endTimestamp.sub(startTimestamp);
+            console.log('sub1', sub1.toNumber());
+            console.log('sub2', sub2.toNumber());
+            console.log('balanceClaimable', ethers.utils.formatEther(balanceClaimable));
 
-            const temp = redeemableAmountBN.add(1);
+            const subTotal = balanceClaimable.mul(sub1).div(sub2);
+            console.log('subTotal', subTotal.toNumber());
+            console.log('claimedUnderlyingAmount', claimedUnderlyingAmount.toNumber());
+            const flow = subTotal.sub(claimedUnderlyingAmount);
 
             if (flow) console.log('flow', ethers.utils.formatEther(flow));
-            if (temp) console.log('temp', ethers.utils.formatEther(temp));
-            // if (!flow.eq(BigNumber.from(0))) {
-            setRedeemableAmountBN(temp);
+            if (!flow.isZero()) {
+              setRedeemableAmountBN((current) => current?.add(flow));
+            }
           }
           // }
         }
       }
-    }, 250);
+    }, 1000);
 
     return () => clearInterval(intervalId);
   }, [
     blockTimestamp,
     claimedUnderlyingAmount,
     endTimestamp,
-    initialBalance,
+    balanceClaimable,
     isMounted,
     redeemableAmountBN,
     startTimestamp,
