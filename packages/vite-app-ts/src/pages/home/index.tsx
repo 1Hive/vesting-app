@@ -1,46 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Wrapper } from './index.styled';
 import { useEthersContext } from 'eth-hooks/context';
 import MyUserVestings from '~~/components/my-user-streams.tsx';
 import { PageTitle } from '~~/components/page-title';
 import AllStreamsPack from '~~/components/all-streams-pack.tsx';
 
-const MODAL_WIDTH = {
-  deploy: '500px',
-  redeem: '350px',
-  wrap: '450px',
-};
-
-export type MODAL_MODES = 'deploy' | 'wrap' | 'redeem' | null;
-
 function Home() {
-  const [opened, setOpened] = useState(false);
-  const [modalMode, setModalMode] = useState<MODAL_MODES>(null); // deploy, redeem, wrap
-  const [vestedAddress, setVestedAddress] = useState<string | null>(null);
-  const [underTokenAddress, setUnderTokenAddress] = useState<string | null>(null);
-
   const ethersContext = useEthersContext();
-
-  const handleShowModal = (mode: MODAL_MODES) => {
-    setOpened(true);
-    setModalMode(mode);
-  };
-  const handleHideModal = () => {
-    setOpened(false);
-    setModalMode(null);
-    setVestedAddress(null);
-    setUnderTokenAddress(null);
-  };
-  const handleDeployVestedToken = () => handleShowModal('deploy');
-  const handleRedeemVesting = (id: string | null) => {
-    setVestedAddress(id);
-    handleShowModal('redeem');
-  };
-  const handleWrapVesting = (vestedAddress: string, underTokenAddress: string) => {
-    setVestedAddress(vestedAddress);
-    setUnderTokenAddress(underTokenAddress);
-    handleShowModal('wrap');
-  };
 
   return (
     <Wrapper>
