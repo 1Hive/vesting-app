@@ -23,6 +23,7 @@ const USER_VESTINGS_QUERY = gql`
       recipient
       underlyingAmount
       claimedUnderlyingAmount
+      wrappedTokenAmount
     }
   }
 `;
