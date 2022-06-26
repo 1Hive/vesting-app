@@ -51,11 +51,13 @@ export const Add = () => {
 
     if (newVestedERCAddress !== undefined) {
       notification.open({
-        message: 'Vesting stream created',
+        message: 'Add vesting',
+        description: 'Vesting created with success',
       });
     } else {
       notification.open({
-        message: 'There was an error while creating stream',
+        message: 'Add vesting',
+        description: 'There was an error while creating stream',
       });
     }
   }, [vestedERC20Factory, state.name, state.symbol, state.tokenAddress, dates]);

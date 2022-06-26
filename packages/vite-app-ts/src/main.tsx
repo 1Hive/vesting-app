@@ -19,7 +19,7 @@ import { Add } from './components/modals';
 import { useState } from 'react';
 import { DownArrowIcon, UpArrowIcon } from './components/accordion';
 import { getNetworkNameByChainID } from './models/constants/networks';
-import { Popover } from 'antd';
+import { Modal, Popover } from 'antd';
 
 import './styles/app.less';
 
@@ -45,26 +45,20 @@ export const MainApp = () => {
             </a>
             <div className="relative flex items-center gap-6">
               <div>
-                <Popover
-                  content={
-                    <>
-                      <p className="mb-4 text-base font-bold">Creating new Vesting</p>
-                      <Add />
-                    </>
-                  }
-                  trigger="click"
-                  visible={isAddModalVisible}
-                  onVisibleChange={() => setIsAddModalVisible(!isAddModalVisible)}>
-                  <button
-                    className="flex items-center px-3 py-2  font-semibold text-white bg-green-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-green-500 gap-2"
-                    onClick={() => setIsAddModalVisible(!isAddModalVisible)}>
-                    <PlusOutlined />
-                    Add
-                  </button>
-                </Popover>
+                <button
+                  className="flex items-center px-3 py-2  font-semibold text-white bg-green-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-green-500 gap-2"
+                  onClick={() => setIsAddModalVisible(!isAddModalVisible)}>
+                  <PlusOutlined />
+                  Add
+                </button>
               </div>
             </div>
           </div>
+
+          <Modal visible={isAddModalVisible} footer={null} onCancel={() => setIsAddModalVisible(false)}>
+            <p className="mb-4 text-base font-bold">Creating new Vesting</p>
+            <Add />
+          </Modal>
 
           <div className="relative">
             {ethersContext.account ? (

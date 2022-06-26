@@ -198,7 +198,6 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
     const updateBlocktimestamp = async () => {
       const blockTimestamp = await getBlockTimestamp(ethersContext);
       if (blockTimestamp) {
-        console.log('blockTimestamp', blockTimestamp);
         if (isMounted()) {
           setBlockTimestamp(blockTimestamp);
         }
@@ -244,14 +243,14 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
               <p className="uppercase">$</p>
             </div>
           ) : null}
-          <div className="flex flex-col mt-4">
+          <div className="mt-4 grid gap-2">
             {streams?.map((vest, index: number) => {
               const vestToken = vest.token;
               const startDate = dateFormat(vestToken.startTimestamp);
               const endDate = dateFormat(vestToken.endTimestamp);
 
               return isComplete ? (
-                <div className="mb-4 grid grid-cols-5" key={index}>
+                <div className="grid grid-cols-5" key={index}>
                   <p className="mb-0 text-base">{vestToken.name}</p>
                   <p className="mb-0 text-base">
                     {startDate} - {endDate}
@@ -268,7 +267,7 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
                   </p>
                 </div>
               ) : (
-                <div className="mb-4 grid grid-cols-3" key={index}>
+                <div className="grid grid-cols-3" key={index}>
                   <p className="mb-0 text-base">{vestToken.name}</p>
                   <p className="mb-0 text-base">
                     {vestToken.underlying.name} - {vestToken.underlying.symbol}
