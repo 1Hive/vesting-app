@@ -1,10 +1,12 @@
-import { DateRangePicker } from '@1hive/1hive-ui';
+import { DatePicker, notification } from 'antd';
 import dayjs from 'dayjs';
 import { useEthersContext } from 'eth-hooks/context';
 import { ethers } from 'ethers';
 import { useCallback, useState } from 'react';
 import { useAppContracts } from '~~/config/contractContext';
 import { StyledDatePicker } from './index.styled';
+
+const { RangePicker } = DatePicker;
 
 const formatStringToBytes32 = (fromString: string) => ethers.utils.formatBytes32String(fromString);
 const formatStringDateToUnixstamp = (fromStringDate: string | number | Date | dayjs.Dayjs | null | undefined) =>
@@ -18,14 +20,17 @@ export const Add = () => {
     name: '',
     symbol: '',
   });
-  const [range, setRange] = useState({
+  const [range, setRange] = useState<any>({
     start: null,
     end: null,
   });
+  const [dates, setDates] = useState<any>(null);
 
   const ethersContext = useEthersContext();
   const vestedERC20Factory = useAppContracts('VestedERC20Factory', ethersContext.chainId);
   console.log('ethersContext.chainId', ethersContext.chainId);
+
+  console.log({ dates });
 
   const deployVestedToken = useCallback(async () => {
     // console.log(`deployVestedToken`, range, state);
@@ -51,6 +56,16 @@ export const Add = () => {
     console.log('deployedEvent:', deployedEvent);
     const newVestedERCAddress = deployedEvent?.args?.['vestedERC0'] as string | undefined;
     console.log('newVestedERCAddress:', newVestedERCAddress);
+
+    if (newVestedERCAddress !== undefined) {
+      notification.open({
+        message: 'Vesting stream created',
+      });
+    } else {
+      notification.open({
+        message: 'There was an error while creating stream',
+      });
+    }
   }, [vestedERC20Factory, state.name, state.symbol, state.tokenAddress, range.start, range.end]);
 
   return (
@@ -62,8 +77,7 @@ export const Add = () => {
         className="block w-full px-2 py-2 mt-4 border border-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         onChange={(e: any) => setState((prev: any) => ({ ...prev, tokenAddress: e.target.value }))}
       />
-      {/* <fieldset>
-        <legend>Vested Info:</legend> */}
+
       <input
         type="text"
         name="name"
@@ -79,10 +93,9 @@ export const Add = () => {
         className="block w-full px-2 py-2 mt-4 border border-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         onChange={(e: any) => setState((prev: any) => ({ ...prev, symbol: e.target.value }))}
       />
-      {/* </fieldset> */}
 
       <StyledDatePicker className="mt-4">
-        <DateRangePicker startDate={range.start} endDate={range.end} onChange={setRange} />
+        <RangePicker onCalendarChange={(val) => setDates(val)} />
       </StyledDatePicker>
 
       <div className="mt-4">

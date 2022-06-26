@@ -2,7 +2,6 @@ import { useEthersAdaptorFromProviderOrSigners } from 'eth-hooks';
 import { EthersModalConnector, TEthersModalConnector, useEthersContext } from 'eth-hooks/context';
 import { TCreateEthersModalConnector, TEthersAdaptor, TEthersProvider, TNetworkInfo } from 'eth-hooks/models';
 import { useCallback, useEffect, useState } from 'react';
-import { useThemeSwitcher } from 'react-css-theme-switcher';
 import { invariant } from 'ts-invariant';
 import { ICoreOptions } from 'web3modal';
 
@@ -48,20 +47,18 @@ export const useScaffoldProviders = (): IScaffoldAppProviders => {
       });
   }, []);
 
-  const { currentTheme } = useThemeSwitcher();
-
   const createLoginConnector: TCreateEthersModalConnector = useCallback(
     (id?: string) => {
       if (web3Config) {
         const connector = new EthersModalConnector(
-          { ...web3Config, theme: currentTheme },
+          { ...web3Config },
           { reloadOnNetworkChange: false, immutableProvider: false },
           id
         );
         return connector;
       }
     },
-    [web3Config, currentTheme]
+    [web3Config]
   );
 
   useEffect(() => {
@@ -77,7 +74,7 @@ export const useScaffoldProviders = (): IScaffoldAppProviders => {
         connector.loadWeb3Modal();
         if (connector != null && !connector.hasCachedProvider()) {
           newConnector = new EthersModalConnector(
-            { ...web3Config, theme: currentTheme },
+            { ...web3Config },
             { reloadOnNetworkChange: false, immutableProvider: false },
             web3ModalConfigKeys.localhostKey
           );
