@@ -25,10 +25,12 @@ export const Add = () => {
 
   const ethersContext = useEthersContext();
   const vestedERC20Factory = useAppContracts('VestedERC20Factory', ethersContext.chainId);
+  console.log('ethersContext.chainId', ethersContext.chainId);
 
   const deployVestedToken = useCallback(async () => {
     // console.log(`deployVestedToken`, range, state);
-    const response = await vestedERC20Factory?.createVestedERC20(
+
+    const tx = await vestedERC20Factory?.createVestedERC20(
       formatStringToBytes32(state.name),
       formatStringToBytes32(state.symbol),
       18,
@@ -37,7 +39,18 @@ export const Add = () => {
       formatStringDateToUnixstamp(range.end)
     );
 
-    console.log(response);
+    console.log(tx);
+    // TODO that is way to wait for transaction success or fail and get the event to see the address.
+    const receipt = await tx?.wait();
+
+    const deployedEvent = receipt?.events?.find((ev) => {
+      console.log('ev:', ev);
+      return ev.event === 'DeployVestedERC20';
+    });
+
+    console.log('deployedEvent:', deployedEvent);
+    const newVestedERCAddress = deployedEvent?.args?.['vestedERC0'] as string | undefined;
+    console.log('newVestedERCAddress:', newVestedERCAddress);
   }, [vestedERC20Factory, state.name, state.symbol, state.tokenAddress, range.start, range.end]);
 
   return (
@@ -45,15 +58,16 @@ export const Add = () => {
       <input
         type="text"
         name="token"
-        placeholder="0x00..."
+        placeholder="Underlying token (0x00...)"
         className="block w-full px-2 py-2 mt-4 border border-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         onChange={(e: any) => setState((prev: any) => ({ ...prev, tokenAddress: e.target.value }))}
       />
-
+      {/* <fieldset>
+        <legend>Vested Info:</legend> */}
       <input
         type="text"
         name="name"
-        placeholder="Name"
+        placeholder="Name Vested Token (StreamingTKN)"
         className="block w-full px-2 py-2 mt-4 border border-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         onChange={(e: any) => setState((prev: any) => ({ ...prev, name: e.target.value }))}
       />
@@ -61,10 +75,11 @@ export const Add = () => {
       <input
         type="text"
         name="symbol"
-        placeholder="Symbol"
+        placeholder="Symbol Vested Token (sTKN)"
         className="block w-full px-2 py-2 mt-4 border border-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         onChange={(e: any) => setState((prev: any) => ({ ...prev, symbol: e.target.value }))}
       />
+      {/* </fieldset> */}
 
       <StyledDatePicker className="mt-4">
         <DateRangePicker startDate={range.start} endDate={range.end} onChange={setRange} />

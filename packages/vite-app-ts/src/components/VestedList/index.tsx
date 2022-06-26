@@ -2,10 +2,13 @@ import { memo } from 'react';
 import { Skeleton, Empty } from 'antd';
 import { Button, TokenBadge } from '@1hive/1hive-ui';
 import { dateFormat } from '../../helpers/date-utils';
-import { useVestedTokens } from '../../hooks';
 import { Wrapper } from './index.styled';
 
 import ListItems from '../List/index';
+import { useEthersContext } from 'eth-hooks/context';
+import { useAppContracts } from '~~/config/contractContext';
+import { useContractReader } from 'eth-hooks';
+import { useVestedTokens } from '~~/hooks/use-vested-tokens';
 
 type VestedListProps = {
   handleWrapVesting: (vestedAddress: string, underTokenAddress: string) => void;

@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Field } from '@1hive/1hive-ui';
 import { ethers } from 'ethers';
-import { useIsMounted } from '../../hooks';
 import { useEthersContext } from 'eth-hooks/context';
 import { useAppContracts } from '~~/config/contractContext';
 import { RedeemType } from '.';
+import { useIsMounted } from '~~/hooks/use-is-mounted';
 
 export const Redeem = ({ vestedAdress, address }: RedeemType) => {
   const isMounted = useIsMounted();

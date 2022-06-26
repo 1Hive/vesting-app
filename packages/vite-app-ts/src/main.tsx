@@ -53,7 +53,7 @@ export const MainApp = () => {
                   Add
                 </button>
 
-                <Popover title="Add Vesting" isOpen={isAddModalVisible}>
+                <Popover title="Creating new Vesting" isOpen={isAddModalVisible}>
                   <Add />
                 </Popover>
               </div>
