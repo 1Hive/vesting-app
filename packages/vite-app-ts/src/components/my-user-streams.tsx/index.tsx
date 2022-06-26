@@ -1,4 +1,3 @@
-import { TokenBadge } from '@1hive/1hive-ui';
 import { Empty, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { BigNumber, ethers } from 'ethers';
@@ -233,7 +232,7 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
   return (
     <div className="mt-4">
       {isEmpty ? (
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No streams… yet. Send your first stream!" />
       ) : (
         <>
           {isComplete ? (
@@ -253,17 +252,12 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
 
               return isComplete ? (
                 <div className="mb-4 grid grid-cols-5" key={index}>
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={vest.id} name={vestToken.name} symbol={vestToken.symbol} />
-                  </p>
+                  <p className="mb-0 text-base">{vestToken.name}</p>
                   <p className="mb-0 text-base">
                     {startDate} - {endDate}
                   </p>
                   <p className="mb-0 text-base">{MyStreamingStatus[getStatusStream(vest, blockTimestamp)]}</p>
-                  {/* <p className="mb-0 text-base">{vest.underlying.symbol}</p> */}
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={vestToken.id} name={vestToken.name} symbol={vestToken.symbol} />
-                  </p>
+                  <p className="mb-0 text-base">{vestToken.symbol} </p>
                   <p className="mb-0 text-base">
                     $
                     {ethersContext.account ? (

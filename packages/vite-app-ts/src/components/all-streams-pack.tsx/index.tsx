@@ -1,4 +1,3 @@
-import { TokenBadge } from '@1hive/1hive-ui';
 import { Empty, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { useEffect, useMemo, useState } from 'react';
@@ -74,7 +73,7 @@ const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
       ) : (
         <>
           {isComplete ? (
-            <div className="mb-4 grid grid-cols-5">
+            <div className="mb-4 grid grid-cols-4">
               <p className="uppercase">Vesting Token</p>
               <p className="uppercase">Start/End</p>
               <p className="uppercase">Status</p>
@@ -88,18 +87,13 @@ const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
               const endDate = dateFormat(vestToken.endTimestamp);
 
               return isComplete ? (
-                <div className="mb-4 grid grid-cols-5" key={index}>
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={vest.id} name={vestToken.name} symbol={vestToken.symbol} />
-                  </p>
+                <div className="mb-4 grid grid-cols-4" key={index}>
+                  <p className="mb-0 text-base">{vestToken.name}</p>
                   <p className="mb-0 text-base">
                     {startDate} - {endDate}
                   </p>
                   <p className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vest, blockTimestamp)]}</p>
-                  {/* <p className="mb-0 text-base">{vest.underlying.symbol}</p> */}
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={vestToken.id} name={vestToken.name} symbol={vestToken.symbol} />
-                  </p>
+                  <p className="mb-0 text-base">{vestToken.symbol}</p>
                 </div>
               ) : (
                 <div className="mb-4 grid grid-cols-3" key={index}>
