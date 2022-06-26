@@ -1,47 +1,39 @@
-import { DatePicker, notification } from 'antd';
-import dayjs from 'dayjs';
+import { DatePicker, notification, Spin } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
-import { ethers } from 'ethers';
-import { useCallback, useState } from 'react';
+import { BigNumberish, ethers } from 'ethers';
+import { Moment } from 'moment';
+import React, { useCallback, useState } from 'react';
 import { useAppContracts } from '~~/config/contractContext';
 import { StyledDatePicker } from './index.styled';
 
 const { RangePicker } = DatePicker;
 
+type RangeValue = [Moment | null, Moment | null] | null;
+
+import { LoadingOutlined } from '@ant-design/icons';
+
 const formatStringToBytes32 = (fromString: string) => ethers.utils.formatBytes32String(fromString);
-const formatStringDateToUnixstamp = (fromStringDate: string | number | Date | dayjs.Dayjs | null | undefined) =>
-  dayjs(fromStringDate).unix();
 
 export const Add = () => {
-  const [error, setError] = useState('aa');
-  const [success, setSuccess] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useState({
     tokenAddress: '',
     name: '',
     symbol: '',
   });
-  const [range, setRange] = useState<any>({
-    start: null,
-    end: null,
-  });
-  const [dates, setDates] = useState<any>(null);
+  const [dates, setDates] = useState<RangeValue>(null);
 
   const ethersContext = useEthersContext();
   const vestedERC20Factory = useAppContracts('VestedERC20Factory', ethersContext.chainId);
-  console.log('ethersContext.chainId', ethersContext.chainId);
-
-  console.log({ dates });
 
   const deployVestedToken = useCallback(async () => {
-    // console.log(`deployVestedToken`, range, state);
-
     const tx = await vestedERC20Factory?.createVestedERC20(
       formatStringToBytes32(state.name),
       formatStringToBytes32(state.symbol),
       18,
       state.tokenAddress,
-      formatStringDateToUnixstamp(range.start),
-      formatStringDateToUnixstamp(range.end)
+      dates?.[0]?.unix() as BigNumberish,
+      dates?.[1]?.unix() as BigNumberish
     );
 
     console.log(tx);
@@ -66,9 +58,13 @@ export const Add = () => {
         message: 'There was an error while creating stream',
       });
     }
-  }, [vestedERC20Factory, state.name, state.symbol, state.tokenAddress, range.start, range.end]);
+  }, [vestedERC20Factory, state.name, state.symbol, state.tokenAddress, dates]);
 
-  return (
+  return isLoading ? (
+    <div className="flex items-center justify-center">
+      <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+    </div>
+  ) : (
     <div style={{ minWidth: '376px' }}>
       <input
         type="text"
@@ -106,12 +102,6 @@ export const Add = () => {
           Create
         </button>
       </div>
-
-      {error !== null ? (
-        <div className="mt-2">
-          <p className="text-sm font-bold text-red-600">There was an error while making the transaction</p>
-        </div>
-      ) : null}
     </div>
   );
 };

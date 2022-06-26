@@ -1,5 +1,5 @@
 import { TokenBadge } from '@1hive/1hive-ui';
-import { Skeleton } from 'antd';
+import { Empty, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { BigNumber, ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
@@ -233,7 +233,7 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
   return (
     <div className="mt-4">
       {isEmpty ? (
-        <p>Is Empty</p>
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
       ) : (
         <>
           {isComplete ? (
@@ -277,13 +277,7 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
                 <div className="mb-4 grid grid-cols-3" key={index}>
                   <p className="mb-0 text-base">{vestToken.name}</p>
                   <p className="mb-0 text-base">
-                    <>
-                      <TokenBadge
-                        address={vestToken.underlying.id}
-                        name={vestToken.underlying.name}
-                        symbol={vestToken.underlying.symbol}
-                      />
-                    </>
+                    {vestToken.underlying.name} - {vestToken.underlying.symbol}
                   </p>
                   <p className="mb-0 text-base">$12.20</p>
                 </div>
