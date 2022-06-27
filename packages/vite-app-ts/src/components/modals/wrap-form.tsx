@@ -48,7 +48,7 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
       <input
         type="text"
         name="address"
-        placeholder="Receipt Address"
+        placeholder="Receipt Address (0x000...)"
         className="block w-full px-2 py-2 mt-4 border border-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         onChange={(e: any) => setState((prev: any) => ({ ...prev, address: e.target.value }))}
       />
