@@ -15,7 +15,7 @@ const History = () => {
 
   return (
     <Wrapper>
-      <PageTitle title="Dashboard" renderFilters={() => <p className="text-xs">Filters</p>} />
+      <PageTitle title="History" renderFilters={() => <p className="text-xs">Filters</p>} />
 
       <div className="mt-6">
         <div className="p-4 bg-white rounded-lg shadow-xl pointer-events-auto text-[0.8125rem] leading-5 shadow-black/5 hover:bg-slate-50 ring-1 ring-slate-700/10">

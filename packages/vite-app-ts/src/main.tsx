@@ -4,14 +4,11 @@ import { Main } from '@1hive/1hive-ui';
 import { useEthersContext } from 'eth-hooks/context';
 import { asEthersAdaptor } from 'eth-hooks/functions';
 
-import { MainPageMenu } from './components/main';
-
 import { useBurnerFallback } from '~~/components/main/hooks/useBurnerFallback';
 import { useScaffoldProviders as useScaffoldAppProviders } from '~~/components/main/hooks/useScaffoldAppProviders';
 import { BURNER_FALLBACK_ENABLED } from '~~/config/appConfig';
 import { useConnectAppContracts, useLoadAppContracts } from '~~/config/contractContext';
 
-import { Header, MainWrapper, Sidebar, Content } from './main.styled';
 import Home from './pages/home';
 import History from './pages/history';
 import FaqView from './pages/faq';
@@ -20,10 +17,11 @@ import { DollarOutlined, HomeOutlined, PlusOutlined, QuestionCircleOutlined, Ret
 import { truncateAddress } from './helpers';
 import { Add } from './components/modals';
 import { useState } from 'react';
-import { ThemeSwitcher } from './components/theme-switcher';
-import { Popover } from './components/popover';
 import { DownArrowIcon, UpArrowIcon } from './components/accordion';
 import { getNetworkNameByChainID } from './models/constants/networks';
+import { Modal, Popover } from 'antd';
+
+import './styles/app.less';
 
 export const MainApp = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -39,8 +37,8 @@ export const MainApp = () => {
 
   return (
     <Main layout={false} scrollView={false}>
-      <MainWrapper>
-        <Header>
+      <main>
+        <header>
           <div className="flex items-center gap-8">
             <a href="/">
               <h1 className="mb-0 text-2xl font-bold">Streaming Bee</h1>
@@ -53,35 +51,42 @@ export const MainApp = () => {
                   <PlusOutlined />
                   Add
                 </button>
-
-                <Popover title="Creating new Vesting" isOpen={isAddModalVisible}>
-                  <Add />
-                </Popover>
               </div>
             </div>
           </div>
 
-          <div className="relative w-60">
+          <Modal visible={isAddModalVisible} footer={null} onCancel={() => setIsAddModalVisible(false)}>
+            <p className="mb-4 text-base font-bold">Creating new Vesting</p>
+            <Add />
+          </Modal>
+
+          <div className="relative">
             {ethersContext.account ? (
               <div className="flex flex-col">
-                <div
-                  onClick={() => setIsWalletModal(!isWalletModal)}
-                  className="flex items-center justify-center text-right cursor-pointer gap-6 hover:text-gray-600">
-                  <div>
-                    <p className="font-bold text-black">
-                      Personal Wallet - chain: {getNetworkNameByChainID(ethersContext.chainId)}
-                    </p>
-                    <p className="text-xs">{truncateAddress(ethersContext.account)}</p>
+                <Popover
+                  content={
+                    <>
+                      <p className="mb-4 text-base font-bold">Disconnect wallet</p>
+                      <button
+                        onClick={() => ethersContext.disconnectModal()}
+                        className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
+                        Disconnect wallet
+                      </button>
+                    </>
+                  }
+                  trigger="click"
+                  visible={isWalletModal}
+                  onVisibleChange={() => setIsWalletModal(!isWalletModal)}>
+                  <div className="flex items-center justify-center text-right cursor-pointer gap-6 hover:text-gray-600">
+                    <div>
+                      <p className="font-bold text-black">
+                        Personal Wallet{' '}
+                        <p className="text-sm font-bold ">{getNetworkNameByChainID(ethersContext.chainId)}</p>
+                      </p>
+                      <p className="text-xs">{truncateAddress(ethersContext.account)}</p>
+                    </div>
+                    {!isWalletModal ? <DownArrowIcon /> : <UpArrowIcon />}
                   </div>
-                  {!isWalletModal ? <DownArrowIcon /> : <UpArrowIcon />}
-                </div>
-
-                <Popover title="Disconnect Wallet" isOpen={isWalletModal}>
-                  <button
-                    onClick={() => ethersContext.disconnectModal()}
-                    className="px-3 py-2 mt-4 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
-                    Disconnect wallet
-                  </button>
                 </Popover>
               </div>
             ) : (
@@ -92,9 +97,9 @@ export const MainApp = () => {
               </button>
             )}
           </div>
-        </Header>
+        </header>
 
-        <Sidebar>
+        <nav>
           <ul>
             <li className="py-6 text-center">
               <a href="/" className="text-xl text-black">
@@ -116,15 +121,11 @@ export const MainApp = () => {
                 <QuestionCircleOutlined />
               </a>
             </li>
-            <li>
-              <ThemeSwitcher />
-            </li>
           </ul>
-        </Sidebar>
+        </nav>
 
-        <Content>
+        <div className="content">
           <BrowserRouter>
-            <MainPageMenu />
             <Switch>
               <Route exact path="/">
                 <Home />
@@ -140,8 +141,8 @@ export const MainApp = () => {
               </Route>
             </Switch>
           </BrowserRouter>
-        </Content>
-      </MainWrapper>
+        </div>
+      </main>
     </Main>
   );
 };

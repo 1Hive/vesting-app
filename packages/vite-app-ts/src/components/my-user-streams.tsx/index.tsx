@@ -1,5 +1,4 @@
-import { TokenBadge } from '@1hive/1hive-ui';
-import { Skeleton } from 'antd';
+import { Empty, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { BigNumber, ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
@@ -199,7 +198,6 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
     const updateBlocktimestamp = async () => {
       const blockTimestamp = await getBlockTimestamp(ethersContext);
       if (blockTimestamp) {
-        console.log('blockTimestamp', blockTimestamp);
         if (isMounted()) {
           setBlockTimestamp(blockTimestamp);
         }
@@ -233,7 +231,7 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
   return (
     <div className="mt-4">
       {isEmpty ? (
-        <p>Is Empty</p>
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No streams… yet. Send your first stream!" />
       ) : (
         <>
           {isComplete ? (
@@ -245,25 +243,20 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
               <p className="uppercase">$</p>
             </div>
           ) : null}
-          <div className="flex flex-col mt-4">
+          <div className="mt-4 grid gap-2">
             {streams?.map((vest, index: number) => {
               const vestToken = vest.token;
               const startDate = dateFormat(vestToken.startTimestamp);
               const endDate = dateFormat(vestToken.endTimestamp);
 
               return isComplete ? (
-                <div className="mb-4 grid grid-cols-5" key={index}>
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={vest.id} name={vestToken.name} symbol={vestToken.symbol} />
-                  </p>
+                <div className="grid grid-cols-5" key={index}>
+                  <p className="mb-0 text-base">{vestToken.name}</p>
                   <p className="mb-0 text-base">
                     {startDate} - {endDate}
                   </p>
                   <p className="mb-0 text-base">{MyStreamingStatus[getStatusStream(vest, blockTimestamp)]}</p>
-                  {/* <p className="mb-0 text-base">{vest.underlying.symbol}</p> */}
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={vestToken.id} name={vestToken.name} symbol={vestToken.symbol} />
-                  </p>
+                  <p className="mb-0 text-base">{vestToken.symbol} </p>
                   <p className="mb-0 text-base">
                     $
                     {ethersContext.account ? (
@@ -274,16 +267,10 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
                   </p>
                 </div>
               ) : (
-                <div className="mb-4 grid grid-cols-3" key={index}>
+                <div className="grid grid-cols-3" key={index}>
                   <p className="mb-0 text-base">{vestToken.name}</p>
                   <p className="mb-0 text-base">
-                    <>
-                      <TokenBadge
-                        address={vestToken.underlying.id}
-                        name={vestToken.underlying.name}
-                        symbol={vestToken.underlying.symbol}
-                      />
-                    </>
+                    {vestToken.underlying.name} - {vestToken.underlying.symbol}
                   </p>
                   <p className="mb-0 text-base">$12.20</p>
                 </div>

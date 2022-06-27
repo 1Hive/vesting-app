@@ -1,4 +1,4 @@
-import { Skeleton } from 'antd';
+import { Empty, Skeleton } from 'antd';
 import { useMemo } from 'react';
 import { truncateAddress } from '~~/helpers';
 import { dateFormat } from '~~/helpers/date-utils';
@@ -28,7 +28,7 @@ const Streams = () => {
   return (
     <div className="mt-4">
       {isEmpty ? (
-        <p>Is Empty</p>
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
       ) : (
         <>
           <div className="mb-4 grid grid-cols-5">
