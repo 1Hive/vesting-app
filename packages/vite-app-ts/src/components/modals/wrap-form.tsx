@@ -52,7 +52,16 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
     } else {
       console.log('Do something if it not exist, or not found if without internet'); // TODO: Replace for propper Logger.
     }
-  }, [isErcExist, queryStatus, state.address, state.underlyingAmount, underlyingTokenERC20, vestedERC20, vestedAdress]);
+  }, [
+    isErcExist,
+    queryStatus,
+    state.underlyingAmount,
+    state.address,
+    underlyingTokenERC20,
+    vestedAdress,
+    vestedERC20,
+    isMounted,
+  ]);
 
   return (
     <div>
