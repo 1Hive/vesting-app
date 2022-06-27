@@ -129,7 +129,8 @@ const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
                   <p className="mb-0 text-base">
                     <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
                   </p>
-                  {WrapButton(vestedERC20.id, token.id)}
+                  {getStatusStreamPack(vestedERC20, blockTimestamp) === StreamPackStatus.OPEN &&
+                    WrapButton(vestedERC20.id, token.id)}
                 </div>
               ) : (
                 <div className="grid grid-cols-4" key={index}>
@@ -140,7 +141,8 @@ const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
                     <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
                   </p>
                   <p className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</p>
-                  {WrapButton(vestedERC20.id, token.id)}
+                  {getStatusStreamPack(vestedERC20, blockTimestamp) === StreamPackStatus.OPEN &&
+                    WrapButton(vestedERC20.id, token.id)}
                 </div>
               );
             })}

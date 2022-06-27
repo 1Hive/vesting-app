@@ -7,6 +7,9 @@ import { toDecimals } from '~~/helpers/math-utils';
 import { WrapType } from '.';
 import { useContractExistsAtAddress } from 'eth-hooks';
 import { getContractERC20 } from '~~/helpers/contract';
+import { TransactionBadge } from '@1hive/1hive-ui';
+import { getNetworkInfo } from '~~/functions';
+import { useIsMounted } from '~~/hooks';
 
 export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
   const [state, setState] = useState({
@@ -14,7 +17,12 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
     address: '',
   });
 
+  const isMounted = useIsMounted();
+
+  const [txHash, setTxHash] = useState<string | undefined>(undefined);
+
   const ethersContext = useEthersContext();
+  const network = getNetworkInfo(ethersContext.chainId);
   const vestedERC20 = useAppContracts('VestedERC20', ethersContext.chainId);
   const underlyingTokenERC20 = getContractERC20({ ethersContext, contractAddress: underlyingTokenAddress });
 
@@ -28,9 +36,19 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
   const handleWrap = useCallback(async () => {
     if (isErcExist && queryStatus === 'success') {
       const amount = BigNumber.from(toDecimals(state.underlyingAmount, 18));
-      const r = await underlyingTokenERC20.approve(vestedAdress, amount);
+      console.log('before approve');
+      const r = await underlyingTokenERC20.approve(vestedAdress, amount); // TODO Check with Gabi if need use approve(0) here first
+      console.log('tx approve', r);
       await r?.wait(); // TODO we should handle errors/cancel before try wrap.
-      await vestedERC20?.attach(vestedAdress).wrap(amount, state.address);
+      console.log('tx success approve');
+      console.log('start wrap');
+      const tx = await vestedERC20?.attach(vestedAdress).wrap(amount, state.address, { gasLimit: 100000 });
+      if (isMounted()) {
+        setTxHash(tx?.hash);
+      }
+      console.log('wait wrap');
+      await tx?.wait();
+      console.log('end wrap');
     } else {
       console.log('Do something if it not exist, or not found if without internet'); // TODO: Replace for propper Logger.
     }
@@ -60,6 +78,15 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
           className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
           Wrap
         </button>
+      </div>
+      <div className="mt-4">
+        {txHash && network && (
+          <TransactionBadge
+            transaction={txHash}
+            networkType={network.chainId}
+            explorerProvider={network.blockExplorer}
+          />
+        )}
       </div>
     </div>
   );
