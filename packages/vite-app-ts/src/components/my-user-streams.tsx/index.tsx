@@ -7,6 +7,7 @@ import { getBlockTimestamp, getContractERC20 } from '~~/helpers/contract';
 import { dateFormat } from '~~/helpers/date-utils';
 import { useUserVestings } from '~~/hooks';
 import { useIsMounted } from '~~/hooks/use-is-mounted';
+import { RoutesPath } from '~~/main';
 import { Vesting } from '~~/types-and-hooks';
 
 const INTERVAL = 1000;
@@ -280,7 +281,7 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
           {!isComplete ? (
             <div className="mt-4">
               <a
-                href="/transactions"
+                href={RoutesPath.MY_STREAMS}
                 className="flex-none px-2 font-medium bg-white pointer-events-auto rounded-md py-[0.3125rem] text-slate-700 shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50">
                 View all streams
               </a>

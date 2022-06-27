@@ -10,9 +10,7 @@ import { BURNER_FALLBACK_ENABLED } from '~~/config/appConfig';
 import { useConnectAppContracts, useLoadAppContracts } from '~~/config/contractContext';
 
 import Home from './pages/home';
-import History from './pages/history';
 import FaqView from './pages/faq';
-import Transactions from './pages/transactions';
 import { DollarOutlined, HomeOutlined, PlusOutlined, QuestionCircleOutlined, RetweetOutlined } from '@ant-design/icons';
 import { truncateAddress } from './helpers';
 import { Add } from './components/modals';
@@ -22,6 +20,15 @@ import { getNetworkNameByChainID } from './models/constants/networks';
 import { Modal, Popover } from 'antd';
 
 import './styles/app.less';
+import StreamsPack from './pages/streamspack';
+import MyStreams from './pages/mystreams';
+
+export enum RoutesPath {
+  HOME = '/',
+  MY_STREAMS = '/mystreams',
+  STREAMS_PACK = '/streamspack',
+  FAQ = '/faq',
+}
 
 export const MainApp = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -102,22 +109,22 @@ export const MainApp = () => {
         <nav>
           <ul>
             <li className="py-6 text-center">
-              <a href="/" className="text-xl text-black">
+              <a href={RoutesPath.HOME} className="text-xl text-black">
                 <HomeOutlined />
               </a>
             </li>
             <li className="py-6 text-center">
-              <a href="/transactions" className="text-xl text-black">
+              <a href={RoutesPath.MY_STREAMS} className="text-xl text-black">
                 <RetweetOutlined />
               </a>
             </li>
             <li className="py-6 text-center">
-              <a href="/history" className="text-xl text-black">
+              <a href={RoutesPath.STREAMS_PACK} className="text-xl text-black">
                 <DollarOutlined />
               </a>
             </li>
             <li className="py-6 text-center">
-              <a href="/faq" className="text-xl text-black">
+              <a href={RoutesPath.FAQ} className="text-xl text-black">
                 <QuestionCircleOutlined />
               </a>
             </li>
@@ -127,16 +134,16 @@ export const MainApp = () => {
         <div className="content">
           <BrowserRouter>
             <Switch>
-              <Route exact path="/">
+              <Route exact path={RoutesPath.HOME}>
                 <Home />
               </Route>
-              <Route exact path="/history">
-                <History />
+              <Route exact path={RoutesPath.MY_STREAMS}>
+                <MyStreams />
               </Route>
-              <Route exact path="/transactions">
-                <Transactions />
+              <Route exact path={RoutesPath.STREAMS_PACK}>
+                <StreamsPack />
               </Route>
-              <Route exact path="/faq">
+              <Route exact path={RoutesPath.FAQ}>
                 <FaqView />
               </Route>
             </Switch>

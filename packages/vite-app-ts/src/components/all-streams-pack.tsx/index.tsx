@@ -1,3 +1,4 @@
+import { TokenBadge } from '@1hive/1hive-ui';
 import { RollbackOutlined } from '@ant-design/icons';
 import { Empty, Modal, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
@@ -5,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { getBlockTimestamp } from '~~/helpers/contract';
 import { dateFormat } from '~~/helpers/date-utils';
 import { useVestedTokens } from '~~/hooks';
+import { RoutesPath } from '~~/main';
 import { VestedErc20 } from '~~/types-and-hooks';
 import { Wrap } from '../modals';
 
@@ -79,6 +81,18 @@ const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
       </div>
     );
 
+  function WrapButton(underlyingTokenAddress: string, vestedAdress: string) {
+    return (
+      <div className="flex justify-center">
+        <button
+          className="flex items-center px-3 py-2 font-semibold text-white bg-blue-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-blue-500 gap-2"
+          onClick={() => handleWrap(underlyingTokenAddress, vestedAdress)}>
+          <RollbackOutlined />
+          Wrap
+        </button>
+      </div>
+    );
+  }
   return (
     <div className="mt-4">
       {isEmpty ? (
@@ -103,36 +117,28 @@ const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
 
               return isComplete ? (
                 <div className="grid grid-cols-5" key={index}>
-                  <p className="mb-0 text-base">{vestedERC20.name}</p>
+                  {/* <p className="mb-0 text-base">{vestedERC20.name}</p> */}
+                  <p className="mb-0 text-base">
+                    <TokenBadge address={vestedERC20.id} name={vestedERC20.name} symbol={vestedERC20.symbol} />
+                  </p>
                   <p className="mb-0 text-base">
                     {startDate} - {endDate}
                   </p>
                   <p className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</p>
                   <p className="mb-0 text-base">{vestedERC20.symbol}</p>
-                  <div className="flex justify-center">
-                    <button
-                      className="flex items-center px-3 py-2 font-semibold text-white bg-blue-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-blue-500 gap-2"
-                      onClick={() => handleWrap(vestedERC20.id, token.id)}>
-                      <RollbackOutlined />
-                      Wrapp
-                    </button>
-                  </div>
+                  {WrapButton(vestedERC20.id, token.id)}
                 </div>
               ) : (
                 <div className="grid grid-cols-4" key={index}>
                   <p className="mb-0 text-base">{vestedERC20.name}</p>
-                  <p className="mb-0 text-base">
+                  {/* <p className="mb-0 text-base">
                     {token.name} - {token.symbol}
+                  </p> */}
+                  <p className="mb-0 text-base">
+                    <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
                   </p>
                   <p className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</p>
-                  <div className="flex justify-center">
-                    <button
-                      className="flex items-center px-3 py-2 font-semibold text-white bg-blue-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-blue-500 gap-2"
-                      onClick={() => handleWrap(vestedERC20.id, token.id)}>
-                      <RollbackOutlined />
-                      Wrapp
-                    </button>
-                  </div>
+                  {WrapButton(vestedERC20.id, token.id)}
                 </div>
               );
             })}
@@ -141,7 +147,7 @@ const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
           {!isComplete ? (
             <div className="mt-4">
               <a
-                href="/transactions"
+                href={RoutesPath.STREAMS_PACK}
                 className="flex-none px-2 font-medium bg-white pointer-events-auto rounded-md py-[0.3125rem] text-slate-700 shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50">
                 View all packs
               </a>
