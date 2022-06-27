@@ -125,15 +125,17 @@ const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
                     {startDate} - {endDate}
                   </p>
                   <p className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</p>
-                  <p className="mb-0 text-base">{vestedERC20.symbol}</p>
+                  {/* <p className="mb-0 text-base">{vestedERC20.symbol}</p> */}
+                  <p className="mb-0 text-base">
+                    <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
+                  </p>
                   {WrapButton(vestedERC20.id, token.id)}
                 </div>
               ) : (
                 <div className="grid grid-cols-4" key={index}>
-                  <p className="mb-0 text-base">{vestedERC20.name}</p>
-                  {/* <p className="mb-0 text-base">
-                    {token.name} - {token.symbol}
-                  </p> */}
+                  <p className="mb-0 text-base">
+                    <TokenBadge address={vestedERC20.id} name={vestedERC20.name} symbol={vestedERC20.symbol} />
+                  </p>
                   <p className="mb-0 text-base">
                     <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
                   </p>
@@ -155,7 +157,7 @@ const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
           ) : null}
 
           <Modal visible={isModalVisible} footer={null} onCancel={() => setIsModalVisible(false)}>
-            <p className="mb-4 text-base font-bold">Creating new Vesting</p>
+            <p className="mb-4 text-base font-bold">Wrapping Token</p>
             <Wrap
               underlyingTokenAddress={activeElement.underlyingTokenAddress}
               vestedAdress={activeElement.vestedAdress}

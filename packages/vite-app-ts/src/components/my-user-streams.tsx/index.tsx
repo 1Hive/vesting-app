@@ -1,3 +1,4 @@
+import { TokenBadge } from '@1hive/1hive-ui';
 import { Empty, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { BigNumber, ethers } from 'ethers';
@@ -240,24 +241,29 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
               <p className="uppercase">Vesting Token</p>
               <p className="uppercase">Start/End</p>
               <p className="uppercase">Streaming</p>
-              <p className="uppercase">Token</p>
+              <p className="uppercase">Wrapped Token</p>
               <p className="uppercase">$</p>
             </div>
           ) : null}
           <div className="mt-4 grid gap-2">
             {streams?.map((vest, index: number) => {
               const vestToken = vest.token;
+              const wrappedToken = vest.token.underlying;
               const startDate = dateFormat(vestToken.startTimestamp);
               const endDate = dateFormat(vestToken.endTimestamp);
 
               return isComplete ? (
                 <div className="grid grid-cols-5" key={index}>
-                  <p className="mb-0 text-base">{vestToken.name}</p>
+                  <p className="mb-0 text-base">
+                    <TokenBadge address={vestToken.id} name={vestToken.name} symbol={vestToken.symbol} />
+                  </p>
                   <p className="mb-0 text-base">
                     {startDate} - {endDate}
                   </p>
                   <p className="mb-0 text-base">{MyStreamingStatus[getStatusStream(vest, blockTimestamp)]}</p>
-                  <p className="mb-0 text-base">{vestToken.symbol} </p>
+                  <p className="mb-0 text-base">
+                    <TokenBadge address={wrappedToken.id} name={wrappedToken.name} symbol={wrappedToken.symbol} />
+                  </p>
                   <p className="mb-0 text-base">
                     $
                     {ethersContext.account ? (
@@ -269,9 +275,11 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
                 </div>
               ) : (
                 <div className="grid grid-cols-3" key={index}>
-                  <p className="mb-0 text-base">{vestToken.name}</p>
                   <p className="mb-0 text-base">
-                    {vestToken.underlying.name} - {vestToken.underlying.symbol}
+                    <TokenBadge address={vestToken.id} name={vestToken.name} symbol={vestToken.symbol} />
+                  </p>
+                  <p className="mb-0 text-base">
+                    <TokenBadge address={wrappedToken.id} name={wrappedToken.name} symbol={wrappedToken.symbol} />
                   </p>
                   <p className="mb-0 text-base">$12.20</p>
                 </div>
