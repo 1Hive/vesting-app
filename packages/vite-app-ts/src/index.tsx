@@ -1,22 +1,6 @@
-/* eslint-disable */
-//import './helpers/__global';
-
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { SUBGRAPH_URI } from './config/appConfig';
 
-/**
- * ⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️
- * 🏹 See MainPage.tsx for main app component!
- * ⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️⛳️
- *
- * This file loads react.
- * You don't need to change this file!!
- */
-
-/**
- * Loads {@see App} which sets up the application async.
- * The main page is in the component {@see MainPage}
- */
 const run = async (): Promise<void> => {
   await import('./helpers/__global');
   // dynamic imports for code splitting

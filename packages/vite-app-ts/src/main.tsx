@@ -30,7 +30,7 @@ export enum RoutesPath {
   FAQ = '/faq',
 }
 
-export const MainApp = () => {
+const MainApp = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isWalletModal, setIsWalletModal] = useState(false);
   const scaffoldAppProviders = useScaffoldAppProviders();
@@ -153,3 +153,5 @@ export const MainApp = () => {
     </Main>
   );
 };
+
+export default MainApp;
