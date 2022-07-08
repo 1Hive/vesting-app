@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Main } from '@1hive/1hive-ui';
 
-import { useEthersContext } from 'eth-hooks/context';
+import { EthersModalConnector, useEthersContext } from 'eth-hooks/context';
 import { asEthersAdaptor } from 'eth-hooks/functions';
 
 import { useBurnerFallback } from '~~/components/main/hooks/useBurnerFallback';
@@ -14,7 +14,7 @@ import FaqView from './pages/faq';
 import { DollarOutlined, HomeOutlined, PlusOutlined, QuestionCircleOutlined, RetweetOutlined } from '@ant-design/icons';
 import { truncateAddress } from './helpers';
 import { Add } from './components/modals';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { DownArrowIcon, UpArrowIcon } from './components/accordion';
 import { getNetworkNameByChainID } from './models/constants/networks';
 import { Modal, Popover } from 'antd';
@@ -41,6 +41,19 @@ const MainApp = () => {
   useLoadAppContracts();
 
   useConnectAppContracts(asEthersAdaptor(ethersContext));
+
+  const connect = React.useCallback(() => {
+    if (scaffoldAppProviders.createLoginConnector != null && ethersContext?.openModal != null) {
+      const connector = scaffoldAppProviders.createLoginConnector() as EthersModalConnector;
+      ethersContext.openModal(connector);
+    }
+  }, [ethersContext, scaffoldAppProviders]);
+
+  const disconnect = React.useCallback(() => {
+    if (ethersContext?.disconnectModal != null) {
+      ethersContext.disconnectModal();
+    }
+  }, [ethersContext]);
 
   return (
     <Main layout={false} scrollView={false}>
@@ -75,7 +88,7 @@ const MainApp = () => {
                     <>
                       <p className="mb-4 text-base font-bold">Disconnect wallet</p>
                       <button
-                        onClick={() => ethersContext.disconnectModal()}
+                        onClick={disconnect}
                         className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
                         Disconnect wallet
                       </button>
@@ -99,7 +112,7 @@ const MainApp = () => {
             ) : (
               <button
                 className="px-3 py-2 ml-8 font-semibold text-white bg-indigo-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-indigo-500"
-                onClick={() => scaffoldAppProviders.createLoginConnector()}>
+                onClick={connect}>
                 Connect Wallet
               </button>
             )}
