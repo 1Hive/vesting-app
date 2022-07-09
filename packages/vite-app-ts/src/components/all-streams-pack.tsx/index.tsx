@@ -4,7 +4,7 @@ import { useEthersContext } from 'eth-hooks/context';
 import { useEffect, useMemo, useState } from 'react';
 import { getBlockTimestamp } from '~~/helpers/contract';
 import { useVestedTokens } from '~~/hooks';
-import useResponsive, { DisplaySize } from '~~/hooks/use-responsive';
+import useResponsive from '~~/hooks/use-responsive';
 import { VestedErc20 } from '~~/types-and-hooks';
 import { Wrap } from '../modals';
 import StreamPackListDesktop from './desktop-list';
@@ -58,8 +58,7 @@ const AllStreamsPack = ({ isComplete }: AllStreamPackProps) => {
     underlyingTokenAddress: '',
     vestedAdress: '',
   });
-  const size = useResponsive();
-  const isMobile = size < DisplaySize.MobileL;
+  const { isMobile } = useResponsive();
 
   const [blockTimestamp, setBlockTimestamp] = useState<number | undefined>();
 
@@ -105,11 +104,11 @@ const AllStreamsPack = ({ isComplete }: AllStreamPackProps) => {
       ) : (
         <>
           {isMobile ? (
-            <StreamPackListMobile />
+            <StreamPackListMobile list={streams} handleWrap={handleWrap} blockTimestamp={blockTimestamp} />
           ) : (
             <StreamPackListDesktop
               isComplete={isComplete}
-              streams={streams}
+              list={streams}
               handleWrap={handleWrap}
               blockTimestamp={blockTimestamp}
             />

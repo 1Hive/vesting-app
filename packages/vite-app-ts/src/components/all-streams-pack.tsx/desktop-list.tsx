@@ -6,12 +6,12 @@ import { getStatusStreamPack, StreamPackStatus, WrapButton } from '.';
 
 type StreamPackListDesktopProps = {
   isComplete?: boolean;
-  streams: VestedErc20[] | undefined;
+  list: VestedErc20[] | undefined;
   handleWrap: (underlyingTokenAddress: string, vestedAdress: string) => void;
   blockTimestamp: number | undefined;
 };
 
-const StreamPackListDesktop = ({ isComplete, streams, handleWrap, blockTimestamp }: StreamPackListDesktopProps) => {
+const StreamPackListDesktop = ({ isComplete, list, handleWrap, blockTimestamp }: StreamPackListDesktopProps) => {
   return (
     <>
       {isComplete ? (
@@ -25,7 +25,7 @@ const StreamPackListDesktop = ({ isComplete, streams, handleWrap, blockTimestamp
       ) : null}
 
       <div className="mt-4 grid gap-2">
-        {streams?.map((vestedERC20, index: number) => {
+        {list?.map((vestedERC20, index: number) => {
           const token = vestedERC20.underlying;
           const startDate = dateFormat(vestedERC20.startTimestamp);
           const endDate = dateFormat(vestedERC20.endTimestamp);

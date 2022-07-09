@@ -1,14 +1,13 @@
 import { Empty, Skeleton } from 'antd';
 import { useMemo } from 'react';
 import { useVestedTokens } from '~~/hooks';
-import useResponsive, { DisplaySize } from '~~/hooks/use-responsive';
+import useResponsive from '~~/hooks/use-responsive';
 import StreamListDesktop from './desktop-list';
 import StreamListMobile from './mobile-list';
 
 const Streams = () => {
   const { loading, error, data } = useVestedTokens();
-  const size = useResponsive();
-  const isMobile = size < DisplaySize.MobileL;
+  const { isMobile } = useResponsive();
 
   const isEmpty = useMemo(() => {
     return data?.vestedERC20S === undefined || data?.vestedERC20S?.length === 0;

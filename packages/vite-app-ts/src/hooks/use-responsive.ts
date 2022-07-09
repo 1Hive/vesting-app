@@ -46,7 +46,11 @@ const useResponsive = () => {
     return () => window.removeEventListener('resize', handler);
   }, []);
 
-  return useMemo(() => currentDisplaySize, [currentDisplaySize]);
+  const size = useMemo(() => currentDisplaySize, [currentDisplaySize]);
+
+  return {
+    isMobile: size < DisplaySize.MobileL,
+  };
 };
 
 export default useResponsive;

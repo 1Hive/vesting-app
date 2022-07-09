@@ -6,7 +6,7 @@ import { useAppContracts } from '~~/config/contractContext';
 import { getBlockTimestamp, getContractERC20 } from '~~/helpers/contract';
 import { useUserVestings } from '~~/hooks';
 import { useIsMounted } from '~~/hooks/use-is-mounted';
-import useResponsive, { DisplaySize } from '~~/hooks/use-responsive';
+import useResponsive from '~~/hooks/use-responsive';
 import { Vesting } from '~~/types-and-hooks';
 import UserStreamListDesktop from './desktop-list';
 import UserStreamListMobile from './mobile-list';
@@ -193,8 +193,7 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
   const [blockTimestamp, setBlockTimestamp] = useState<number | undefined>();
   const ethersContext = useEthersContext();
   const isMounted = useIsMounted();
-  const size = useResponsive();
-  const isMobile = size < DisplaySize.MobileL;
+  const { isMobile } = useResponsive();
 
   useEffect(() => {
     const updateBlocktimestamp = async () => {

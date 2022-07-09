@@ -19,7 +19,6 @@ import {
   RetweetOutlined,
 } from '@ant-design/icons';
 import { truncateAddress } from './helpers';
-import { Add } from './components/modals';
 import React, { useState } from 'react';
 import { DownArrowIcon, UpArrowIcon } from './components/accordion';
 import { Modal, Popover } from 'antd';
@@ -29,6 +28,8 @@ import StreamsPack from './pages/streamspack';
 import MyStreams from './pages/mystreams';
 import { getNetworkNameByChainID } from './models/constants/networks';
 import Dashboard from './pages/dashboard';
+import useResponsive from './hooks/use-responsive';
+import { Add } from './components/modals';
 
 export enum RoutesPath {
   DASHBOARD = '/',
@@ -42,6 +43,7 @@ const MainApp = () => {
   const [isWalletModal, setIsWalletModal] = useState(false);
   const scaffoldAppProviders = useScaffoldAppProviders();
   const ethersContext = useEthersContext();
+  const { isMobile } = useResponsive();
 
   useBurnerFallback(scaffoldAppProviders, BURNER_FALLBACK_ENABLED);
 
@@ -67,66 +69,72 @@ const MainApp = () => {
       <BrowserRouter>
         <main>
           <header>
-            <div className="flex items-center gap-8">
-              <a href="/">
-                <h1 className="mb-0 text-2xl font-bold">Streaming Bee</h1>
-              </a>
-              <div className="relative flex items-center gap-6">
-                <div>
-                  <button
-                    className="flex items-center px-3 py-2  font-semibold text-white bg-green-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-green-500 gap-2"
-                    onClick={() => setIsAddModalVisible(!isAddModalVisible)}>
-                    <PlusOutlined />
-                    <span>Add Vesting</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <Modal visible={isAddModalVisible} footer={null} onCancel={() => setIsAddModalVisible(false)}>
-              <p className="mb-4 text-base font-bold">Creating new Vesting</p>
-              <Add />
-            </Modal>
-
-            <div className="relative">
+            <a href="/">
+              <h1 className="mb-0 text-2xl font-bold">Streaming Bee</h1>
+            </a>
+            <div className="flex gap-4">
               {ethersContext.account ? (
-                <div className="flex flex-wrap gap-4">
-                  <div className="flex items-center justify-center">
-                    <p className="px-2 py-1 text-xs font-bold text-white uppercase bg-amber-600 rounded-md">
-                      {getNetworkNameByChainID(ethersContext.chainId)}
-                    </p>
-                  </div>
-                  <div className="flex flex-col">
-                    <Popover
-                      content={
-                        <>
-                          <p className="mb-4 text-base font-bold">Disconnect wallet</p>
-                          <button
-                            onClick={disconnect}
-                            className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
-                            Disconnect wallet
-                          </button>
-                        </>
-                      }
-                      trigger="click"
-                      visible={isWalletModal}
-                      onVisibleChange={() => setIsWalletModal(!isWalletModal)}>
-                      <div className="flex items-center justify-center text-right cursor-pointer gap-6 hover:text-gray-600">
+                <>
+                  {!isMobile ? (
+                    <>
+                      <div className="relative flex items-center gap-6">
                         <div>
-                          <p className="font-bold text-black">Personal Wallet </p>
-                          <p className="text-sm">{truncateAddress(ethersContext.account)}</p>
+                          <button
+                            className="flex items-center px-3 py-2  font-semibold text-white bg-green-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-green-500 gap-2"
+                            onClick={() => setIsAddModalVisible(!isAddModalVisible)}>
+                            <PlusOutlined />
+                            Add Vesting
+                          </button>
                         </div>
-                        {!isWalletModal ? <DownArrowIcon /> : <UpArrowIcon />}
                       </div>
-                    </Popover>
+                      <Modal visible={isAddModalVisible} footer={null} onCancel={() => setIsAddModalVisible(false)}>
+                        <p className="mb-4 text-base font-bold">Creating new Vesting</p>
+                        <Add />
+                      </Modal>
+                    </>
+                  ) : null}
+
+                  <div className="flex flex-wrap gap-4">
+                    {!isMobile ? (
+                      <div className="flex items-center justify-center">
+                        <p className="px-2 py-1 text-xs font-bold text-white uppercase bg-amber-600 rounded-md">
+                          {getNetworkNameByChainID(ethersContext.chainId)}
+                        </p>
+                      </div>
+                    ) : null}
+
+                    <div className="flex flex-col">
+                      <Popover
+                        content={
+                          <>
+                            <p className="mb-4 text-base font-bold">Disconnect wallet</p>
+                            <button
+                              onClick={disconnect}
+                              className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
+                              Disconnect wallet
+                            </button>
+                          </>
+                        }
+                        trigger="click"
+                        visible={isWalletModal}
+                        onVisibleChange={() => setIsWalletModal(!isWalletModal)}>
+                        <div className="flex items-center justify-center text-right cursor-pointer gap-6 hover:text-gray-600">
+                          <div>
+                            <p className="font-bold text-black">Personal Wallet </p>
+                            <p className="text-sm">{truncateAddress(ethersContext.account)}</p>
+                          </div>
+                          {!isWalletModal ? <DownArrowIcon /> : <UpArrowIcon />}
+                        </div>
+                      </Popover>
+                    </div>
                   </div>
-                </div>
+                </>
               ) : (
                 <button
-                  className="flex items-center justify-center px-3 py-2 ml-8 font-semibold text-white bg-indigo-600 pointer-events-auto gap-2 rounded-md text-[0.8125rem] leading-5 hover:bg-indigo-500"
+                  className="flex items-center justify-center px-3 py-2 font-semibold text-white bg-indigo-600 pointer-events-auto gap-2 rounded-md text-[0.8125rem] leading-5 hover:bg-indigo-500"
                   onClick={connect}>
                   <ApiOutlined />
-                  <span>Connect Wallet</span>
+                  Connect Wallet
                 </button>
               )}
             </div>
