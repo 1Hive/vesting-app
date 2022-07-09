@@ -1,15 +1,12 @@
-import { TokenBadge } from '@1hive/1hive-ui';
 import { Empty, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { BigNumber, ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import { useAppContracts } from '~~/config/contractContext';
 import { getBlockTimestamp, getContractERC20 } from '~~/helpers/contract';
-import { dateFormat } from '~~/helpers/date-utils';
 import { useUserVestings } from '~~/hooks';
 import { useIsMounted } from '~~/hooks/use-is-mounted';
 import useResponsive, { DisplaySize } from '~~/hooks/use-responsive';
-import { RoutesPath } from '~~/main';
 import { Vesting } from '~~/types-and-hooks';
 import UserStreamListDesktop from './desktop-list';
 import UserStreamListMobile from './mobile-list';
@@ -31,7 +28,7 @@ enum StreamingStatus {
   UNKNOWN,
 }
 
-enum MyStreamingStatus {
+export enum MyStreamingStatus {
   NOT_ACTIVE, // same as StreamPackStatus.NOT_INITIALIAZED AND not have any destination address (receipt)
   OPEN, // Current block timestamp BETWEEN start-end timestamp
   CLOSED, // Current block timestamp GREATER than start-end timestamp
@@ -43,7 +40,7 @@ enum MyStreamingStatus {
   UNKNOWN,
 }
 
-function getStatusStream(vest: Vesting, blockTimestamp: number | undefined) {
+export const getStatusStream = (vest: Vesting, blockTimestamp: number | undefined) => {
   if (!blockTimestamp) {
     return MyStreamingStatus.UNKNOWN;
   }
@@ -54,9 +51,9 @@ function getStatusStream(vest: Vesting, blockTimestamp: number | undefined) {
   } else {
     return MyStreamingStatus.OPEN;
   }
-}
+};
 
-const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; accountHolder: string }) => {
+export const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; accountHolder: string }) => {
   const [redeemableAmountBN, setRedeemableAmountBN] = useState<BigNumber | undefined>();
   const [claimedUnderlyingAmount, setClaimedUnderlyingAmount] = useState<BigNumber | undefined>();
   const [startTimestamp] = useState<BigNumber | undefined>(BigNumber.from(vesting.token.startTimestamp));
@@ -64,8 +61,6 @@ const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; accountHold
   const [blockTimestamp, setBlockTimestamp] = useState<BigNumber | undefined>();
   const [balanceClaimable, setBalanceClaimable] = useState<BigNumber | undefined>();
   const ethersContext = useEthersContext();
-  const size = useResponsive();
-  const isMobile = size < DisplaySize.MobileL;
 
   const vestedERCAddress = vesting.id;
 
@@ -239,70 +234,10 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
     <div className="mt-4">
       {isEmpty ? (
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No streams… yet. Send your first stream!" />
+      ) : isMobile ? (
+        <UserStreamListMobile />
       ) : (
-        <>
-          {isMobile ? <UserStreamListMobile /> : <UserStreamListDesktop />}
-
-          {isComplete ? (
-            <div className="mb-4 grid grid-cols-5">
-              <p className="uppercase">Vesting Token</p>
-              <p className="uppercase">Start/End</p>
-              <p className="uppercase">Streaming</p>
-              <p className="uppercase">Wrapped Token</p>
-              <p className="uppercase">$</p>
-            </div>
-          ) : null}
-          <div className="mt-4 grid gap-2">
-            {streams?.map((vest, index: number) => {
-              const vestToken = vest.token;
-              const wrappedToken = vest.token.underlying;
-              const startDate = dateFormat(vestToken.startTimestamp);
-              const endDate = dateFormat(vestToken.endTimestamp);
-
-              return isComplete ? (
-                <div className="grid grid-cols-5" key={index}>
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={vestToken.id} name={vestToken.name} symbol={vestToken.symbol} />
-                  </p>
-                  <p className="mb-0 text-base">
-                    {startDate} - {endDate}
-                  </p>
-                  <p className="mb-0 text-base">{MyStreamingStatus[getStatusStream(vest, blockTimestamp)]}</p>
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={wrappedToken.id} name={wrappedToken.name} symbol={wrappedToken.symbol} />
-                  </p>
-                  <p className="mb-0 text-base">
-                    $
-                    {ethersContext.account ? (
-                      <RedeemValue vesting={vest} accountHolder={ethersContext.account} />
-                    ) : (
-                      'Loading...'
-                    )}
-                  </p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-3" key={index}>
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={vestToken.id} name={vestToken.name} symbol={vestToken.symbol} />
-                  </p>
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={wrappedToken.id} name={wrappedToken.name} symbol={wrappedToken.symbol} />
-                  </p>
-                  <p className="mb-0 text-base">$12.20</p>
-                </div>
-              );
-            })}
-          </div>
-          {!isComplete ? (
-            <div className="mt-4">
-              <a
-                href={RoutesPath.MY_STREAMS}
-                className="flex-none px-2 font-medium bg-white pointer-events-auto rounded-md py-[0.3125rem] text-slate-700 shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50">
-                View all streams
-              </a>
-            </div>
-          ) : null}
-        </>
+        <UserStreamListDesktop list={streams} isComplete={isComplete} blockTimestamp={blockTimestamp} />
       )}
     </div>
   );
