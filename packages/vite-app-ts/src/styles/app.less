@@ -49,14 +49,17 @@ nav {
   padding-top: 80px;
   background-color: #fff;
 
+  a.selected {
+    color: #000;
+  }
+
   @media only screen and (max-width: 640px) {
     display: flex;
     align-items: center;
     padding: 0;
 
     ul {
-      display: flex;
-      gap: 32px;
+      display: flex !important;
       justify-content: space-evenly;
       width: 100%;
 

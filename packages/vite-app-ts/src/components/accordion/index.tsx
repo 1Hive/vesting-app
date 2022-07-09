@@ -30,8 +30,10 @@ export const UpArrowIcon = () => {
 const Accordion = ({ title, children }: IAccordion) => {
   return (
     <StyledAccordion>
-      <p className="text-xl font-bold">{title}</p>
-      <p className="text-base">{children}</p>
+      <div className="p-4 bg-white rounded-lg shadow-xl pointer-events-auto text-[0.8125rem] leading-5 shadow-black/5 hover:bg-slate-50 ring-1 ring-slate-700/10">
+        <p className="text-xl font-bold">{title}</p>
+        <p className="text-base">{children}</p>
+      </div>
     </StyledAccordion>
   );
 };

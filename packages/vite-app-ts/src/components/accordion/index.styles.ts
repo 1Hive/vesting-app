@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const StyledAccordion = styled.div`
-  margin-bottom: 16px;
-
   h2 {
     button {
       display: flex;

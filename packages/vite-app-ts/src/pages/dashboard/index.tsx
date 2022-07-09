@@ -16,7 +16,7 @@ function Dashboard() {
         <div className="p-4 bg-white rounded-lg shadow-xl pointer-events-auto text-[0.8125rem] leading-5 shadow-black/5 hover:bg-slate-50 ring-1 ring-slate-700/10">
           <label className="text-base font-bold text-black">Balance</label>
           <div className="mt-4">
-            <p className="text-4xl">$25,999</p>
+            <p className="text-4xl">$0</p>
           </div>
           <div className="mt-4">Show all balances</div>
         </div>

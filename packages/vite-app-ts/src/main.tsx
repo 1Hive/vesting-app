@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom';
 import { Main } from '@1hive/1hive-ui';
 
 import { EthersModalConnector, useEthersContext } from 'eth-hooks/context';
@@ -106,14 +106,11 @@ const MainApp = () => {
                     <div className="flex flex-col">
                       <Popover
                         content={
-                          <>
-                            <p className="mb-4 text-base font-bold">Disconnect wallet</p>
-                            <button
-                              onClick={disconnect}
-                              className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
-                              Disconnect wallet
-                            </button>
-                          </>
+                          <button
+                            onClick={disconnect}
+                            className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
+                            Disconnect wallet
+                          </button>
                         }
                         trigger="click"
                         visible={isWalletModal}
@@ -140,27 +137,37 @@ const MainApp = () => {
             </div>
           </header>
 
-          <nav>
-            <ul>
-              <li className="py-6 text-center">
-                <Link to={RoutesPath.DASHBOARD} className="text-xl text-black">
+          <nav className="bg-teal-500">
+            <ul className="grid gap-10">
+              <li className="text-center">
+                <NavLink
+                  to={RoutesPath.DASHBOARD}
+                  className="text-xl text-white hover:text-black"
+                  exact
+                  activeClassName="selected">
                   <HomeOutlined />
-                </Link>
+                </NavLink>
               </li>
-              <li className="py-6 text-center">
-                <Link to={RoutesPath.MY_STREAMS} className="text-xl text-black">
+              <li className="text-center">
+                <NavLink
+                  to={RoutesPath.MY_STREAMS}
+                  className="text-xl text-white hover:text-black"
+                  activeClassName="selected">
                   <RetweetOutlined />
-                </Link>
+                </NavLink>
               </li>
-              <li className="py-6 text-center">
-                <Link to={RoutesPath.STREAMS_PACK} className="text-xl text-black">
+              <li className="text-center">
+                <NavLink
+                  to={RoutesPath.STREAMS_PACK}
+                  className="text-xl text-white hover:text-black"
+                  activeClassName="selected">
                   <DollarOutlined />
-                </Link>
+                </NavLink>
               </li>
-              <li className="py-6 text-center">
-                <Link to={RoutesPath.FAQ} className="text-xl text-black">
+              <li className="text-center">
+                <NavLink to={RoutesPath.FAQ} className="text-xl text-white hover:text-black" activeClassName="selected">
                   <QuestionCircleOutlined />
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </nav>
