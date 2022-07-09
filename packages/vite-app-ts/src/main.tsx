@@ -24,8 +24,8 @@ import { DownArrowIcon, UpArrowIcon } from './components/accordion';
 import { Modal, Popover } from 'antd';
 
 import './styles/app.less';
-import StreamsPack from './pages/streamspack';
-import MyStreams from './pages/mystreams';
+import StreamsPack from './pages/streams-pack';
+import MyStreams from './pages/my-streams';
 import { getNetworkNameByChainID } from './models/constants/networks';
 import Dashboard from './pages/dashboard';
 import useResponsive from './hooks/use-responsive';
@@ -33,8 +33,8 @@ import { Add } from './components/modals';
 
 export enum RoutesPath {
   DASHBOARD = '/',
-  MY_STREAMS = '/mystreams',
-  STREAMS_PACK = '/streamspack',
+  MY_STREAMS = '/my-streams',
+  STREAMS_PACK = '/streams-pack',
   FAQ = '/faq',
 }
 
@@ -118,7 +118,7 @@ const MainApp = () => {
                         trigger="click"
                         visible={isWalletModal}
                         onVisibleChange={() => setIsWalletModal(!isWalletModal)}>
-                        <div className="flex items-center justify-center text-right cursor-pointer gap-6 hover:text-gray-600">
+                        <div className="flex items-center justify-center text-right cursor-pointer gap-4 hover:text-gray-600">
                           <div>
                             <p className="font-bold text-black">Personal Wallet </p>
                             <p className="text-sm">{truncateAddress(ethersContext.account)}</p>

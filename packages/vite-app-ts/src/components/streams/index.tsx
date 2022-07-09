@@ -8,6 +8,7 @@ import StreamListMobile from './mobile-list';
 const Streams = () => {
   const { loading, error, data } = useVestedTokens();
   const { isMobile } = useResponsive();
+  const List = isMobile ? StreamListMobile : StreamListDesktop;
 
   const isEmpty = useMemo(() => {
     return data?.vestedERC20S === undefined || data?.vestedERC20S?.length === 0;
@@ -29,13 +30,7 @@ const Streams = () => {
 
   return (
     <div className="mt-4">
-      {isEmpty ? (
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-      ) : isMobile ? (
-        <StreamListMobile />
-      ) : (
-        <StreamListDesktop list={data?.vestedERC20S} />
-      )}
+      {isEmpty ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> : <List list={data?.vestedERC20S} />}
     </div>
   );
 };

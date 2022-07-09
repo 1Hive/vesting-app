@@ -234,7 +234,7 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
       {isEmpty ? (
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No streams… yet. Send your first stream!" />
       ) : isMobile ? (
-        <UserStreamListMobile />
+        <UserStreamListMobile list={streams} />
       ) : (
         <UserStreamListDesktop list={streams} isComplete={isComplete} blockTimestamp={blockTimestamp} />
       )}

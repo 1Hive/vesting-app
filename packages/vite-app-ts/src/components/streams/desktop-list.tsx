@@ -2,7 +2,7 @@ import { truncateAddress } from '~~/helpers';
 import { dateFormat } from '~~/helpers/date-utils';
 import { VestedErc20 } from '~~/types-and-hooks';
 
-type StreamListDesktopProps = {
+export type StreamListDesktopProps = {
   list: Array<VestedErc20> | undefined;
 };
 

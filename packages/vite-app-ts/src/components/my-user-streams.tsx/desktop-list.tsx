@@ -5,7 +5,7 @@ import { RoutesPath } from '~~/main';
 import { VestedErc20 } from '~~/types-and-hooks';
 import { MyStreamingStatus, RedeemValue, getStatusStream } from '.';
 
-type UserStreamListDesktopProps = {
+export type UserStreamListDesktopProps = {
   isComplete?: boolean;
   list:
     | {
@@ -19,7 +19,7 @@ type UserStreamListDesktopProps = {
         token: VestedErc20;
       }[]
     | undefined;
-  blockTimestamp: number | undefined;
+  blockTimestamp?: number | undefined;
 };
 
 const UserStreamListDesktop = ({ isComplete, list, blockTimestamp }: UserStreamListDesktopProps) => {
