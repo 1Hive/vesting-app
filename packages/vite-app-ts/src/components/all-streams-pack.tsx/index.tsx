@@ -1,23 +1,23 @@
-import { TokenBadge } from '@1hive/1hive-ui';
 import { RollbackOutlined } from '@ant-design/icons';
 import { Empty, Modal, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { useEffect, useMemo, useState } from 'react';
 import { getBlockTimestamp } from '~~/helpers/contract';
-import { dateFormat } from '~~/helpers/date-utils';
 import { useVestedTokens } from '~~/hooks';
-import { RoutesPath } from '~~/main';
+import useResponsive, { DisplaySize } from '~~/hooks/use-responsive';
 import { VestedErc20 } from '~~/types-and-hooks';
 import { Wrap } from '../modals';
+import StreamPackListDesktop from './desktop-list';
+import StreamPackListMobile from './mobile-list';
 
-enum StreamPackStatus {
+export enum StreamPackStatus {
   NOT_INITIALIAZED,
   OPEN,
   CLOSED,
   UNKNOWN,
 }
 
-function getStatusStreamPack(vest: VestedErc20, blockTimestamp: number | undefined) {
+export const getStatusStreamPack = (vest: VestedErc20, blockTimestamp: number | undefined) => {
   if (!blockTimestamp) {
     return StreamPackStatus.UNKNOWN;
   }
@@ -28,9 +28,27 @@ function getStatusStreamPack(vest: VestedErc20, blockTimestamp: number | undefin
   } else {
     return StreamPackStatus.OPEN;
   }
-}
+};
 
-const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
+export const WrapButton = (handleWrap: () => void) => {
+  return (
+    <div className="flex justify-center">
+      <button
+        className="flex items-center px-3 py-2 font-semibold text-white bg-blue-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-blue-500 gap-2"
+        onClick={handleWrap}>
+        <RollbackOutlined />
+        Wrap
+      </button>
+    </div>
+  );
+};
+
+type AllStreamPackProps = {
+  isComplete?: boolean;
+};
+
+const AllStreamsPack = ({ isComplete }: AllStreamPackProps) => {
+  const ethersContext = useEthersContext();
   const { loading, error, data } = useVestedTokens();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [activeElement, setActiveElement] = useState<{
@@ -40,8 +58,8 @@ const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
     underlyingTokenAddress: '',
     vestedAdress: '',
   });
-
-  const ethersContext = useEthersContext();
+  const size = useResponsive();
+  const isMobile = size < DisplaySize.MobileL;
 
   const [blockTimestamp, setBlockTimestamp] = useState<number | undefined>();
 
@@ -52,7 +70,7 @@ const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
     };
 
     void getBlock();
-  }, []);
+  }, [ethersContext]);
 
   const isEmpty = useMemo(() => {
     return data?.vestedERC20S === undefined || data?.vestedERC20S?.length === 0;
@@ -80,87 +98,22 @@ const AllStreamsPack = ({ isComplete }: { isComplete?: boolean }) => {
         <p>Error...</p>
       </div>
     );
-
-  function WrapButton(underlyingTokenAddress: string, vestedAdress: string) {
-    return (
-      <div className="flex justify-center">
-        <button
-          className="flex items-center px-3 py-2 font-semibold text-white bg-blue-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-blue-500 gap-2"
-          onClick={() => handleWrap(underlyingTokenAddress, vestedAdress)}>
-          <RollbackOutlined />
-          Wrap
-        </button>
-      </div>
-    );
-  }
   return (
     <div className="mt-4">
       {isEmpty ? (
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
       ) : (
         <>
-          {isComplete ? (
-            <div className="mb-4 grid grid-cols-5">
-              <p className="uppercase">Vesting Token</p>
-              <p className="uppercase">Start/End</p>
-              <p className="uppercase">Status</p>
-              <p className="uppercase">Wrap Token</p>
-              <p className="uppercase"></p>
-            </div>
-          ) : null}
-
-          <div className="mt-4 grid gap-2">
-            {streams?.map((vestedERC20, index: number) => {
-              const token = vestedERC20.underlying;
-              const startDate = dateFormat(vestedERC20.startTimestamp);
-              const endDate = dateFormat(vestedERC20.endTimestamp);
-
-              return isComplete ? (
-                <div className="items-center grid grid-cols-5" key={index}>
-                  {/* <p className="mb-0 text-base">{vestedERC20.name}</p> */}
-                  <p className=" mb-0 text-base">
-                    <TokenBadge address={vestedERC20.id} name={vestedERC20.name} symbol={vestedERC20.symbol} />
-                  </p>
-                  <p className="mb-0 text-base">
-                    {startDate} - {endDate}
-                  </p>
-                  <p className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</p>
-                  {/* <p className="mb-0 text-base">{vestedERC20.symbol}</p> */}
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
-                  </p>
-                  <p>
-                    {getStatusStreamPack(vestedERC20, blockTimestamp) === StreamPackStatus.OPEN &&
-                      WrapButton(vestedERC20.id, token.id)}
-                  </p>
-                </div>
-              ) : (
-                <div className="items-center grid grid-cols-4 gap-2" key={index}>
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={vestedERC20.id} name={vestedERC20.name} symbol={vestedERC20.symbol} />
-                  </p>
-                  <p className="mb-0 text-base">
-                    <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
-                  </p>
-                  <p className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</p>
-                  <p>
-                    {getStatusStreamPack(vestedERC20, blockTimestamp) === StreamPackStatus.OPEN &&
-                      WrapButton(vestedERC20.id, token.id)}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-
-          {!isComplete ? (
-            <div className="mt-4">
-              <a
-                href={RoutesPath.STREAMS_PACK}
-                className="flex-none px-2 font-medium bg-white pointer-events-auto rounded-md py-[0.3125rem] text-slate-700 shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50">
-                View all packs
-              </a>
-            </div>
-          ) : null}
+          {isMobile ? (
+            <StreamPackListMobile />
+          ) : (
+            <StreamPackListDesktop
+              isComplete={isComplete}
+              streams={streams}
+              handleWrap={handleWrap}
+              blockTimestamp={blockTimestamp}
+            />
+          )}
 
           <Modal visible={isModalVisible} footer={null} onCancel={() => setIsModalVisible(false)}>
             <p className="mb-4 text-base font-bold">Wrapping Token</p>

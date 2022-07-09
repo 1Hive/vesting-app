@@ -67,7 +67,7 @@ export const Add = () => {
       <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     </div>
   ) : (
-    <div style={{ minWidth: '376px' }}>
+    <div>
       <input
         type="text"
         name="token"

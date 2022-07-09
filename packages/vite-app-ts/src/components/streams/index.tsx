@@ -3,9 +3,14 @@ import { useMemo } from 'react';
 import { truncateAddress } from '~~/helpers';
 import { dateFormat } from '~~/helpers/date-utils';
 import { useVestedTokens } from '~~/hooks';
+import useResponsive, { DisplaySize } from '~~/hooks/use-responsive';
+import StreamListDesktop from './desktop-list';
+import StreamListMobile from './mobile-list';
 
 const Streams = () => {
   const { loading, error, data } = useVestedTokens();
+  const size = useResponsive();
+  const isMobile = size < DisplaySize.MobileL;
 
   const isEmpty = useMemo(() => {
     return data?.vestedERC20S === undefined || data?.vestedERC20S?.length === 0;
@@ -31,6 +36,8 @@ const Streams = () => {
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
       ) : (
         <>
+          {isMobile ? <StreamListMobile /> : <StreamListDesktop />}
+
           <div className="mb-4 grid grid-cols-5">
             <p className="uppercase">Address</p>
             <p className="uppercase">Start/End</p>

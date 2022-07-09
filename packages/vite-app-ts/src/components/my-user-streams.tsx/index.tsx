@@ -8,8 +8,11 @@ import { getBlockTimestamp, getContractERC20 } from '~~/helpers/contract';
 import { dateFormat } from '~~/helpers/date-utils';
 import { useUserVestings } from '~~/hooks';
 import { useIsMounted } from '~~/hooks/use-is-mounted';
+import useResponsive, { DisplaySize } from '~~/hooks/use-responsive';
 import { RoutesPath } from '~~/main';
 import { Vesting } from '~~/types-and-hooks';
+import UserStreamListDesktop from './desktop-list';
+import UserStreamListMobile from './mobile-list';
 
 const INTERVAL = 1000;
 
@@ -61,6 +64,8 @@ const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; accountHold
   const [blockTimestamp, setBlockTimestamp] = useState<BigNumber | undefined>();
   const [balanceClaimable, setBalanceClaimable] = useState<BigNumber | undefined>();
   const ethersContext = useEthersContext();
+  const size = useResponsive();
+  const isMobile = size < DisplaySize.MobileL;
 
   const vestedERCAddress = vesting.id;
 
@@ -190,11 +195,11 @@ const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; accountHold
 
 const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?: boolean }) => {
   const { loading, error, data } = useUserVestings(account);
-
-  const ethersContext = useEthersContext();
-
   const [blockTimestamp, setBlockTimestamp] = useState<number | undefined>();
+  const ethersContext = useEthersContext();
   const isMounted = useIsMounted();
+  const size = useResponsive();
+  const isMobile = size < DisplaySize.MobileL;
 
   useEffect(() => {
     const updateBlocktimestamp = async () => {
@@ -236,6 +241,8 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No streams… yet. Send your first stream!" />
       ) : (
         <>
+          {isMobile ? <UserStreamListMobile /> : <UserStreamListDesktop />}
+
           {isComplete ? (
             <div className="mb-4 grid grid-cols-5">
               <p className="uppercase">Vesting Token</p>

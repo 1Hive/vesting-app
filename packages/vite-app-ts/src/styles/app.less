@@ -10,6 +10,15 @@ main {
 
   grid-template-rows: 80px 1fr;
   grid-template-columns: 80px 1fr;
+
+  @media only screen and (max-width: 640px) {
+    grid-template-areas:
+      'head'
+      'nav'
+      'main';
+    grid-template-rows: 80px 80px 1fr;
+    grid-template-columns: 1fr;
+  }
 }
 
 header {
@@ -21,6 +30,9 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 0 30px;
+
+  @media only screen and (max-width: 640px) {
+  }
 }
 
 nav {
@@ -28,6 +40,21 @@ nav {
   box-shadow: rgb(224 232 248) -1px 0px 0px 0px inset;
   padding-top: 80px;
   background-color: #fff;
+
+  @media only screen and (max-width: 640px) {
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+
+    ul {
+      display: flex;
+      gap: 32px;
+
+      a {
+        font-size: 32px !important;
+      }
+    }
+  }
 }
 
 .content {
@@ -41,4 +68,14 @@ nav {
 
 .ant-picker {
   border-color: rgb(55 65 81 / var(--tw-border-opacity));
+}
+
+button {
+  height: 36px;
+
+  @media only screen and (max-width: 640px) {
+    span {
+      display: none;
+    }
+  }
 }

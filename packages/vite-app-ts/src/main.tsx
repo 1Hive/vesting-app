@@ -9,9 +9,15 @@ import { useScaffoldProviders as useScaffoldAppProviders } from '~~/components/m
 import { BURNER_FALLBACK_ENABLED } from '~~/config/appConfig';
 import { useConnectAppContracts, useLoadAppContracts } from '~~/config/contractContext';
 
-import Home from './pages/home';
 import FaqView from './pages/faq';
-import { DollarOutlined, HomeOutlined, PlusOutlined, QuestionCircleOutlined, RetweetOutlined } from '@ant-design/icons';
+import {
+  ApiOutlined,
+  DollarOutlined,
+  HomeOutlined,
+  PlusOutlined,
+  QuestionCircleOutlined,
+  RetweetOutlined,
+} from '@ant-design/icons';
 import { truncateAddress } from './helpers';
 import { Add } from './components/modals';
 import React, { useState } from 'react';
@@ -22,9 +28,10 @@ import './styles/app.less';
 import StreamsPack from './pages/streamspack';
 import MyStreams from './pages/mystreams';
 import { getNetworkNameByChainID } from './models/constants/networks';
+import Dashboard from './pages/dashboard';
 
 export enum RoutesPath {
-  HOME = '/',
+  DASHBOARD = '/',
   MY_STREAMS = '/mystreams',
   STREAMS_PACK = '/streamspack',
   FAQ = '/faq',
@@ -70,7 +77,7 @@ const MainApp = () => {
                     className="flex items-center px-3 py-2  font-semibold text-white bg-green-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-green-500 gap-2"
                     onClick={() => setIsAddModalVisible(!isAddModalVisible)}>
                     <PlusOutlined />
-                    Add
+                    <span>Add Vesting</span>
                   </button>
                 </div>
               </div>
@@ -116,9 +123,10 @@ const MainApp = () => {
                 </div>
               ) : (
                 <button
-                  className="px-3 py-2 ml-8 font-semibold text-white bg-indigo-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-indigo-500"
+                  className="flex items-center justify-center px-3 py-2 ml-8 font-semibold text-white bg-indigo-600 pointer-events-auto gap-2 rounded-md text-[0.8125rem] leading-5 hover:bg-indigo-500"
                   onClick={connect}>
-                  Connect Wallet
+                  <ApiOutlined />
+                  <span>Connect Wallet</span>
                 </button>
               )}
             </div>
@@ -127,7 +135,7 @@ const MainApp = () => {
           <nav>
             <ul>
               <li className="py-6 text-center">
-                <Link to={RoutesPath.HOME} className="text-xl text-black">
+                <Link to={RoutesPath.DASHBOARD} className="text-xl text-black">
                   <HomeOutlined />
                 </Link>
               </li>
@@ -151,8 +159,8 @@ const MainApp = () => {
 
           <div className="content">
             <Switch>
-              <Route exact path={RoutesPath.HOME}>
-                <Home />
+              <Route exact path={RoutesPath.DASHBOARD}>
+                <Dashboard />
               </Route>
               <Route exact path={RoutesPath.MY_STREAMS}>
                 <MyStreams />

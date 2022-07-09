@@ -1,17 +1,11 @@
 import { useEthersAdaptorFromProviderOrSigners } from 'eth-hooks';
-import { EthersModalConnector, TEthersModalConnector, useEthersContext } from 'eth-hooks/context';
+import { EthersModalConnector, useEthersContext } from 'eth-hooks/context';
 import { TCreateEthersModalConnector, TEthersAdaptor, TEthersProvider, TNetworkInfo } from 'eth-hooks/models';
 import { useCallback, useEffect, useState } from 'react';
 import { invariant } from 'ts-invariant';
 import { ICoreOptions } from 'web3modal';
 
-import {
-  MAINNET_PROVIDER,
-  LOCAL_PROVIDER,
-  TARGET_NETWORK_INFO,
-  CONNECT_TO_BURNER_AUTOMATICALLY,
-} from '~~/config/appConfig';
-import { web3ModalConfigKeys } from '../../../config/web3ModalConfig';
+import { MAINNET_PROVIDER, LOCAL_PROVIDER, TARGET_NETWORK_INFO } from '~~/config/appConfig';
 
 export interface IScaffoldAppProviders {
   currentProvider: TEthersProvider | undefined;
@@ -61,34 +55,34 @@ export const useScaffoldProviders = (): IScaffoldAppProviders => {
     [web3Config]
   );
 
-  useEffect(() => {
-    /**
-     * This is for to auto connect to the burner wallet when there is no cached provier
-     * you can turn it off by settting {@link const_ConnectToBurnerOnFirstLoad} to false
-     * @param connector
-     * @returns
-     */
-    const autoConnectToBurner = (connector: TEthersModalConnector | undefined): TEthersModalConnector | undefined => {
-      let newConnector = connector;
-      if (CONNECT_TO_BURNER_AUTOMATICALLY && connector && connector?.loadWeb3Modal) {
-        connector.loadWeb3Modal();
-        if (connector != null && !connector.hasCachedProvider()) {
-          newConnector = new EthersModalConnector(
-            { ...web3Config },
-            { reloadOnNetworkChange: false, immutableProvider: false },
-            web3ModalConfigKeys.localhostKey
-          );
-        }
-      }
-      return newConnector;
-    };
+  // useEffect(() => {
+  //   /**
+  //    * This is for to auto connect to the burner wallet when there is no cached provier
+  //    * you can turn it off by settting {@link const_ConnectToBurnerOnFirstLoad} to false
+  //    * @param connector
+  //    * @returns
+  //    */
+  //   const autoConnectToBurner = (connector: TEthersModalConnector | undefined): TEthersModalConnector | undefined => {
+  //     let newConnector = connector;
+  //     if (CONNECT_TO_BURNER_AUTOMATICALLY && connector && connector?.loadWeb3Modal) {
+  //       connector.loadWeb3Modal();
+  //       if (connector != null && !connector.hasCachedProvider()) {
+  //         newConnector = new EthersModalConnector(
+  //           { ...web3Config },
+  //           { reloadOnNetworkChange: false, immutableProvider: false },
+  //           web3ModalConfigKeys.localhostKey
+  //         );
+  //       }
+  //     }
+  //     return newConnector;
+  //   };
 
-    if (!ethersContext.active && createLoginConnector) {
-      let connector = createLoginConnector(undefined);
-      connector = autoConnectToBurner(connector);
-      if (connector) void ethersContext.activate(connector);
-    }
-  }, [web3Config]);
+  //   if (!ethersContext.active && createLoginConnector) {
+  //     let connector = createLoginConnector(undefined);
+  //     connector = autoConnectToBurner(connector);
+  //     if (connector) void ethersContext.activate(connector);
+  //   }
+  // }, [web3Config]);
 
   return {
     currentProvider: ethersContext.provider ?? LOCAL_PROVIDER,
