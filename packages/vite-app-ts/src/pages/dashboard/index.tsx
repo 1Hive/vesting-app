@@ -1,4 +1,3 @@
-import React from 'react';
 import { Wrapper } from './index.styled';
 import { useEthersContext } from 'eth-hooks/context';
 import MyUserVestings from '~~/components/my-user-streams.tsx';
@@ -18,7 +17,6 @@ function Dashboard() {
           <div className="mt-4">
             <p className="text-4xl">$0</p>
           </div>
-          <div className="mt-4">Show all balances</div>
         </div>
 
         <div className="p-4 bg-white rounded-lg shadow-xl pointer-events-auto text-[0.8125rem] leading-5 shadow-black/5 hover:bg-slate-50 ring-1 ring-slate-700/10">
