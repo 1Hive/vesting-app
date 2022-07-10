@@ -4,10 +4,10 @@ import { Main } from '@1hive/1hive-ui';
 import { EthersModalConnector, useEthersContext } from 'eth-hooks/context';
 import { asEthersAdaptor } from 'eth-hooks/functions';
 
-import { useBurnerFallback } from '~~/components/main/hooks/useBurnerFallback';
-import { useScaffoldProviders as useScaffoldAppProviders } from '~~/components/main/hooks/useScaffoldAppProviders';
-import { BURNER_FALLBACK_ENABLED } from '~~/config/appConfig';
-import { useConnectAppContracts, useLoadAppContracts } from '~~/config/contractContext';
+import { useBurnerFallback } from '~~/hooks/use-burner-fallback';
+import { useScaffoldProviders as useScaffoldAppProviders } from '~~/hooks/use-scaffold-app-providers';
+import { BURNER_FALLBACK_ENABLED } from '~~/config/app-config';
+import { useConnectAppContracts, useLoadAppContracts } from '~~/config/contract-context';
 
 import FaqView from './pages/faq';
 import {

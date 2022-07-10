@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Field } from '@1hive/1hive-ui';
 import { ethers } from 'ethers';
 import { useEthersContext } from 'eth-hooks/context';
-import { useAppContracts } from '~~/config/contractContext';
+import { useAppContracts } from '~~/config/contract-context';
 import { RedeemType } from '.';
 import { useIsMounted } from '~~/hooks/use-is-mounted';
 

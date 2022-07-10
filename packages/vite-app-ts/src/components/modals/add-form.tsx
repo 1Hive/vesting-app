@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { DatePicker, notification, Spin } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { BigNumberish, ethers } from 'ethers';
 import { Moment } from 'moment';
-import React, { useCallback, useState } from 'react';
-import { useAppContracts } from '~~/config/contractContext';
+import React from 'react';
+import { useAppContracts } from '~~/config/contract-context';
 import { StyledDatePicker } from './index.styled';
 
 const { RangePicker } = DatePicker;
@@ -15,18 +16,18 @@ import { LoadingOutlined } from '@ant-design/icons';
 const formatStringToBytes32 = (fromString: string) => ethers.utils.formatBytes32String(fromString);
 
 export const Add = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [state, setState] = useState({
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [state, setState] = React.useState({
     tokenAddress: '',
     name: '',
     symbol: '',
   });
-  const [dates, setDates] = useState<RangeValue>(null);
+  const [dates, setDates] = React.useState<RangeValue>(null);
 
   const ethersContext = useEthersContext();
   const vestedERC20Factory = useAppContracts('VestedERC20Factory', ethersContext.chainId);
 
-  const deployVestedToken = useCallback(async () => {
+  const deployVestedToken = React.useCallback(async () => {
     const tx = await vestedERC20Factory?.createVestedERC20(
       formatStringToBytes32(state.name),
       formatStringToBytes32(state.symbol),
@@ -98,7 +99,6 @@ export const Add = () => {
 
       <div className="mt-4">
         <button
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={deployVestedToken}
           className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
           Create

@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { invariant } from 'ts-invariant';
 import { ICoreOptions } from 'web3modal';
 
-import { MAINNET_PROVIDER, LOCAL_PROVIDER, TARGET_NETWORK_INFO } from '~~/config/appConfig';
+import { MAINNET_PROVIDER, LOCAL_PROVIDER, TARGET_NETWORK_INFO } from '~~/config/app-config';
 
 export interface IScaffoldAppProviders {
   currentProvider: TEthersProvider | undefined;
@@ -23,7 +23,7 @@ export const useScaffoldProviders = (): IScaffoldAppProviders => {
 
   useEffect(() => {
     // import async to split bundles
-    const importedConfig = import('../../../config/web3ModalConfig');
+    const importedConfig = import('../config/web3-modal-config');
 
     importedConfig
       .then((getter) => {

@@ -1,7 +1,7 @@
 // import { BigNumber } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import { useEthersContext } from 'eth-hooks/context';
-import { useAppContracts } from '~~/config/contractContext';
+import { useAppContracts } from '~~/config/contract-context';
 import { BigNumber } from 'ethers';
 import { toDecimals } from '~~/helpers/math-utils';
 import { WrapType } from '.';

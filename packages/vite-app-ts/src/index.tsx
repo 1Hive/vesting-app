@@ -1,5 +1,5 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { SUBGRAPH_URI } from './config/appConfig';
+import { SUBGRAPH_URI } from './config/app-config';
 
 const run = async (): Promise<void> => {
   await import('./helpers/__global');

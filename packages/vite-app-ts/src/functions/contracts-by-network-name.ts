@@ -1,6 +1,6 @@
 import { networkIDtoSymbol } from '@dethcrypto/eth-sdk/dist/abi-management/networks';
 
-import { externalContractsAddressMap } from '../config/externalContractsConfig';
+import { externalContractsAddressMap } from '../config/external-contracts-config';
 
 /**
  * used by eth-sdk and `yarn contracts:build`

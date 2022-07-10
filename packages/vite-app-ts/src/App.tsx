@@ -2,8 +2,8 @@ import { EthComponentsSettingsContext, IEthComponentsSettings } from 'eth-compon
 import { EthersAppContext } from 'eth-hooks/context';
 import { FC, Suspense, lazy } from 'react';
 
-import { ErrorBoundary, ErrorFallback } from '~~/components/common/ErrorFallback';
-import { ContractsAppContext } from '~~/config/contractContext';
+import { ErrorBoundary, ErrorFallback } from '~~/components/common/error-fallback';
+import { ContractsAppContext } from '~~/config/contract-context';
 
 import '~~/styles/css/tailwind-base.pcss';
 import '~~/styles/css/tailwind-components.pcss';

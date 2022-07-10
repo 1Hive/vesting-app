@@ -2,7 +2,7 @@ import { Empty, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { BigNumber, ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
-import { useAppContracts } from '~~/config/contractContext';
+import { useAppContracts } from '~~/config/contract-context';
 import { getBlockTimestamp, getContractERC20 } from '~~/helpers/contract';
 import { useUserVestings } from '~~/hooks';
 import { useIsMounted } from '~~/hooks/use-is-mounted';

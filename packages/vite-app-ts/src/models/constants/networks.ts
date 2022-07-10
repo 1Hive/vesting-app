@@ -1,5 +1,5 @@
 import { TNetworkInfo } from 'eth-hooks/models';
-import { DEBUG } from '~~/config/appConfig';
+import { DEBUG } from '~~/config/app-config';
 
 const INFURA_ID = import.meta.env.VITE_KEY_INFURA;
 
