@@ -83,12 +83,12 @@ const MainApp = () => {
                             className="flex items-center px-3 py-2  font-semibold text-white bg-green-600 pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-green-500 gap-2"
                             onClick={() => setIsAddModalVisible(!isAddModalVisible)}>
                             <PlusOutlined />
-                            Add Vesting
+                            Create StreamPack
                           </button>
                         </div>
                       </div>
                       <Modal visible={isAddModalVisible} footer={null} onCancel={() => setIsAddModalVisible(false)}>
-                        <p className="mb-4 text-base font-bold">Creating new Vesting</p>
+                        <p className="mb-4 text-base font-bold">Creating new StreamPack</p>
                         <Add />
                       </Modal>
                     </>
