@@ -1,5 +1,5 @@
 // import { BigNumber } from 'ethers';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useEthersContext } from 'eth-hooks/context';
 import { useAppContracts } from '~~/config/contract-context';
 import { BigNumber } from 'ethers';
@@ -42,7 +42,7 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
       await r?.wait(); // TODO we should handle errors/cancel before try wrap.
       console.log('tx success approve');
       console.log('start wrap');
-      const tx = await vestedERC20?.attach(vestedAdress).wrap(amount, state.address, { gasLimit: 100000 });
+      const tx = await vestedERC20?.attach(vestedAdress).wrap(amount, state.address, { gasLimit: 150000 });
       if (isMounted()) {
         setTxHash(tx?.hash);
       }
@@ -63,6 +63,8 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
     isMounted,
   ]);
 
+  const inputAdress = useRef<HTMLInputElement | null>(null);
+
   return (
     <div>
       <input
@@ -73,12 +75,24 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
         onChange={(e: any) => setState((prev: any) => ({ ...prev, underlyingAmount: e.target.value }))}
       />
       <input
+        ref={inputAdress}
         type="text"
         name="address"
         placeholder="Receipt Address (0x000...)"
         className="block w-full px-2 py-2 mt-4 border border-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         onChange={(e: any) => setState((prev: any) => ({ ...prev, address: e.target.value }))}
       />
+      <button
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        onClick={() => {
+          setState((prev: any) => ({ ...prev, address: ethersContext.account }));
+          if (inputAdress.current && ethersContext.account) {
+            inputAdress.current.value = ethersContext.account;
+          }
+        }}
+        className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
+        Me
+      </button>
 
       <div className="mt-4">
         <button

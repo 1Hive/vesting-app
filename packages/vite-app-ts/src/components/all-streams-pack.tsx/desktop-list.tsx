@@ -46,7 +46,7 @@ const StreamPackListDesktop = ({ isComplete, list, handleWrap, blockTimestamp }:
               </p>
               <p>
                 {getStatusStreamPack(vestedERC20, blockTimestamp) === StreamPackStatus.OPEN &&
-                  WrapButton(() => handleWrap(vestedERC20.id, token.id))}
+                  WrapButton(() => handleWrap(token.id, vestedERC20.id))}
               </p>
             </div>
           ) : (
@@ -60,7 +60,7 @@ const StreamPackListDesktop = ({ isComplete, list, handleWrap, blockTimestamp }:
               <p className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</p>
               <p>
                 {getStatusStreamPack(vestedERC20, blockTimestamp) === StreamPackStatus.OPEN &&
-                  WrapButton(() => handleWrap(vestedERC20.id, token.id))}
+                  WrapButton(() => handleWrap(token.id, vestedERC20.id))}
               </p>
             </div>
           );
