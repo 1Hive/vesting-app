@@ -1,30 +1,9 @@
 // import { TypedMap, Entity, Value, ValueKind, store, Bytes, BigInt, BigDecimal } from '@graphprotocol/graph-ts';
-import { useQuery, UseQueryOptions } from 'react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-
-function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      ...requestInit,
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  };
-}
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -97,41 +76,4 @@ export type VestingsQuery = {
     wrappedTokenAmount: any;
     token: VestedErc20;
   }>;
-};
-
-export const VestingsDocument = `
-    query vestings {
-  vestings {
-    claimedUnderlyingAmount
-    createdAt
-    id
-    recipient
-    underlyingAmount
-    wrappedTokenAmount
-    token {
-      decimals
-      name
-      id
-      endTimestamp
-      startTimestamp
-      symbol
-    }
-  }
-}`;
-
-export const useVestingsQuery = <TData, TError>(
-  dataSource: { endpoint: string; fetchParams?: RequestInit },
-  variables?: VestingsQueryVariables,
-  options?: UseQueryOptions<VestingsQuery, TError, TData>
-) => {
-  return useQuery<VestingsQuery, TError, TData>(
-    variables === undefined ? ['vestings'] : ['vestings', variables],
-    fetcher<VestingsQuery, VestingsQueryVariables>(
-      dataSource.endpoint,
-      dataSource.fetchParams || {},
-      VestingsDocument,
-      variables
-    ),
-    options
-  );
 };

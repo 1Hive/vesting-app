@@ -21,6 +21,7 @@ export enum KNOWN_FORMATS {
   onlyDate = 'DD/MM/YYYY',
   iso = 'YYYY-MM-DD',
   custom = 'DD MMMM HH:mm',
+  simple = 'DD MMMM',
 }
 
 // dayjs plugins
@@ -29,7 +30,7 @@ dayjs.extend(isBetween);
 dayjs.extend(relativeTime);
 dayjs.extend(advancedFormat);
 
-function dateFormat(date: number, format = KNOWN_FORMATS.custom) {
+function dateFormat(date: number, format = KNOWN_FORMATS.simple) {
   return dayjs.unix(date).format(format.toString());
 }
 

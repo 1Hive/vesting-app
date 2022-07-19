@@ -1,0 +1,91 @@
+@import 'antd/dist/antd.less';
+
+html,
+body {
+  @media only screen and (max-width: 640px) {
+    overflow: auto !important;
+  }
+}
+
+main {
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  grid-template-areas:
+    'nav head'
+    'nav main';
+
+  grid-template-rows: 80px 1fr;
+  grid-template-columns: 80px 1fr;
+
+  @media only screen and (max-width: 640px) {
+    grid-template-areas:
+      'head'
+      'nav'
+      'main';
+    grid-template-rows: 80px 80px 1fr;
+    grid-template-columns: 1fr;
+    height: 100%;
+  }
+}
+
+header {
+  grid-area: head;
+  background-color: #fff;
+  box-shadow: rgb(224 232 248) 0px -1px 0px 0px inset, rgb(224 232 248) -1px 0px 0px 0px inset;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+
+  @media only screen and (max-width: 640px) {
+  }
+}
+
+nav {
+  grid-area: nav;
+  box-shadow: rgb(224 232 248) -1px 0px 0px 0px inset;
+  padding-top: 80px;
+  background-color: #fff;
+
+  a.selected {
+    color: #000;
+  }
+
+  @media only screen and (max-width: 640px) {
+    display: flex;
+    align-items: center;
+    padding: 0;
+
+    ul {
+      display: flex !important;
+      justify-content: space-evenly;
+      width: 100%;
+
+      a {
+        font-size: 32px !important;
+      }
+    }
+  }
+}
+
+.content {
+  grid-area: main;
+}
+
+.ant-picker,
+.ant-popover-inner {
+  border-radius: 4px;
+}
+
+.ant-picker {
+  border-color: rgb(55 65 81 / var(--tw-border-opacity));
+}
+
+button {
+  height: 36px;
+
+  @media only screen and (max-width: 640px) {
+  }
+}

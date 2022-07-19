@@ -1,4 +1,5 @@
 import { TNetworkInfo } from 'eth-hooks/models';
+import { DEBUG } from '~~/config/app-config';
 
 const INFURA_ID = import.meta.env.VITE_KEY_INFURA;
 
@@ -95,4 +96,26 @@ export const NETWORKS: Record<TNetworkNames, TNetworkInfo> = {
     faucet: 'https://faucet.matic.network/',
     blockExplorer: 'https://mumbai-explorer.matic.today/',
   },
+};
+
+export const getNetworkByChainID = (chainId: number | undefined): TNetworkInfo | undefined => {
+  if (!chainId) {
+    if (DEBUG) {
+      console.log(`getNetworkByChainID:chainId undefined`);
+    }
+    return undefined;
+  }
+  const key = (Object.keys(NETWORKS) as Array<TNetworkNames>).find((key) => NETWORKS[key].chainId === chainId);
+  if (!key) {
+    return undefined;
+  }
+  return NETWORKS[key];
+};
+
+export const getNetworkNameByChainID = (chainId: number | undefined): string => {
+  const network = getNetworkByChainID(chainId);
+  if (!network) {
+    return 'Unknown';
+  }
+  return network.name;
 };
