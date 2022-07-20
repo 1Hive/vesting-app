@@ -7,6 +7,7 @@ import { toDecimals } from '~~/helpers/math-utils';
 import { WrapType } from '.';
 import { useContractExistsAtAddress } from 'eth-hooks';
 import { getContractERC20 } from '~~/helpers/contract';
+import { WrapInput } from '../wrapInput/wrapinput';
 
 export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
   const [state, setState] = useState({
@@ -38,17 +39,21 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
 
   return (
     <div>
-      <input
+      {/* <input
         type="text"
         name="amount"
         placeholder="Amount"
         className="block w-full px-2 py-2 mt-4 border border-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         onChange={(e: any) => setState((prev: any) => ({ ...prev, underlyingAmount: e.target.value }))}
+      /> */}
+      <WrapInput
+        accountBalance={BigNumber.from('10000000000000000000')}
+        token={{ decimals: 18, name: 'Fel', symbol: 'FEL' }}
       />
       <input
         type="text"
         name="address"
-        placeholder="Receipt Address"
+        placeholder="Receipt Address (0x00...)"
         className="block w-full px-2 py-2 mt-4 border border-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         onChange={(e: any) => setState((prev: any) => ({ ...prev, address: e.target.value }))}
       />
