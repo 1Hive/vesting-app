@@ -1,0 +1,11 @@
+[default]
+src = 'contracts'
+test  = 'contracts/test'
+out = 'out'
+libs = ["contracts/lib", "lib"]
+remappings = [
+    '@rari-capital/=lib/',
+    'hardhat/=contracts/lib'
+    ]
+
+# See more config options https://github.com/foundry-rs/foundry/tree/master/config

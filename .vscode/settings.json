@@ -47,16 +47,25 @@
    },
    "explorerExclude.backup": null,
    "eslint.workingDirectories": [
-   
-      { "directory": "packages/eth-hooks", "changeProcessCWD": true },
-      { "directory": "packages/hardhat-ts", "changeProcessCWD": true },
-      { "directory": "packages/vite-app-ts", "changeProcessCWD": true },
+      {
+         "directory": "packages/eth-hooks",
+         "changeProcessCWD": true
+      },
+      {
+         "directory": "packages/hardhat-ts",
+         "changeProcessCWD": true
+      },
+      {
+         "directory": "packages/vite-app-ts",
+         "changeProcessCWD": true
+      },
    ],
    "solidity.packageDefaultDependenciesDirectory": "packages/hardhat-ts/node_modules",
    "editor.formatOnSave": true,
    "solidity.formatter": "prettier", // This is the default so it might be missing.
    "[solidity]": {
-     "editor.defaultFormatter": "JuanBlanco.solidity"
+      "editor.defaultFormatter": "JuanBlanco.solidity"
    },
-   "solidity.defaultCompiler": "localNodeModule"
+   "solidity.defaultCompiler": "localNodeModule",
+   "solidity.compileUsingLocalVersion": "/home/felipenovaesrocha/Projects/1Hive/vesting-app/soljson-v0.8.14+commit.80d49f37.js"
 }
