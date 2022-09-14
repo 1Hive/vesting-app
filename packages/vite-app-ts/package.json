@@ -37,6 +37,7 @@
     "@ethersproject/signing-key": "^5.5.0",
     "@ethersproject/solidity": "^5.5.0",
     "@ethersproject/units": "^5.5.0",
+    "@habx/apollo-multi-endpoint-link": "2.7.0",
     "@maticnetwork/maticjs": "^3.2.3",
     "@portis/web3": "^4.1.0",
     "@ramp-network/ramp-instant-sdk": "^3.0.0",

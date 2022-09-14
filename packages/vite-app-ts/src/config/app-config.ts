@@ -3,8 +3,7 @@ import { TNetworkInfo, TEthersProvider } from 'eth-hooks/models';
 import { invariant } from 'ts-invariant';
 
 import { NETWORKS, TNetworkNames } from '../models/constants/networks';
-
-export const DEBUG = false;
+const DEBUG = false;
 invariant.log('MODE', import.meta.env.MODE, import.meta.env.DEV);
 /** ******************************
  * TARGET NETWORK CONFIG: 📡 What chain are your contracts deployed to?
@@ -55,7 +54,7 @@ if (DEBUG)
   );
 
 // export const SUBGRAPH_URI = 'http://localhost:8000/subgraphs/name/scaffold-eth/your-contract';
-export const SUBGRAPH_URI = 'https://api.thegraph.com/subgraphs/name/kamikazebr/onehivevestingrinkeby';
+// export const SUBGRAPH_URI = 'https://api.thegraph.com/subgraphs/name/kamikazebr/onehivevestingrinkeby';
 
 /** ******************************
  * OTHER FILES

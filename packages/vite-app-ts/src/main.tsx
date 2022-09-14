@@ -54,6 +54,7 @@ const MainApp = () => {
   const connect = React.useCallback(() => {
     if (scaffoldAppProviders.createLoginConnector != null && ethersContext?.openModal != null) {
       const connector = scaffoldAppProviders.createLoginConnector() as EthersModalConnector;
+      console.log('connector', connector);
       ethersContext.openModal(connector);
     }
   }, [ethersContext, scaffoldAppProviders]);
@@ -63,6 +64,10 @@ const MainApp = () => {
       ethersContext.disconnectModal();
     }
   }, [ethersContext]);
+
+  // useEffect(() => {
+  //   connect();
+  // }, []);
 
   return (
     <Main layout={false} scrollView={false}>

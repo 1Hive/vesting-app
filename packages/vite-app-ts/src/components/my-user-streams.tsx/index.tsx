@@ -1,12 +1,14 @@
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { Empty, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { BigNumber, ethers } from 'ethers';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppContracts } from '~~/config/contract-context';
 import { getBlockTimestamp, getContractERC20 } from '~~/helpers/contract';
 import { useUserVestings } from '~~/hooks';
 import { useIsMounted } from '~~/hooks/use-is-mounted';
 import useResponsive from '~~/hooks/use-responsive';
+import { getNetworkByChainID, getNetworkNameByChainID, NETWORKS } from '~~/models/constants/networks';
 import { Vesting } from '~~/types-and-hooks';
 import UserStreamListDesktop from './desktop-list';
 import UserStreamListMobile from './mobile-list';
@@ -188,10 +190,26 @@ export const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; acco
   return <>{redeemableAmountBN ? ethers.utils.formatEther(redeemableAmountBN) : null}</>;
 };
 
+// console.log('load apollo');
+// const client2 = new ApolloClient({
+//   uri: 'https://api.thegraph.com/subgraphs/name/kamikazebr/onehivevestingrinkeby',
+//   cache: new InMemoryCache(),
+// });
+
 const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?: boolean }) => {
-  const { loading, error, data } = useUserVestings(account);
-  const [blockTimestamp, setBlockTimestamp] = useState<number | undefined>();
   const ethersContext = useEthersContext();
+
+  // const client = useCallback(() => {
+  //   const subgraphURI = 'https://api.thegraph.com/subgraphs/name/kamikazebr/onehivevestingrinkeby';
+  //   // const subgraphURI = getNetworkByChainID(ethersContext.chainId)?.subgraph ?? NETWORKS['rinkeby'].subgraph;
+  //   console.log('subgraphURI', subgraphURI);
+
+  //   return client;
+  // }, []);
+
+  const [blockTimestamp, setBlockTimestamp] = useState<number | undefined>();
+  const { loading, error, data } = useUserVestings(account, getNetworkNameByChainID(ethersContext.chainId));
+  console.log('loading', loading);
   const isMounted = useIsMounted();
   const { isMobile } = useResponsive();
 
@@ -226,6 +244,7 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
     return (
       <div className="mt-4">
         <p>Error...</p>
+        <p>{JSON.stringify(error, null, 4)}</p>
       </div>
     );
 

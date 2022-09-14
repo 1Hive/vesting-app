@@ -106,8 +106,8 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
         {txHash && network && (
           <TransactionBadge
             transaction={txHash}
-            networkType={network.chainId}
-            explorerProvider={network.blockExplorer}
+            networkType={network.name}
+            // explorerProvider={network.blockExplorer}
           />
         )}
       </div>

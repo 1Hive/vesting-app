@@ -1,5 +1,5 @@
 import { TNetworkInfo } from 'eth-hooks/models';
-import { DEBUG } from '~~/config/app-config';
+// import { DEBUG } from '~~/config/app-config';
 
 const INFURA_ID = import.meta.env.VITE_KEY_INFURA;
 
@@ -26,6 +26,7 @@ export const NETWORKS: Record<TNetworkNames, TNetworkInfo> = {
     chainId: 31337,
     blockExplorer: '',
     rpcUrl: 'http://' + hostname + ':8545',
+    subgraph: 'http://localhost:8000/subgraphs/name/scaffold-eth/your-contract',
   },
   mainnet: {
     name: 'mainnet',
@@ -49,6 +50,7 @@ export const NETWORKS: Record<TNetworkNames, TNetworkInfo> = {
     rpcUrl: `https://rinkeby.infura.io/v3/${INFURA_ID}`,
     faucet: 'https://faucet.rinkeby.io/',
     blockExplorer: 'https://rinkeby.etherscan.io/',
+    subgraph: 'https://api.thegraph.com/subgraphs/name/kamikazebr/onehivevestingrinkeby',
   },
   ropsten: {
     name: 'ropsten',
@@ -100,9 +102,9 @@ export const NETWORKS: Record<TNetworkNames, TNetworkInfo> = {
 
 export const getNetworkByChainID = (chainId: number | undefined): TNetworkInfo | undefined => {
   if (!chainId) {
-    if (DEBUG) {
-      console.log(`getNetworkByChainID:chainId undefined`);
-    }
+    // if (DEBUG) {
+    console.log(`getNetworkByChainID:chainId undefined`);
+    // }
     return undefined;
   }
   const key = (Object.keys(NETWORKS) as Array<TNetworkNames>).find((key) => NETWORKS[key].chainId === chainId);
@@ -118,4 +120,21 @@ export const getNetworkNameByChainID = (chainId: number | undefined): string => 
     return 'Unknown';
   }
   return network.name;
+};
+export const getNetworkSubgraphEndpoints = (): Record<TNetworkNames, string> => {
+  const entries = Object.entries(NETWORKS);
+
+  const endpoints = entries.reduce<Record<string, string>>((prev, curr) => {
+    const [key, value] = curr;
+    const prevB = prev ?? {};
+
+    // return { key: value.subgraph });
+    if (value.subgraph) {
+      prevB[key] = value.subgraph;
+    }
+
+    return prevB;
+  }, {});
+
+  return endpoints as Record<TNetworkNames, string>;
 };

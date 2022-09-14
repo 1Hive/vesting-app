@@ -15,10 +15,10 @@
     "**/build/**/*": true,
     "**/debug/": true,
     "**/dist/": true,
-    "**/node_modules/": true,
+    "**/node_modules/": false,
     "**/obj": true,
-    "node_modules": true,
-    "node_modules/*/**": true,
+    "node_modules": false,
+    "node_modules/*/**": false,
     "**/.yalc": true
   },
   "explorerExclude.backup": null
