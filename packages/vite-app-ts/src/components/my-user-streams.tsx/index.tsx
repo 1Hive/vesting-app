@@ -2,7 +2,8 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { Empty, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { BigNumber, ethers } from 'ethers';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useContractRead } from 'wagmi';
 import { useAppContracts } from '~~/config/contract-context';
 import { getBlockTimestamp, getContractERC20 } from '~~/helpers/contract';
 import { useUserVestings } from '~~/hooks';
@@ -196,7 +197,7 @@ export const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; acco
 //   cache: new InMemoryCache(),
 // });
 
-const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?: boolean }) => {
+const MyUserStreams = ({ account, isComplete }: { account: string; isComplete?: boolean }) => {
   const ethersContext = useEthersContext();
 
   // const client = useCallback(() => {
@@ -261,4 +262,4 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
   );
 };
 
-export default MyUserVestings;
+export default MyUserStreams;

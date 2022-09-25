@@ -21,20 +21,77 @@ const ethComponentsSettings: IEthComponentsSettings = {
   },
 };
 
+import '@rainbow-me/rainbowkit/styles.css';
+
+import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { Chain, chain, configureChains, createClient, useProvider, WagmiConfig } from 'wagmi';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { publicProvider } from 'wagmi/providers/public';
+import { ExternalProvider, JsonRpcFetchFunc, StaticJsonRpcProvider } from '@ethersproject/providers';
+import { TEthersProvider } from 'eth-hooks/models';
+
+const gnosisChain: Chain = {
+  id: 100,
+  name: 'Gnosis Chain',
+  network: 'gnosis',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'XDAI',
+    symbol: 'XDAI',
+  },
+  rpcUrls: {
+    default: 'https://rpc.gnosischain.com',
+  },
+  blockExplorers: {
+    default: { name: 'Blockscout', url: 'https://blockscout.com/' },
+  },
+  testnet: false,
+};
+
+const { chains, provider } = configureChains(
+  [gnosisChain, chain.rinkeby, chain.polygon],
+  [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
+);
+
+const { connectors } = getDefaultWallets({
+  appName: 'StreamingBee App',
+  chains,
+});
+
+const wagmiClient = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+});
+// eslint-disable-next-line import/no-extraneous-dependencies
+// import { AbstractConnector } from '@web3-react/abstract-connector';
+
 const App: FC = () => {
+  // const providerWagmi = useProvider();
+  // const customProvider = (
+  //   _provider: TEthersProvider | ExternalProvider | JsonRpcFetchFunc | any,
+  //   _connector?: AbstractConnector
+  // ) => {
+  //   console.log('providerWagmi', providerWagmi);
+  //   return providerWagmi as unknown as StaticJsonRpcProvider;
+  // };
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <EthComponentsSettingsContext.Provider value={ethComponentsSettings}>
-        <ContractsAppContext>
-          <EthersAppContext>
-            <ErrorBoundary FallbackComponent={ErrorFallback}>
-              <Suspense fallback={<div />}>
-                <MainApp />
-              </Suspense>
-            </ErrorBoundary>
-          </EthersAppContext>
-        </ContractsAppContext>
-      </EthComponentsSettingsContext.Provider>
+      <WagmiConfig client={wagmiClient}>
+        <RainbowKitProvider chains={chains}>
+          <EthComponentsSettingsContext.Provider value={ethComponentsSettings}>
+            <ContractsAppContext>
+              <EthersAppContext>
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<div />}>
+                    <MainApp />
+                  </Suspense>
+                </ErrorBoundary>
+              </EthersAppContext>
+            </ContractsAppContext>
+          </EthComponentsSettingsContext.Provider>
+        </RainbowKitProvider>
+      </WagmiConfig>
     </ErrorBoundary>
   );
 };
