@@ -1,7 +1,4 @@
-import { ApolloClient, gql, InMemoryCache, useQuery } from '@apollo/client';
-import { useEthersContext } from 'eth-hooks/context';
-import { useCallback, useMemo } from 'react';
-import { getNetworkByChainID, getNetworkNameByChainID, NETWORKS } from '~~/models/constants/networks';
+import { gql, useQuery } from '@apollo/client';
 import { VestingsQuery } from '~~/types-and-hooks';
 
 const USER_VESTINGS_QUERY = gql`

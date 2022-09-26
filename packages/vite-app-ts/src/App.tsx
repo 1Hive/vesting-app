@@ -49,7 +49,7 @@ const gnosisChain: Chain = {
 };
 
 const { chains, provider } = configureChains(
-  [gnosisChain, chain.rinkeby, chain.polygon],
+  [gnosisChain, chain.goerli],
   [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
 );
 
@@ -78,7 +78,7 @@ const App: FC = () => {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains}>
+        <RainbowKitProvider modalSize="compact" chains={chains}>
           <EthComponentsSettingsContext.Provider value={ethComponentsSettings}>
             <ContractsAppContext>
               <EthersAppContext>

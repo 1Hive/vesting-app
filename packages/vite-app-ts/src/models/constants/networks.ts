@@ -3,16 +3,7 @@ import { TNetworkInfo } from 'eth-hooks/models';
 
 const INFURA_ID = import.meta.env.VITE_KEY_INFURA;
 
-export type TNetworkNames =
-  | 'localhost'
-  | 'mainnet'
-  | 'kovan'
-  | 'rinkeby'
-  | 'ropsten'
-  | 'goerli'
-  | 'xdai'
-  | 'matic'
-  | 'mumbai';
+export type TNetworkNames = 'localhost' | 'rinkeby' | 'goerli' | 'gnosis';
 
 let hostname = '';
 if (typeof window !== 'undefined') {
@@ -28,21 +19,6 @@ export const NETWORKS: Record<TNetworkNames, TNetworkInfo> = {
     rpcUrl: 'http://' + hostname + ':8545',
     subgraph: 'http://localhost:8000/subgraphs/name/scaffold-eth/your-contract',
   },
-  mainnet: {
-    name: 'mainnet',
-    color: '#ff8b9e',
-    chainId: 1,
-    rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`,
-    blockExplorer: 'https://etherscan.io/',
-  },
-  kovan: {
-    name: 'kovan',
-    color: '#7003DD',
-    chainId: 42,
-    rpcUrl: `https://kovan.infura.io/v3/${INFURA_ID}`,
-    blockExplorer: 'https://kovan.etherscan.io/',
-    faucet: 'https://gitter.im/kovan-testnet/faucet', // https://faucet.kovan.network/
-  },
   rinkeby: {
     name: 'rinkeby',
     color: '#e0d068',
@@ -52,14 +28,6 @@ export const NETWORKS: Record<TNetworkNames, TNetworkInfo> = {
     blockExplorer: 'https://rinkeby.etherscan.io/',
     subgraph: 'https://api.thegraph.com/subgraphs/name/kamikazebr/onehivevestingrinkeby',
   },
-  ropsten: {
-    name: 'ropsten',
-    color: '#F60D09',
-    chainId: 3,
-    faucet: 'https://faucet.ropsten.be/',
-    blockExplorer: 'https://ropsten.etherscan.io/',
-    rpcUrl: `https://ropsten.infura.io/v3/${INFURA_ID}`,
-  },
   goerli: {
     name: 'goerli',
     color: '#0975F6',
@@ -67,36 +35,17 @@ export const NETWORKS: Record<TNetworkNames, TNetworkInfo> = {
     faucet: 'https://goerli-faucet.slock.it/',
     blockExplorer: 'https://goerli.etherscan.io/',
     rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`,
+    subgraph: 'https://api.studio.thegraph.com/query/29898/streamingbee-goerli/0.0.8',
   },
-  xdai: {
-    name: 'xdai',
+  gnosis: {
+    name: 'gnosis',
     color: '#48a9a6',
     chainId: 100,
     price: 1,
     gasPrice: 1000000000,
-    rpcUrl: 'https://dai.poa.network',
+    rpcUrl: 'https://rpc.gnosischain.com',
     faucet: 'https://xdai-faucet.top/',
     blockExplorer: 'https://blockscout.com/poa/xdai/',
-  },
-  matic: {
-    name: 'matic',
-    color: '#2bbdf7',
-    chainId: 137,
-    price: 1,
-    gasPrice: 1000000000,
-    rpcUrl: 'https://rpc-mainnet.maticvigil.com',
-    faucet: 'https://faucet.matic.network/',
-    blockExplorer: 'https://explorer-mainnet.maticvigil.com//',
-  },
-  mumbai: {
-    name: 'mumbai',
-    color: '#92D9FA',
-    chainId: 80001,
-    price: 1,
-    gasPrice: 1000000000,
-    rpcUrl: 'https://rpc-mumbai.maticvigil.com',
-    faucet: 'https://faucet.matic.network/',
-    blockExplorer: 'https://mumbai-explorer.matic.today/',
   },
 };
 
@@ -108,16 +57,17 @@ export const getNetworkByChainID = (chainId: number | undefined): TNetworkInfo |
     return undefined;
   }
   const key = (Object.keys(NETWORKS) as Array<TNetworkNames>).find((key) => NETWORKS[key].chainId === chainId);
+  console.log(`getNetworkByChainID:chainId `, key);
   if (!key) {
     return undefined;
   }
   return NETWORKS[key];
 };
 
-export const getNetworkNameByChainID = (chainId: number | undefined): string => {
+export const getNetworkNameByChainID = (chainId: number | undefined): string | undefined => {
   const network = getNetworkByChainID(chainId);
   if (!network) {
-    return 'Unknown';
+    return undefined;
   }
   return network.name;
 };

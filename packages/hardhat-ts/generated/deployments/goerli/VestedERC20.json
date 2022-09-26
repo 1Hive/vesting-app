@@ -1,0 +1,585 @@
+{
+  "address": "0x390eFF51E354FA19D73F5eb9191d01ce69Cb5314",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "Error_Wrap_AmountTooLarge",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "Error_Wrap_VestOver",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Approval",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "holder",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "redeemedAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Redeem",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "wrappedAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "underlyingAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Wrap",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "allowance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "approve",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "claimedUnderlyingAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "_decimals",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "endTimestamp",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "_endTimestamp",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "holder",
+          "type": "address"
+        }
+      ],
+      "name": "getRedeemableAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "redeem",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "redeemedAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "startTimestamp",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "_startTimestamp",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "transfer",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "underlying",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "_underlying",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "underlyingAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "wrap",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "wrappedTokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xcdf2faa7abf392cfaad768225e1732bdf83598c50c542f7517c7d5f012a7ed39",
+  "receipt": {
+    "to": null,
+    "from": "0x959FD7Ef9089B7142B6B908Dc3A8af7Aa8ff0FA1",
+    "contractAddress": "0x390eFF51E354FA19D73F5eb9191d01ce69Cb5314",
+    "transactionIndex": 10,
+    "gasUsed": "797165",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x10432095e96eee0463272ba456d9cb53bc08c8f8ac907e355746b9758debfd32",
+    "transactionHash": "0xcdf2faa7abf392cfaad768225e1732bdf83598c50c542f7517c7d5f012a7ed39",
+    "logs": [],
+    "blockNumber": 7659301,
+    "cumulativeGasUsed": "3192303",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "0501e3a4d2f11f6c20bcd3ad04935b9c",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"Error_Wrap_AmountTooLarge\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Error_Wrap_VestOver\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"holder\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"redeemedAmount\",\"type\":\"uint256\"}],\"name\":\"Redeem\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"wrappedAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"underlyingAmount\",\"type\":\"uint256\"}],\"name\":\"Wrap\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"claimedUnderlyingAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"_decimals\",\"type\":\"uint8\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"endTimestamp\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"_endTimestamp\",\"type\":\"uint64\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"holder\",\"type\":\"address\"}],\"name\":\"getRedeemableAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"}],\"name\":\"redeem\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"redeemedAmount\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"startTimestamp\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"_startTimestamp\",\"type\":\"uint64\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"underlying\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"_underlying\",\"type\":\"address\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"underlyingAmount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"}],\"name\":\"wrap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"wrappedTokenAmount\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"zefram.eth\",\"kind\":\"dev\",\"methods\":{\"endTimestamp()\":{\"returns\":{\"_endTimestamp\":\"The vest end timestamp\"}},\"getRedeemableAmount(address)\":{\"params\":{\"holder\":\"The wrapped token holder to query\"},\"returns\":{\"_0\":\"The amount of vested tokens redeemable\"}},\"redeem(address)\":{\"params\":{\"recipient\":\"The address that will receive the vested tokens\"},\"returns\":{\"redeemedAmount\":\"The amount of vested tokens redeemed\"}},\"startTimestamp()\":{\"returns\":{\"_startTimestamp\":\"The vest start timestamp\"}},\"underlying()\":{\"returns\":{\"_underlying\":\"The address of the underlying token\"}},\"wrap(uint256,address)\":{\"params\":{\"recipient\":\"The address that will receive the minted wrapped tokens\",\"underlyingAmount\":\"The amount of underlying tokens to wrap\"},\"returns\":{\"wrappedTokenAmount\":\"The amount of wrapped tokens minted\"}}},\"title\":\"VestedERC20\",\"version\":1},\"userdoc\":{\"errors\":{\"Error_Wrap_VestOver()\":[{\"notice\":\"----------------------------------------------------------------------- Errors -----------------------------------------------------------------------\"}]},\"events\":{\"Wrap(address,uint256,uint256)\":{\"notice\":\"----------------------------------------------------------------------- Events -----------------------------------------------------------------------\"}},\"kind\":\"user\",\"methods\":{\"claimedUnderlyingAmount(address)\":{\"notice\":\"The amount of underlying tokens claimed by a token holder\"},\"endTimestamp()\":{\"notice\":\"The Unix timestamp (in seconds) of the end of the vest\"},\"getRedeemableAmount(address)\":{\"notice\":\"Computes the amount of vested tokens redeemable by an account\"},\"redeem(address)\":{\"notice\":\"Allows a holder of the wrapped token to redeem the vested tokens\"},\"startTimestamp()\":{\"notice\":\"The Unix timestamp (in seconds) of the start of the vest\"},\"transfer(address,uint256)\":{\"notice\":\"The ERC20 transfer function\"},\"transferFrom(address,address,uint256)\":{\"notice\":\"The ERC20 transferFrom function\"},\"underlying()\":{\"notice\":\"The token that is vested\"},\"wrap(uint256,address)\":{\"notice\":\"Mints wrapped tokens using underlying tokens. Can only be called before the vest is over.\"}},\"notice\":\"An ERC20 wrapper token that linearly vests an underlying token to its holders\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/VestedERC20.sol\":\"VestedERC20\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@rari-capital/solmate/src/tokens/ERC20.sol\":{\"content\":\"// SPDX-License-Identifier: AGPL-3.0-only\\npragma solidity >=0.8.0;\\n\\n/// @notice Modern and gas efficient ERC20 + EIP-2612 implementation.\\n/// @author Solmate (https://github.com/Rari-Capital/solmate/blob/main/src/tokens/ERC20.sol)\\n/// @author Modified from Uniswap (https://github.com/Uniswap/uniswap-v2-core/blob/master/contracts/UniswapV2ERC20.sol)\\n/// @dev Do not manually set balances without updating totalSupply, as the sum of all user balances must not exceed it.\\nabstract contract ERC20 {\\n    /*///////////////////////////////////////////////////////////////\\n                                  EVENTS\\n    //////////////////////////////////////////////////////////////*/\\n\\n    event Transfer(address indexed from, address indexed to, uint256 amount);\\n\\n    event Approval(address indexed owner, address indexed spender, uint256 amount);\\n\\n    /*///////////////////////////////////////////////////////////////\\n                             METADATA STORAGE\\n    //////////////////////////////////////////////////////////////*/\\n\\n    string public name;\\n\\n    string public symbol;\\n\\n    uint8 public immutable decimals;\\n\\n    /*///////////////////////////////////////////////////////////////\\n                              ERC20 STORAGE\\n    //////////////////////////////////////////////////////////////*/\\n\\n    uint256 public totalSupply;\\n\\n    mapping(address => uint256) public balanceOf;\\n\\n    mapping(address => mapping(address => uint256)) public allowance;\\n\\n    /*///////////////////////////////////////////////////////////////\\n                             EIP-2612 STORAGE\\n    //////////////////////////////////////////////////////////////*/\\n\\n    bytes32 public constant PERMIT_TYPEHASH =\\n        keccak256(\\\"Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)\\\");\\n\\n    uint256 internal immutable INITIAL_CHAIN_ID;\\n\\n    bytes32 internal immutable INITIAL_DOMAIN_SEPARATOR;\\n\\n    mapping(address => uint256) public nonces;\\n\\n    /*///////////////////////////////////////////////////////////////\\n                               CONSTRUCTOR\\n    //////////////////////////////////////////////////////////////*/\\n\\n    constructor(\\n        string memory _name,\\n        string memory _symbol,\\n        uint8 _decimals\\n    ) {\\n        name = _name;\\n        symbol = _symbol;\\n        decimals = _decimals;\\n\\n        INITIAL_CHAIN_ID = block.chainid;\\n        INITIAL_DOMAIN_SEPARATOR = computeDomainSeparator();\\n    }\\n\\n    /*///////////////////////////////////////////////////////////////\\n                              ERC20 LOGIC\\n    //////////////////////////////////////////////////////////////*/\\n\\n    function approve(address spender, uint256 amount) public virtual returns (bool) {\\n        allowance[msg.sender][spender] = amount;\\n\\n        emit Approval(msg.sender, spender, amount);\\n\\n        return true;\\n    }\\n\\n    function transfer(address to, uint256 amount) public virtual returns (bool) {\\n        balanceOf[msg.sender] -= amount;\\n\\n        // Cannot overflow because the sum of all user\\n        // balances can't exceed the max uint256 value.\\n        unchecked {\\n            balanceOf[to] += amount;\\n        }\\n\\n        emit Transfer(msg.sender, to, amount);\\n\\n        return true;\\n    }\\n\\n    function transferFrom(\\n        address from,\\n        address to,\\n        uint256 amount\\n    ) public virtual returns (bool) {\\n        uint256 allowed = allowance[from][msg.sender]; // Saves gas for limited approvals.\\n\\n        if (allowed != type(uint256).max) allowance[from][msg.sender] = allowed - amount;\\n\\n        balanceOf[from] -= amount;\\n\\n        // Cannot overflow because the sum of all user\\n        // balances can't exceed the max uint256 value.\\n        unchecked {\\n            balanceOf[to] += amount;\\n        }\\n\\n        emit Transfer(from, to, amount);\\n\\n        return true;\\n    }\\n\\n    /*///////////////////////////////////////////////////////////////\\n                              EIP-2612 LOGIC\\n    //////////////////////////////////////////////////////////////*/\\n\\n    function permit(\\n        address owner,\\n        address spender,\\n        uint256 value,\\n        uint256 deadline,\\n        uint8 v,\\n        bytes32 r,\\n        bytes32 s\\n    ) public virtual {\\n        require(deadline >= block.timestamp, \\\"PERMIT_DEADLINE_EXPIRED\\\");\\n\\n        // Unchecked because the only math done is incrementing\\n        // the owner's nonce which cannot realistically overflow.\\n        unchecked {\\n            bytes32 digest = keccak256(\\n                abi.encodePacked(\\n                    \\\"\\\\x19\\\\x01\\\",\\n                    DOMAIN_SEPARATOR(),\\n                    keccak256(abi.encode(PERMIT_TYPEHASH, owner, spender, value, nonces[owner]++, deadline))\\n                )\\n            );\\n\\n            address recoveredAddress = ecrecover(digest, v, r, s);\\n\\n            require(recoveredAddress != address(0) && recoveredAddress == owner, \\\"INVALID_SIGNER\\\");\\n\\n            allowance[recoveredAddress][spender] = value;\\n        }\\n\\n        emit Approval(owner, spender, value);\\n    }\\n\\n    function DOMAIN_SEPARATOR() public view virtual returns (bytes32) {\\n        return block.chainid == INITIAL_CHAIN_ID ? INITIAL_DOMAIN_SEPARATOR : computeDomainSeparator();\\n    }\\n\\n    function computeDomainSeparator() internal view virtual returns (bytes32) {\\n        return\\n            keccak256(\\n                abi.encode(\\n                    keccak256(\\\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\\\"),\\n                    keccak256(bytes(name)),\\n                    keccak256(\\\"1\\\"),\\n                    block.chainid,\\n                    address(this)\\n                )\\n            );\\n    }\\n\\n    /*///////////////////////////////////////////////////////////////\\n                       INTERNAL MINT/BURN LOGIC\\n    //////////////////////////////////////////////////////////////*/\\n\\n    function _mint(address to, uint256 amount) internal virtual {\\n        totalSupply += amount;\\n\\n        // Cannot overflow because the sum of all user\\n        // balances can't exceed the max uint256 value.\\n        unchecked {\\n            balanceOf[to] += amount;\\n        }\\n\\n        emit Transfer(address(0), to, amount);\\n    }\\n\\n    function _burn(address from, uint256 amount) internal virtual {\\n        balanceOf[from] -= amount;\\n\\n        // Cannot underflow because a user's balance\\n        // will never be larger than the total supply.\\n        unchecked {\\n            totalSupply -= amount;\\n        }\\n\\n        emit Transfer(from, address(0), amount);\\n    }\\n}\\n\",\"keccak256\":\"0x698cdbf614109fafc2bf00057b60715fa3aba9dad447c42f4f8b749ae16ce84f\",\"license\":\"AGPL-3.0-only\"},\"@rari-capital/solmate/src/utils/SafeTransferLib.sol\":{\"content\":\"// SPDX-License-Identifier: AGPL-3.0-only\\npragma solidity >=0.8.0;\\n\\nimport {ERC20} from \\\"../tokens/ERC20.sol\\\";\\n\\n/// @notice Safe ETH and ERC20 transfer library that gracefully handles missing return values.\\n/// @author Solmate (https://github.com/Rari-Capital/solmate/blob/main/src/utils/SafeTransferLib.sol)\\n/// @author Modified from Gnosis (https://github.com/gnosis/gp-v2-contracts/blob/main/src/contracts/libraries/GPv2SafeERC20.sol)\\n/// @dev Use with caution! Some functions in this library knowingly create dirty bits at the destination of the free memory pointer.\\nlibrary SafeTransferLib {\\n    /*///////////////////////////////////////////////////////////////\\n                            ETH OPERATIONS\\n    //////////////////////////////////////////////////////////////*/\\n\\n    function safeTransferETH(address to, uint256 amount) internal {\\n        bool callStatus;\\n\\n        assembly {\\n            // Transfer the ETH and store if it succeeded or not.\\n            callStatus := call(gas(), to, amount, 0, 0, 0, 0)\\n        }\\n\\n        require(callStatus, \\\"ETH_TRANSFER_FAILED\\\");\\n    }\\n\\n    /*///////////////////////////////////////////////////////////////\\n                           ERC20 OPERATIONS\\n    //////////////////////////////////////////////////////////////*/\\n\\n    function safeTransferFrom(\\n        ERC20 token,\\n        address from,\\n        address to,\\n        uint256 amount\\n    ) internal {\\n        bool callStatus;\\n\\n        assembly {\\n            // Get a pointer to some free memory.\\n            let freeMemoryPointer := mload(0x40)\\n\\n            // Write the abi-encoded calldata to memory piece by piece:\\n            mstore(freeMemoryPointer, 0x23b872dd00000000000000000000000000000000000000000000000000000000) // Begin with the function selector.\\n            mstore(add(freeMemoryPointer, 4), and(from, 0xffffffffffffffffffffffffffffffffffffffff)) // Mask and append the \\\"from\\\" argument.\\n            mstore(add(freeMemoryPointer, 36), and(to, 0xffffffffffffffffffffffffffffffffffffffff)) // Mask and append the \\\"to\\\" argument.\\n            mstore(add(freeMemoryPointer, 68), amount) // Finally append the \\\"amount\\\" argument. No mask as it's a full 32 byte value.\\n\\n            // Call the token and store if it succeeded or not.\\n            // We use 100 because the calldata length is 4 + 32 * 3.\\n            callStatus := call(gas(), token, 0, freeMemoryPointer, 100, 0, 0)\\n        }\\n\\n        require(didLastOptionalReturnCallSucceed(callStatus), \\\"TRANSFER_FROM_FAILED\\\");\\n    }\\n\\n    function safeTransfer(\\n        ERC20 token,\\n        address to,\\n        uint256 amount\\n    ) internal {\\n        bool callStatus;\\n\\n        assembly {\\n            // Get a pointer to some free memory.\\n            let freeMemoryPointer := mload(0x40)\\n\\n            // Write the abi-encoded calldata to memory piece by piece:\\n            mstore(freeMemoryPointer, 0xa9059cbb00000000000000000000000000000000000000000000000000000000) // Begin with the function selector.\\n            mstore(add(freeMemoryPointer, 4), and(to, 0xffffffffffffffffffffffffffffffffffffffff)) // Mask and append the \\\"to\\\" argument.\\n            mstore(add(freeMemoryPointer, 36), amount) // Finally append the \\\"amount\\\" argument. No mask as it's a full 32 byte value.\\n\\n            // Call the token and store if it succeeded or not.\\n            // We use 68 because the calldata length is 4 + 32 * 2.\\n            callStatus := call(gas(), token, 0, freeMemoryPointer, 68, 0, 0)\\n        }\\n\\n        require(didLastOptionalReturnCallSucceed(callStatus), \\\"TRANSFER_FAILED\\\");\\n    }\\n\\n    function safeApprove(\\n        ERC20 token,\\n        address to,\\n        uint256 amount\\n    ) internal {\\n        bool callStatus;\\n\\n        assembly {\\n            // Get a pointer to some free memory.\\n            let freeMemoryPointer := mload(0x40)\\n\\n            // Write the abi-encoded calldata to memory piece by piece:\\n            mstore(freeMemoryPointer, 0x095ea7b300000000000000000000000000000000000000000000000000000000) // Begin with the function selector.\\n            mstore(add(freeMemoryPointer, 4), and(to, 0xffffffffffffffffffffffffffffffffffffffff)) // Mask and append the \\\"to\\\" argument.\\n            mstore(add(freeMemoryPointer, 36), amount) // Finally append the \\\"amount\\\" argument. No mask as it's a full 32 byte value.\\n\\n            // Call the token and store if it succeeded or not.\\n            // We use 68 because the calldata length is 4 + 32 * 2.\\n            callStatus := call(gas(), token, 0, freeMemoryPointer, 68, 0, 0)\\n        }\\n\\n        require(didLastOptionalReturnCallSucceed(callStatus), \\\"APPROVE_FAILED\\\");\\n    }\\n\\n    /*///////////////////////////////////////////////////////////////\\n                         INTERNAL HELPER LOGIC\\n    //////////////////////////////////////////////////////////////*/\\n\\n    function didLastOptionalReturnCallSucceed(bool callStatus) private pure returns (bool success) {\\n        assembly {\\n            // Get how many bytes the call returned.\\n            let returnDataSize := returndatasize()\\n\\n            // If the call reverted:\\n            if iszero(callStatus) {\\n                // Copy the revert message into memory.\\n                returndatacopy(0, 0, returnDataSize)\\n\\n                // Revert with the same message.\\n                revert(0, returnDataSize)\\n            }\\n\\n            switch returnDataSize\\n            case 32 {\\n                // Copy the return data into memory.\\n                returndatacopy(0, 0, returnDataSize)\\n\\n                // Set success to whether it returned true.\\n                success := iszero(iszero(mload(0)))\\n            }\\n            case 0 {\\n                // There was no return data.\\n                success := 1\\n            }\\n            default {\\n                // It returned some malformed input.\\n                success := 0\\n            }\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xcc39d0f5693925ea1e8c517f7cc24211a9899c83a57e62d806180cdb056b6b75\",\"license\":\"AGPL-3.0-only\"},\"contracts/VestedERC20.sol\":{\"content\":\"// SPDX-License-Identifier: AGPL-3.0\\n\\npragma solidity ^0.8.11;\\n\\nimport { ERC20 as SolmateERC20 } from \\\"@rari-capital/solmate/src/tokens/ERC20.sol\\\";\\nimport { SafeTransferLib } from \\\"@rari-capital/solmate/src/utils/SafeTransferLib.sol\\\";\\n\\nimport { ERC20 } from \\\"./lib/ERC20.sol\\\";\\nimport { FullMath } from \\\"./lib/FullMath.sol\\\";\\n\\n/// @title VestedERC20\\n/// @author zefram.eth\\n/// @notice An ERC20 wrapper token that linearly vests an underlying token to\\n/// its holders\\ncontract VestedERC20 is ERC20 {\\n  /// -----------------------------------------------------------------------\\n  /// Library usage\\n  /// -----------------------------------------------------------------------\\n\\n  using SafeTransferLib for SolmateERC20;\\n\\n  /// -----------------------------------------------------------------------\\n  /// Errors\\n  /// -----------------------------------------------------------------------\\n\\n  error Error_Wrap_VestOver();\\n  error Error_Wrap_AmountTooLarge();\\n\\n  /// -----------------------------------------------------------------------\\n  /// Events\\n  /// -----------------------------------------------------------------------\\n\\n  event Wrap(address indexed recipient, uint256 wrappedAmount, uint256 underlyingAmount);\\n  event Redeem(address indexed holder, address indexed recipient, uint256 redeemedAmount);\\n\\n  /// -----------------------------------------------------------------------\\n  /// Storage variables\\n  /// -----------------------------------------------------------------------\\n\\n  /// @notice The amount of underlying tokens claimed by a token holder\\n  mapping(address => uint256) public claimedUnderlyingAmount;\\n\\n  /// -----------------------------------------------------------------------\\n  /// Immutable parameters\\n  /// -----------------------------------------------------------------------\\n\\n  /// @notice The token that is vested\\n  /// @return _underlying The address of the underlying token\\n  function underlying() public pure returns (address _underlying) {\\n    uint256 offset = _getImmutableVariablesOffset();\\n    assembly {\\n      _underlying := shr(0x60, calldataload(add(offset, 0x41)))\\n    }\\n  }\\n\\n  /// @notice The Unix timestamp (in seconds) of the start of the vest\\n  /// @return _startTimestamp The vest start timestamp\\n  function startTimestamp() public pure returns (uint64 _startTimestamp) {\\n    uint256 offset = _getImmutableVariablesOffset();\\n    assembly {\\n      _startTimestamp := shr(0xc0, calldataload(add(offset, 0x55)))\\n    }\\n  }\\n\\n  /// @notice The Unix timestamp (in seconds) of the end of the vest\\n  /// @return _endTimestamp The vest end timestamp\\n  function endTimestamp() public pure returns (uint64 _endTimestamp) {\\n    uint256 offset = _getImmutableVariablesOffset();\\n    assembly {\\n      _endTimestamp := shr(0xc0, calldataload(add(offset, 0x5d)))\\n    }\\n  }\\n\\n  /// -----------------------------------------------------------------------\\n  /// User actions\\n  /// -----------------------------------------------------------------------\\n\\n  /// @notice Mints wrapped tokens using underlying tokens. Can only be called before the vest is over.\\n  /// @param underlyingAmount The amount of underlying tokens to wrap\\n  /// @param recipient The address that will receive the minted wrapped tokens\\n  /// @return wrappedTokenAmount The amount of wrapped tokens minted\\n  function wrap(uint256 underlyingAmount, address recipient) external returns (uint256 wrappedTokenAmount) {\\n    /// -------------------------------------------------------------------\\n    /// Validation\\n    /// -------------------------------------------------------------------\\n\\n    uint256 _startTimestamp = startTimestamp();\\n    uint256 _endTimestamp = endTimestamp();\\n    if (block.timestamp >= _endTimestamp) {\\n      revert Error_Wrap_VestOver();\\n    }\\n    if (underlyingAmount >= type(uint256).max / (_endTimestamp - _startTimestamp)) {\\n      revert Error_Wrap_AmountTooLarge();\\n    }\\n\\n    /// -------------------------------------------------------------------\\n    /// State updates\\n    /// -------------------------------------------------------------------\\n\\n    if (block.timestamp >= _startTimestamp) {\\n      // vest already started\\n      // wrappedTokenAmount * (endTimestamp() - block.timestamp) / (endTimestamp() - startTimestamp()) == underlyingAmount\\n      // thus, wrappedTokenAmount = underlyingAmount * (endTimestamp() - startTimestamp()) / (endTimestamp() - block.timestamp)\\n      wrappedTokenAmount = (underlyingAmount * (_endTimestamp - _startTimestamp)) / (_endTimestamp - block.timestamp);\\n\\n      // pretend we have claimed the vested underlying amount\\n      claimedUnderlyingAmount[recipient] += wrappedTokenAmount - underlyingAmount;\\n    } else {\\n      // vest hasn't started yet\\n      wrappedTokenAmount = underlyingAmount;\\n    }\\n    // mint wrapped tokens\\n    _mint(recipient, wrappedTokenAmount);\\n\\n    /// -------------------------------------------------------------------\\n    /// Effects\\n    /// -------------------------------------------------------------------\\n\\n    SolmateERC20 underlyingToken = SolmateERC20(underlying());\\n    underlyingToken.safeTransferFrom(msg.sender, address(this), underlyingAmount);\\n\\n    emit Wrap(recipient, wrappedTokenAmount, underlyingAmount);\\n  }\\n\\n  /// @notice Allows a holder of the wrapped token to redeem the vested tokens\\n  /// @param recipient The address that will receive the vested tokens\\n  /// @return redeemedAmount The amount of vested tokens redeemed\\n  function redeem(address recipient) external returns (uint256 redeemedAmount) {\\n    /// -------------------------------------------------------------------\\n    /// State updates\\n    /// -------------------------------------------------------------------\\n\\n    uint256 _claimedUnderlyingAmount = claimedUnderlyingAmount[msg.sender];\\n    redeemedAmount = _getRedeemableAmount(msg.sender, _claimedUnderlyingAmount);\\n    claimedUnderlyingAmount[msg.sender] = _claimedUnderlyingAmount + redeemedAmount;\\n\\n    /// -------------------------------------------------------------------\\n    /// Effects\\n    /// -------------------------------------------------------------------\\n\\n    if (redeemedAmount > 0) {\\n      SolmateERC20 underlyingToken = SolmateERC20(underlying());\\n      underlyingToken.safeTransfer(recipient, redeemedAmount);\\n\\n      emit Redeem(msg.sender, recipient, redeemedAmount);\\n    }\\n  }\\n\\n  /// @notice The ERC20 transfer function\\n  function transfer(address to, uint256 amount) public override returns (bool) {\\n    uint256 senderBalance = balanceOf[msg.sender];\\n    uint256 senderClaimedUnderlyingAmount = claimedUnderlyingAmount[msg.sender];\\n\\n    balanceOf[msg.sender] = senderBalance - amount;\\n\\n    // Cannot overflow because the sum of all user\\n    // balances can't exceed the max uint256 value.\\n    unchecked {\\n      balanceOf[to] += amount;\\n    }\\n\\n    uint256 claimedUnderlyingAmountToTransfer = FullMath.mulDiv(senderClaimedUnderlyingAmount, amount, senderBalance);\\n\\n    if (claimedUnderlyingAmountToTransfer > 0) {\\n      claimedUnderlyingAmount[msg.sender] = senderClaimedUnderlyingAmount - claimedUnderlyingAmountToTransfer;\\n      unchecked {\\n        claimedUnderlyingAmount[to] += claimedUnderlyingAmountToTransfer;\\n      }\\n    }\\n\\n    emit Transfer(msg.sender, to, amount);\\n\\n    return true;\\n  }\\n\\n  /// @notice The ERC20 transferFrom function\\n  function transferFrom(\\n    address from,\\n    address to,\\n    uint256 amount\\n  ) public override returns (bool) {\\n    uint256 allowed = allowance[from][msg.sender]; // Saves gas for limited approvals.\\n\\n    if (allowed != type(uint256).max) allowance[from][msg.sender] = allowed - amount;\\n\\n    uint256 fromBalance = balanceOf[from];\\n    uint256 fromClaimedUnderlyingAmount = claimedUnderlyingAmount[from];\\n\\n    balanceOf[from] = fromBalance - amount;\\n\\n    // Cannot overflow because the sum of all user\\n    // balances can't exceed the max uint256 value.\\n    unchecked {\\n      balanceOf[to] += amount;\\n    }\\n\\n    uint256 claimedUnderlyingAmountToTransfer = FullMath.mulDiv(fromClaimedUnderlyingAmount, amount, fromBalance);\\n    if (claimedUnderlyingAmountToTransfer > 0) {\\n      claimedUnderlyingAmount[from] = fromClaimedUnderlyingAmount - claimedUnderlyingAmountToTransfer;\\n      unchecked {\\n        claimedUnderlyingAmount[to] += claimedUnderlyingAmountToTransfer;\\n      }\\n    }\\n\\n    emit Transfer(from, to, amount);\\n\\n    return true;\\n  }\\n\\n  /// -----------------------------------------------------------------------\\n  /// Getters\\n  /// -----------------------------------------------------------------------\\n\\n  /// @notice Computes the amount of vested tokens redeemable by an account\\n  /// @param holder The wrapped token holder to query\\n  /// @return The amount of vested tokens redeemable\\n  function getRedeemableAmount(address holder) external view returns (uint256) {\\n    return _getRedeemableAmount(holder, claimedUnderlyingAmount[holder]);\\n  }\\n\\n  /// -----------------------------------------------------------------------\\n  /// Internal functions\\n  /// -----------------------------------------------------------------------\\n\\n  function _getRedeemableAmount(address holder, uint256 holderClaimedUnderlyingAmount) internal view returns (uint256) {\\n    uint256 _startTimestamp = startTimestamp();\\n    uint256 _endTimestamp = endTimestamp();\\n    if (block.timestamp <= _startTimestamp) {\\n      // vest hasn't started yet, nothing is vested\\n      return 0;\\n    } else if (block.timestamp >= _endTimestamp) {\\n      // vest is over, everything is vested\\n      return balanceOf[holder] - holderClaimedUnderlyingAmount;\\n    } else {\\n      // middle of vest, compute linear vesting\\n      return (balanceOf[holder] * (block.timestamp - _startTimestamp)) / (_endTimestamp - _startTimestamp) - holderClaimedUnderlyingAmount;\\n    }\\n  }\\n}\\n\",\"keccak256\":\"0x34ede5df04a8d55b087cee08e6f484b8c431e4a68f8a30e3e31d8411171141c9\",\"license\":\"AGPL-3.0\"},\"contracts/lib/ERC20.sol\":{\"content\":\"// SPDX-License-Identifier: AGPL-3.0-only\\npragma solidity >=0.8.0;\\n\\n/// @notice Modern and gas efficient ERC20 + EIP-2612 implementation.\\n/// @author Solmate (https://github.com/Rari-Capital/solmate/blob/main/src/tokens/ERC20.sol)\\n/// @author Modified from Uniswap (https://github.com/Uniswap/uniswap-v2-core/blob/master/contracts/UniswapV2ERC20.sol)\\n/// @dev Do not manually set balances without updating totalSupply, as the sum of all user balances must not exceed it.\\nabstract contract ERC20 {\\n  /*///////////////////////////////////////////////////////////////\\n                                  EVENTS\\n    //////////////////////////////////////////////////////////////*/\\n\\n  event Transfer(address indexed from, address indexed to, uint256 amount);\\n\\n  event Approval(address indexed owner, address indexed spender, uint256 amount);\\n\\n  /*///////////////////////////////////////////////////////////////\\n                              ERC20 STORAGE\\n    //////////////////////////////////////////////////////////////*/\\n\\n  uint256 public totalSupply;\\n\\n  mapping(address => uint256) public balanceOf;\\n\\n  mapping(address => mapping(address => uint256)) public allowance;\\n\\n  /*///////////////////////////////////////////////////////////////\\n                               METADATA\\n    //////////////////////////////////////////////////////////////*/\\n\\n  function name() external pure returns (string memory) {\\n    uint256 offset = _getImmutableVariablesOffset();\\n    bytes32 nameBytes;\\n    assembly {\\n      nameBytes := calldataload(offset)\\n    }\\n    return string(abi.encodePacked(nameBytes));\\n  }\\n\\n  function symbol() external pure returns (string memory) {\\n    uint256 offset = _getImmutableVariablesOffset();\\n    bytes32 symbolBytes;\\n    assembly {\\n      symbolBytes := calldataload(add(offset, 0x20))\\n    }\\n    return string(abi.encodePacked(symbolBytes));\\n  }\\n\\n  function decimals() external pure returns (uint8 _decimals) {\\n    uint256 offset = _getImmutableVariablesOffset();\\n    assembly {\\n      _decimals := shr(0xf8, calldataload(add(offset, 0x40)))\\n    }\\n  }\\n\\n  /*///////////////////////////////////////////////////////////////\\n                              ERC20 LOGIC\\n    //////////////////////////////////////////////////////////////*/\\n\\n  function approve(address spender, uint256 amount) public virtual returns (bool) {\\n    allowance[msg.sender][spender] = amount;\\n\\n    emit Approval(msg.sender, spender, amount);\\n\\n    return true;\\n  }\\n\\n  function transfer(address to, uint256 amount) public virtual returns (bool) {\\n    balanceOf[msg.sender] -= amount;\\n\\n    // Cannot overflow because the sum of all user\\n    // balances can't exceed the max uint256 value.\\n    unchecked {\\n      balanceOf[to] += amount;\\n    }\\n\\n    emit Transfer(msg.sender, to, amount);\\n\\n    return true;\\n  }\\n\\n  function transferFrom(\\n    address from,\\n    address to,\\n    uint256 amount\\n  ) public virtual returns (bool) {\\n    uint256 allowed = allowance[from][msg.sender]; // Saves gas for limited approvals.\\n\\n    if (allowed != type(uint256).max) allowance[from][msg.sender] = allowed - amount;\\n\\n    balanceOf[from] -= amount;\\n\\n    // Cannot overflow because the sum of all user\\n    // balances can't exceed the max uint256 value.\\n    unchecked {\\n      balanceOf[to] += amount;\\n    }\\n\\n    emit Transfer(from, to, amount);\\n\\n    return true;\\n  }\\n\\n  /*///////////////////////////////////////////////////////////////\\n                       INTERNAL LOGIC\\n    //////////////////////////////////////////////////////////////*/\\n\\n  function _mint(address to, uint256 amount) internal virtual {\\n    totalSupply += amount;\\n\\n    // Cannot overflow because the sum of all user\\n    // balances can't exceed the max uint256 value.\\n    unchecked {\\n      balanceOf[to] += amount;\\n    }\\n\\n    emit Transfer(address(0), to, amount);\\n  }\\n\\n  function _burn(address from, uint256 amount) internal virtual {\\n    balanceOf[from] -= amount;\\n\\n    // Cannot underflow because a user's balance\\n    // will never be larger than the total supply.\\n    unchecked {\\n      totalSupply -= amount;\\n    }\\n\\n    emit Transfer(from, address(0), amount);\\n  }\\n\\n  function _getImmutableVariablesOffset() internal pure returns (uint256 offset) {\\n    assembly {\\n      offset := sub(calldatasize(), add(shr(240, calldataload(sub(calldatasize(), 2))), 2))\\n    }\\n  }\\n}\\n\",\"keccak256\":\"0xcc51e6a05cb9840144406a738a302db5b7439d79f65f43da691d405abead8157\",\"license\":\"AGPL-3.0-only\"},\"contracts/lib/FullMath.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity >=0.8.0;\\n\\n/// @title Contains 512-bit math functions\\n/// @notice Facilitates multiplication and division that can have overflow of an intermediate value without any loss of precision\\n/// @dev Handles \\\"phantom overflow\\\" i.e., allows multiplication and division where an intermediate value overflows 256 bits\\nlibrary FullMath {\\n  /// @notice Calculates floor(a\\u00d7b\\u00f7denominator) with full precision. Throws if result overflows a uint256 or denominator == 0\\n  /// @param a The multiplicand\\n  /// @param b The multiplier\\n  /// @param denominator The divisor\\n  /// @return result The 256-bit result\\n  /// @dev Credit to Remco Bloemen under MIT license https://xn--2-umb.com/21/muldiv\\n  function mulDiv(\\n    uint256 a,\\n    uint256 b,\\n    uint256 denominator\\n  ) internal pure returns (uint256 result) {\\n    unchecked {\\n      // 512-bit multiply [prod1 prod0] = a * b\\n      // Compute the product mod 2**256 and mod 2**256 - 1\\n      // then use the Chinese Remainder Theorem to reconstruct\\n      // the 512 bit result. The result is stored in two 256\\n      // variables such that product = prod1 * 2**256 + prod0\\n      uint256 prod0; // Least significant 256 bits of the product\\n      uint256 prod1; // Most significant 256 bits of the product\\n      assembly {\\n        let mm := mulmod(a, b, not(0))\\n        prod0 := mul(a, b)\\n        prod1 := sub(sub(mm, prod0), lt(mm, prod0))\\n      }\\n\\n      // Handle non-overflow cases, 256 by 256 division\\n      if (prod1 == 0) {\\n        require(denominator > 0);\\n        assembly {\\n          result := div(prod0, denominator)\\n        }\\n        return result;\\n      }\\n\\n      // Make sure the result is less than 2**256.\\n      // Also prevents denominator == 0\\n      require(denominator > prod1);\\n\\n      ///////////////////////////////////////////////\\n      // 512 by 256 division.\\n      ///////////////////////////////////////////////\\n\\n      // Make division exact by subtracting the remainder from [prod1 prod0]\\n      // Compute remainder using mulmod\\n      uint256 remainder;\\n      assembly {\\n        remainder := mulmod(a, b, denominator)\\n      }\\n      // Subtract 256 bit number from 512 bit number\\n      assembly {\\n        prod1 := sub(prod1, gt(remainder, prod0))\\n        prod0 := sub(prod0, remainder)\\n      }\\n\\n      // Factor powers of two out of denominator\\n      // Compute largest power of two divisor of denominator.\\n      // Always >= 1.\\n      uint256 twos = (type(uint256).max - denominator + 1) & denominator;\\n      // Divide denominator by power of two\\n      assembly {\\n        denominator := div(denominator, twos)\\n      }\\n\\n      // Divide [prod1 prod0] by the factors of two\\n      assembly {\\n        prod0 := div(prod0, twos)\\n      }\\n      // Shift in bits from prod1 into prod0. For this we need\\n      // to flip `twos` such that it is 2**256 / twos.\\n      // If twos is zero, then it becomes one\\n      assembly {\\n        twos := add(div(sub(0, twos), twos), 1)\\n      }\\n      prod0 |= prod1 * twos;\\n\\n      // Invert denominator mod 2**256\\n      // Now that denominator is an odd number, it has an inverse\\n      // modulo 2**256 such that denominator * inv = 1 mod 2**256.\\n      // Compute the inverse by starting with a seed that is correct\\n      // correct for four bits. That is, denominator * inv = 1 mod 2**4\\n      uint256 inv = (3 * denominator) ^ 2;\\n      // Now use Newton-Raphson iteration to improve the precision.\\n      // Thanks to Hensel's lifting lemma, this also works in modular\\n      // arithmetic, doubling the correct bits in each step.\\n      inv *= 2 - denominator * inv; // inverse mod 2**8\\n      inv *= 2 - denominator * inv; // inverse mod 2**16\\n      inv *= 2 - denominator * inv; // inverse mod 2**32\\n      inv *= 2 - denominator * inv; // inverse mod 2**64\\n      inv *= 2 - denominator * inv; // inverse mod 2**128\\n      inv *= 2 - denominator * inv; // inverse mod 2**256\\n\\n      // Because the division is now exact we can divide by multiplying\\n      // with the modular inverse of denominator. This will give us the\\n      // correct result modulo 2**256. Since the precoditions guarantee\\n      // that the outcome is less than 2**256, this is the final result.\\n      // We don't need to compute the high bits of the result and prod1\\n      // is no longer required.\\n      result = prod0 * inv;\\n      return result;\\n    }\\n  }\\n\\n  /// @notice Calculates ceil(a\\u00d7b\\u00f7denominator) with full precision. Throws if result overflows a uint256 or denominator == 0\\n  /// @param a The multiplicand\\n  /// @param b The multiplier\\n  /// @param denominator The divisor\\n  /// @return result The 256-bit result\\n  function mulDivRoundingUp(\\n    uint256 a,\\n    uint256 b,\\n    uint256 denominator\\n  ) internal pure returns (uint256 result) {\\n    result = mulDiv(a, b, denominator);\\n    unchecked {\\n      if (mulmod(a, b, denominator) > 0) {\\n        require(result < type(uint256).max);\\n        result++;\\n      }\\n    }\\n  }\\n}\\n\",\"keccak256\":\"0xe0c0a4bcd907097a76c22f63c387d5fd78e5415f1770a41e1fbf9e2040ac42e0\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610d75806100206000396000f3fe608060405234801561001057600080fd5b50600436106101005760003560e01c80636f307dc311610097578063a85adeab11610066578063a85adeab1461022b578063a9059cbb1461024c578063dd62ed3e1461025f578063e6fd48bc1461028a57600080fd5b80636f307dc3146101d057806370a08231146101f057806395a2251f1461021057806395d89b411461022357600080fd5b806318160ddd116100d357806318160ddd1461018757806323b872dd14610190578063313ce567146101a3578063619cfc35146101bd57600080fd5b806306fdde0314610105578063095ea7b3146101235780630daf3df01461014657806313bac82014610174575b600080fd5b61010d610292565b60405161011a9190610b71565b60405180910390f35b610136610131366004610be2565b6102c6565b604051901515815260200161011a565b610166610154366004610c0c565b60036020526000908152604090205481565b60405190815260200161011a565b610166610182366004610c27565b610333565b61016660005481565b61013661019e366004610c53565b61049f565b6101ab6105fb565b60405160ff909116815260200161011a565b6101666101cb366004610c0c565b610613565b6101d8610637565b6040516001600160a01b03909116815260200161011a565b6101666101fe366004610c0c565b60016020526000908152604090205481565b61016661021e366004610c0c565b61064f565b61010d6106f5565b61023361071a565b60405167ffffffffffffffff909116815260200161011a565b61013661025a366004610be2565b610732565b61016661026d366004610c8f565b600260209081526000928352604080842090915290825290205481565b610233610811565b6060600061029e610829565b60408051823560208201819052929350015b6040516020818303038152906040529250505090565b3360008181526002602090815260408083206001600160a01b038716808552925280832085905551919290917f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925906103219086815260200190565b60405180910390a35060015b92915050565b60008061033e610811565b67ffffffffffffffff169050600061035461071a565b67ffffffffffffffff16905080421061038057604051634bb83d4360e01b815260040160405180910390fd5b61038a8282610ccf565b61039690600019610ce6565b85106103b5576040516303642f3d60e51b815260040160405180910390fd5b814210610423576103c64282610ccf565b6103d08383610ccf565b6103da9087610d08565b6103e49190610ce6565b92506103f08584610ccf565b6001600160a01b03851660009081526003602052604081208054909190610418908490610d27565b909155506104279050565b8492505b610431848461083a565b600061043b610637565b90506104526001600160a01b0382163330896108a4565b60408051858152602081018890526001600160a01b038716917f18a5ed48bb0a697c64a5aef8f28cec1f29ab01da27a45c5f835099781ef1ea46910160405180910390a250505092915050565b6001600160a01b038316600090815260026020908152604080832033845290915281205460001981146104fb576104d68382610ccf565b6001600160a01b03861660009081526002602090815260408083203384529091529020555b6001600160a01b03851660009081526001602090815260408083205460039092529091205461052a8583610ccf565b6001600160a01b0380891660009081526001602052604080822093909355908816815290812080548701905561056182878561093d565b9050801561059e576105738183610ccf565b6001600160a01b03808a16600090815260036020526040808220939093559089168152208054820190555b866001600160a01b0316886001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef886040516105e391815260200190565b60405180910390a360019450505050505b9392505050565b600080610606610829565b6040013560f81c92915050565b6001600160a01b03811660009081526003602052604081205461032d9083906109ec565b600080610642610829565b6041013560601c92915050565b33600081815260036020526040812054909161066b90826109ec565b91506106778282610d27565b3360009081526003602052604090205581156106ef576000610697610637565b90506106ad6001600160a01b0382168585610aab565b6040518381526001600160a01b0385169033907fd12200efa34901b99367694174c3b0d32c99585fdf37c7c26892136ddd0836d99060200160405180910390a3505b50919050565b60606000610701610829565b60408051602080840135908201819052929350016102b0565b600080610725610829565b605d013560c01c92915050565b3360009081526001602090815260408083205460039092528220546107578483610ccf565b33600090815260016020526040808220929092556001600160a01b038716815290812080548601905561078b82868561093d565b905080156107c55761079d8183610ccf565b33600090815260036020526040808220929092556001600160a01b0388168152208054820190555b6040518581526001600160a01b0387169033907fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9060200160405180910390a350600195945050505050565b60008061081c610829565b6055013560c01c92915050565b600119368181013560f01c90030190565b8060008082825461084b9190610d27565b90915550506001600160a01b0382166000818152600160209081526040808320805486019055518481527fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef910160405180910390a35050565b60006040516323b872dd60e01b81526001600160a01b03851660048201526001600160a01b038416602482015282604482015260008060648360008a5af19150506108ee81610b2a565b6109365760405162461bcd60e51b81526020600482015260146024820152731514905394d1915497d19493d357d1905253115160621b60448201526064015b60405180910390fd5b5050505050565b600080806000198587098587029250828110838203039150508060001415610977576000841161096c57600080fd5b5082900490506105f4565b80841161098357600080fd5b60008486880960026001871981018816978890046003810283188082028403028082028403028082028403028082028403028082028403029081029092039091026000889003889004909101858311909403939093029303949094049190911702949350505050565b6000806109f7610811565b67ffffffffffffffff1690506000610a0d61071a565b67ffffffffffffffff169050814211610a2b5760009250505061032d565b804210610a5f576001600160a01b038516600090815260016020526040902054610a56908590610ccf565b9250505061032d565b83610a6a8383610ccf565b610a748442610ccf565b6001600160a01b038816600090815260016020526040902054610a979190610d08565b610aa19190610ce6565b610a569190610ccf565b600060405163a9059cbb60e01b81526001600160a01b03841660048201528260248201526000806044836000895af1915050610ae681610b2a565b610b245760405162461bcd60e51b815260206004820152600f60248201526e1514905394d1915497d19052531151608a1b604482015260640161092d565b50505050565b60003d82610b3c57806000803e806000fd5b8060208114610b54578015610b655760009250610b6a565b816000803e60005115159250610b6a565b600192505b5050919050565b600060208083528351808285015260005b81811015610b9e57858101830151858201604001528201610b82565b81811115610bb0576000604083870101525b50601f01601f1916929092016040019392505050565b80356001600160a01b0381168114610bdd57600080fd5b919050565b60008060408385031215610bf557600080fd5b610bfe83610bc6565b946020939093013593505050565b600060208284031215610c1e57600080fd5b6105f482610bc6565b60008060408385031215610c3a57600080fd5b82359150610c4a60208401610bc6565b90509250929050565b600080600060608486031215610c6857600080fd5b610c7184610bc6565b9250610c7f60208501610bc6565b9150604084013590509250925092565b60008060408385031215610ca257600080fd5b610cab83610bc6565b9150610c4a60208401610bc6565b634e487b7160e01b600052601160045260246000fd5b600082821015610ce157610ce1610cb9565b500390565b600082610d0357634e487b7160e01b600052601260045260246000fd5b500490565b6000816000190483118215151615610d2257610d22610cb9565b500290565b60008219821115610d3a57610d3a610cb9565b50019056fea264697066735822122072d91216d8babc9108f60885a8d727235d9971f34df0ff795e11aae4bc03d75064736f6c634300080b0033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106101005760003560e01c80636f307dc311610097578063a85adeab11610066578063a85adeab1461022b578063a9059cbb1461024c578063dd62ed3e1461025f578063e6fd48bc1461028a57600080fd5b80636f307dc3146101d057806370a08231146101f057806395a2251f1461021057806395d89b411461022357600080fd5b806318160ddd116100d357806318160ddd1461018757806323b872dd14610190578063313ce567146101a3578063619cfc35146101bd57600080fd5b806306fdde0314610105578063095ea7b3146101235780630daf3df01461014657806313bac82014610174575b600080fd5b61010d610292565b60405161011a9190610b71565b60405180910390f35b610136610131366004610be2565b6102c6565b604051901515815260200161011a565b610166610154366004610c0c565b60036020526000908152604090205481565b60405190815260200161011a565b610166610182366004610c27565b610333565b61016660005481565b61013661019e366004610c53565b61049f565b6101ab6105fb565b60405160ff909116815260200161011a565b6101666101cb366004610c0c565b610613565b6101d8610637565b6040516001600160a01b03909116815260200161011a565b6101666101fe366004610c0c565b60016020526000908152604090205481565b61016661021e366004610c0c565b61064f565b61010d6106f5565b61023361071a565b60405167ffffffffffffffff909116815260200161011a565b61013661025a366004610be2565b610732565b61016661026d366004610c8f565b600260209081526000928352604080842090915290825290205481565b610233610811565b6060600061029e610829565b60408051823560208201819052929350015b6040516020818303038152906040529250505090565b3360008181526002602090815260408083206001600160a01b038716808552925280832085905551919290917f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925906103219086815260200190565b60405180910390a35060015b92915050565b60008061033e610811565b67ffffffffffffffff169050600061035461071a565b67ffffffffffffffff16905080421061038057604051634bb83d4360e01b815260040160405180910390fd5b61038a8282610ccf565b61039690600019610ce6565b85106103b5576040516303642f3d60e51b815260040160405180910390fd5b814210610423576103c64282610ccf565b6103d08383610ccf565b6103da9087610d08565b6103e49190610ce6565b92506103f08584610ccf565b6001600160a01b03851660009081526003602052604081208054909190610418908490610d27565b909155506104279050565b8492505b610431848461083a565b600061043b610637565b90506104526001600160a01b0382163330896108a4565b60408051858152602081018890526001600160a01b038716917f18a5ed48bb0a697c64a5aef8f28cec1f29ab01da27a45c5f835099781ef1ea46910160405180910390a250505092915050565b6001600160a01b038316600090815260026020908152604080832033845290915281205460001981146104fb576104d68382610ccf565b6001600160a01b03861660009081526002602090815260408083203384529091529020555b6001600160a01b03851660009081526001602090815260408083205460039092529091205461052a8583610ccf565b6001600160a01b0380891660009081526001602052604080822093909355908816815290812080548701905561056182878561093d565b9050801561059e576105738183610ccf565b6001600160a01b03808a16600090815260036020526040808220939093559089168152208054820190555b866001600160a01b0316886001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef886040516105e391815260200190565b60405180910390a360019450505050505b9392505050565b600080610606610829565b6040013560f81c92915050565b6001600160a01b03811660009081526003602052604081205461032d9083906109ec565b600080610642610829565b6041013560601c92915050565b33600081815260036020526040812054909161066b90826109ec565b91506106778282610d27565b3360009081526003602052604090205581156106ef576000610697610637565b90506106ad6001600160a01b0382168585610aab565b6040518381526001600160a01b0385169033907fd12200efa34901b99367694174c3b0d32c99585fdf37c7c26892136ddd0836d99060200160405180910390a3505b50919050565b60606000610701610829565b60408051602080840135908201819052929350016102b0565b600080610725610829565b605d013560c01c92915050565b3360009081526001602090815260408083205460039092528220546107578483610ccf565b33600090815260016020526040808220929092556001600160a01b038716815290812080548601905561078b82868561093d565b905080156107c55761079d8183610ccf565b33600090815260036020526040808220929092556001600160a01b0388168152208054820190555b6040518581526001600160a01b0387169033907fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9060200160405180910390a350600195945050505050565b60008061081c610829565b6055013560c01c92915050565b600119368181013560f01c90030190565b8060008082825461084b9190610d27565b90915550506001600160a01b0382166000818152600160209081526040808320805486019055518481527fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef910160405180910390a35050565b60006040516323b872dd60e01b81526001600160a01b03851660048201526001600160a01b038416602482015282604482015260008060648360008a5af19150506108ee81610b2a565b6109365760405162461bcd60e51b81526020600482015260146024820152731514905394d1915497d19493d357d1905253115160621b60448201526064015b60405180910390fd5b5050505050565b600080806000198587098587029250828110838203039150508060001415610977576000841161096c57600080fd5b5082900490506105f4565b80841161098357600080fd5b60008486880960026001871981018816978890046003810283188082028403028082028403028082028403028082028403028082028403029081029092039091026000889003889004909101858311909403939093029303949094049190911702949350505050565b6000806109f7610811565b67ffffffffffffffff1690506000610a0d61071a565b67ffffffffffffffff169050814211610a2b5760009250505061032d565b804210610a5f576001600160a01b038516600090815260016020526040902054610a56908590610ccf565b9250505061032d565b83610a6a8383610ccf565b610a748442610ccf565b6001600160a01b038816600090815260016020526040902054610a979190610d08565b610aa19190610ce6565b610a569190610ccf565b600060405163a9059cbb60e01b81526001600160a01b03841660048201528260248201526000806044836000895af1915050610ae681610b2a565b610b245760405162461bcd60e51b815260206004820152600f60248201526e1514905394d1915497d19052531151608a1b604482015260640161092d565b50505050565b60003d82610b3c57806000803e806000fd5b8060208114610b54578015610b655760009250610b6a565b816000803e60005115159250610b6a565b600192505b5050919050565b600060208083528351808285015260005b81811015610b9e57858101830151858201604001528201610b82565b81811115610bb0576000604083870101525b50601f01601f1916929092016040019392505050565b80356001600160a01b0381168114610bdd57600080fd5b919050565b60008060408385031215610bf557600080fd5b610bfe83610bc6565b946020939093013593505050565b600060208284031215610c1e57600080fd5b6105f482610bc6565b60008060408385031215610c3a57600080fd5b82359150610c4a60208401610bc6565b90509250929050565b600080600060608486031215610c6857600080fd5b610c7184610bc6565b9250610c7f60208501610bc6565b9150604084013590509250925092565b60008060408385031215610ca257600080fd5b610cab83610bc6565b9150610c4a60208401610bc6565b634e487b7160e01b600052601160045260246000fd5b600082821015610ce157610ce1610cb9565b500390565b600082610d0357634e487b7160e01b600052601260045260246000fd5b500490565b6000816000190483118215151615610d2257610d22610cb9565b500290565b60008219821115610d3a57610d3a610cb9565b50019056fea264697066735822122072d91216d8babc9108f60885a8d727235d9971f34df0ff795e11aae4bc03d75064736f6c634300080b0033",
+  "devdoc": {
+    "author": "zefram.eth",
+    "kind": "dev",
+    "methods": {
+      "endTimestamp()": {
+        "returns": {
+          "_endTimestamp": "The vest end timestamp"
+        }
+      },
+      "getRedeemableAmount(address)": {
+        "params": {
+          "holder": "The wrapped token holder to query"
+        },
+        "returns": {
+          "_0": "The amount of vested tokens redeemable"
+        }
+      },
+      "redeem(address)": {
+        "params": {
+          "recipient": "The address that will receive the vested tokens"
+        },
+        "returns": {
+          "redeemedAmount": "The amount of vested tokens redeemed"
+        }
+      },
+      "startTimestamp()": {
+        "returns": {
+          "_startTimestamp": "The vest start timestamp"
+        }
+      },
+      "underlying()": {
+        "returns": {
+          "_underlying": "The address of the underlying token"
+        }
+      },
+      "wrap(uint256,address)": {
+        "params": {
+          "recipient": "The address that will receive the minted wrapped tokens",
+          "underlyingAmount": "The amount of underlying tokens to wrap"
+        },
+        "returns": {
+          "wrappedTokenAmount": "The amount of wrapped tokens minted"
+        }
+      }
+    },
+    "title": "VestedERC20",
+    "version": 1
+  },
+  "userdoc": {
+    "errors": {
+      "Error_Wrap_VestOver()": [
+        {
+          "notice": "----------------------------------------------------------------------- Errors -----------------------------------------------------------------------"
+        }
+      ]
+    },
+    "events": {
+      "Wrap(address,uint256,uint256)": {
+        "notice": "----------------------------------------------------------------------- Events -----------------------------------------------------------------------"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "claimedUnderlyingAmount(address)": {
+        "notice": "The amount of underlying tokens claimed by a token holder"
+      },
+      "endTimestamp()": {
+        "notice": "The Unix timestamp (in seconds) of the end of the vest"
+      },
+      "getRedeemableAmount(address)": {
+        "notice": "Computes the amount of vested tokens redeemable by an account"
+      },
+      "redeem(address)": {
+        "notice": "Allows a holder of the wrapped token to redeem the vested tokens"
+      },
+      "startTimestamp()": {
+        "notice": "The Unix timestamp (in seconds) of the start of the vest"
+      },
+      "transfer(address,uint256)": {
+        "notice": "The ERC20 transfer function"
+      },
+      "transferFrom(address,address,uint256)": {
+        "notice": "The ERC20 transferFrom function"
+      },
+      "underlying()": {
+        "notice": "The token that is vested"
+      },
+      "wrap(uint256,address)": {
+        "notice": "Mints wrapped tokens using underlying tokens. Can only be called before the vest is over."
+      }
+    },
+    "notice": "An ERC20 wrapper token that linearly vests an underlying token to its holders",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 1232,
+        "contract": "contracts/VestedERC20.sol:VestedERC20",
+        "label": "totalSupply",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 1236,
+        "contract": "contracts/VestedERC20.sol:VestedERC20",
+        "label": "balanceOf",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_mapping(t_address,t_uint256)"
+      },
+      {
+        "astId": 1242,
+        "contract": "contracts/VestedERC20.sol:VestedERC20",
+        "label": "allowance",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))"
+      },
+      {
+        "astId": 538,
+        "contract": "contracts/VestedERC20.sol:VestedERC20",
+        "label": "claimedUnderlyingAmount",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_mapping(t_address,t_uint256)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => mapping(address => uint256))",
+        "numberOfBytes": "32",
+        "value": "t_mapping(t_address,t_uint256)"
+      },
+      "t_mapping(t_address,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

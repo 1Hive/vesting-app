@@ -2,9 +2,11 @@ import { RollbackOutlined } from '@ant-design/icons';
 import { Empty, Modal, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { useEffect, useMemo, useState } from 'react';
+import { useProvider } from 'wagmi';
 import { getBlockTimestamp } from '~~/helpers/contract';
 import { useVestedTokens } from '~~/hooks';
 import useResponsive from '~~/hooks/use-responsive';
+import { getNetworkNameByChainID } from '~~/models/constants/networks';
 import { VestedErc20 } from '~~/types-and-hooks';
 import { Wrap } from '../modals';
 import StreamPackListDesktop from './desktop-list';
@@ -45,11 +47,13 @@ export const WrapButton = (handleWrap: () => void) => {
 
 type AllStreamPackProps = {
   isComplete?: boolean;
+  chainId: number;
 };
 
-const AllStreamsPack = ({ isComplete }: AllStreamPackProps) => {
-  const ethersContext = useEthersContext();
-  const { loading, error, data } = useVestedTokens();
+const AllStreamsPack = ({ isComplete, chainId }: AllStreamPackProps) => {
+  // const ethersContext = useEthersContext();
+  const provider = useProvider();
+  const { loading, error, data } = useVestedTokens(getNetworkNameByChainID(chainId));
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [activeElement, setActiveElement] = useState<{
     underlyingTokenAddress: string;
@@ -64,12 +68,12 @@ const AllStreamsPack = ({ isComplete }: AllStreamPackProps) => {
 
   useEffect(() => {
     const getBlock = async () => {
-      const blockTimestamp = await getBlockTimestamp(ethersContext);
+      const blockTimestamp = await getBlockTimestamp(provider);
       setBlockTimestamp(blockTimestamp);
     };
 
     void getBlock();
-  }, [ethersContext]);
+  }, [provider]);
 
   const isEmpty = useMemo(() => {
     return data?.vestedERC20S === undefined || data?.vestedERC20S?.length === 0;

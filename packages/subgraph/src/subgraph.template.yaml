@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "{{VestedERC20FactoryAddress}}"
       abi: VestedERC20Factory
-      startBlock: 1
+      startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

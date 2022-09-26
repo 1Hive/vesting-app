@@ -1,15 +1,14 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { Empty, Skeleton } from 'antd';
 import { useEthersContext } from 'eth-hooks/context';
 import { BigNumber, ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
-import { useContractRead } from 'wagmi';
+import { useProvider } from 'wagmi';
 import { useAppContracts } from '~~/config/contract-context';
 import { getBlockTimestamp, getContractERC20 } from '~~/helpers/contract';
 import { useUserVestings } from '~~/hooks';
 import { useIsMounted } from '~~/hooks/use-is-mounted';
 import useResponsive from '~~/hooks/use-responsive';
-import { getNetworkByChainID, getNetworkNameByChainID, NETWORKS } from '~~/models/constants/networks';
+import { getNetworkNameByChainID } from '~~/models/constants/networks';
 import { Vesting } from '~~/types-and-hooks';
 import UserStreamListDesktop from './desktop-list';
 import UserStreamListMobile from './mobile-list';
@@ -197,26 +196,26 @@ export const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; acco
 //   cache: new InMemoryCache(),
 // });
 
-const MyUserStreams = ({ account, isComplete }: { account: string; isComplete?: boolean }) => {
-  const ethersContext = useEthersContext();
-
-  // const client = useCallback(() => {
-  //   const subgraphURI = 'https://api.thegraph.com/subgraphs/name/kamikazebr/onehivevestingrinkeby';
-  //   // const subgraphURI = getNetworkByChainID(ethersContext.chainId)?.subgraph ?? NETWORKS['rinkeby'].subgraph;
-  //   console.log('subgraphURI', subgraphURI);
-
-  //   return client;
-  // }, []);
-
+const MyUserStreams = ({
+  account,
+  isComplete,
+  chainId,
+}: {
+  account: string;
+  chainId: number;
+  isComplete?: boolean;
+}) => {
+  // const ethersContext = useEthersContext();
+  const provider = useProvider();
   const [blockTimestamp, setBlockTimestamp] = useState<number | undefined>();
-  const { loading, error, data } = useUserVestings(account, getNetworkNameByChainID(ethersContext.chainId));
+  const { loading, error, data } = useUserVestings(account, getNetworkNameByChainID(chainId));
   console.log('loading', loading);
   const isMounted = useIsMounted();
   const { isMobile } = useResponsive();
 
   useEffect(() => {
     const updateBlocktimestamp = async () => {
-      const blockTimestamp = await getBlockTimestamp(ethersContext);
+      const blockTimestamp = await getBlockTimestamp(provider);
       if (blockTimestamp) {
         if (isMounted()) {
           setBlockTimestamp(blockTimestamp);
@@ -224,11 +223,11 @@ const MyUserStreams = ({ account, isComplete }: { account: string; isComplete?: 
       }
     };
     void updateBlocktimestamp();
-  }, [ethersContext, isMounted, setBlockTimestamp]);
+  }, [isMounted, setBlockTimestamp]);
 
   const isEmpty = useMemo(() => {
     return data?.vestings === undefined || data?.vestings?.length === 0;
-  }, [data?.vestings]);
+  }, [data]);
 
   const streams = useMemo(() => {
     return isComplete ? data?.vestings : data?.vestings.slice(0, 5);

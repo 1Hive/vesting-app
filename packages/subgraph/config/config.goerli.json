@@ -1,0 +1,7 @@
+{
+  "TestERC20Address": "0xCd2eDCe40DC62c047b07e8af674AAED47794c4f3",
+  "network": "goerli",
+  "VestedERC20Address": "0x390eFF51E354FA19D73F5eb9191d01ce69Cb5314",
+  "VestedERC20FactoryAddress": "0x830d4D85c77eF177639D9d5735493faF85A7bE71",
+  "startBlock": "7659301"
+}

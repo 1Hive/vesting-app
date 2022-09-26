@@ -1,3 +1,4 @@
+import { Provider } from '@ethersproject/abstract-provider';
 import { IEthersContext } from 'eth-hooks/models';
 import { ContractFactory } from 'ethers';
 import { ERC20__factory } from '~~/generated/contract-types';
@@ -17,11 +18,11 @@ export function getContractERC20({ ethersContext, contractAddress }: ERC20Params
   return contractTokenERC20 as ERC20;
 }
 
-export const getBlockTimestamp = async (ethersContext: IEthersContext) => {
-  const blockNumber = ethersContext.provider?.blockNumber;
+export const getBlockTimestamp = async (provider: Provider) => {
+  const blockNumber = await provider?.getBlockNumber();
   if (!blockNumber) {
     return undefined;
   }
-  const block = await ethersContext.provider?.getBlock(blockNumber);
+  const block = await provider?.getBlock(blockNumber);
   return block?.timestamp;
 };
