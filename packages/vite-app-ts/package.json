@@ -26,6 +26,8 @@
     "@ant-design/icons": "^4.7.0",
     "@babel/runtime": "^7.17.2",
     "@emotion/react": "^11.8.1",
+    "@ethersproject/networks": "^5.7.1",
+    "@ethersproject/providers": "^5.7.1",
     "@habx/apollo-multi-endpoint-link": "2.7.0",
     "@maticnetwork/maticjs": "^3.2.3",
     "@portis/web3": "^4.1.0",

@@ -1,8 +1,8 @@
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
-import { TNetworkInfo, TEthersProvider } from 'eth-hooks/models';
+import { TEthersProvider } from 'eth-hooks/models';
 import { invariant } from 'ts-invariant';
 
-import { NETWORKS, TNetworkNames } from '../models/constants/networks';
+import { NETWORKS, TNetworkInfoSubgraph, TNetworkNames } from '../models/constants/networks';
 const DEBUG = false;
 invariant.log('MODE', import.meta.env.MODE, import.meta.env.DEV);
 /** ******************************
@@ -18,7 +18,7 @@ const targetNetwork: TNetworkNames = import.meta.env.VITE_APP_TARGET_NETWORK as 
 invariant.log('VITE_APP_TARGET_NETWORK', import.meta.env.VITE_APP_TARGET_NETWORK);
 invariant(NETWORKS[targetNetwork] != null, `Invalid target network: ${targetNetwork}`);
 
-export const TARGET_NETWORK_INFO: TNetworkInfo = NETWORKS[targetNetwork];
+export const TARGET_NETWORK_INFO: TNetworkInfoSubgraph = NETWORKS[targetNetwork];
 if (DEBUG) console.log(`📡 Connecting to ${TARGET_NETWORK_INFO.name}`);
 
 /** **************************  ****

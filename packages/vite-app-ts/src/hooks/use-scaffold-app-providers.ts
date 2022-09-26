@@ -1,15 +1,16 @@
 import { useEthersAdaptorFromProviderOrSigners } from 'eth-hooks';
 import { EthersModalConnector, useEthersContext } from 'eth-hooks/context';
-import { TCreateEthersModalConnector, TEthersAdaptor, TEthersProvider, TNetworkInfo } from 'eth-hooks/models';
+import { TCreateEthersModalConnector, TEthersAdaptor, TEthersProvider } from 'eth-hooks/models';
 import { useCallback, useEffect, useState } from 'react';
 import { invariant } from 'ts-invariant';
 import { ICoreOptions } from 'web3modal';
 
 import { MAINNET_PROVIDER, LOCAL_PROVIDER, TARGET_NETWORK_INFO } from '~~/config/app-config';
+import { TNetworkInfoSubgraph } from '~~/models/constants/networks';
 
 export interface IScaffoldAppProviders {
   currentProvider: TEthersProvider | undefined;
-  targetNetwork: TNetworkInfo;
+  targetNetwork: TNetworkInfoSubgraph;
   mainnetAdaptor: TEthersAdaptor | undefined;
   localAdaptor: TEthersAdaptor | undefined;
   createLoginConnector: TCreateEthersModalConnector;

@@ -1191,7 +1191,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/networks@npm:5.7.1, @ethersproject/networks@npm:^5.5.2, @ethersproject/networks@npm:^5.6.4, @ethersproject/networks@npm:^5.7.0":
+"@ethersproject/networks@npm:5.7.1, @ethersproject/networks@npm:^5.5.2, @ethersproject/networks@npm:^5.6.4, @ethersproject/networks@npm:^5.7.0, @ethersproject/networks@npm:^5.7.1":
   version: 5.7.1
   resolution: "@ethersproject/networks@npm:5.7.1"
   dependencies:
@@ -1219,7 +1219,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/providers@npm:5.7.1, @ethersproject/providers@npm:^5.4.4, @ethersproject/providers@npm:^5.5.2, @ethersproject/providers@npm:^5.5.3, @ethersproject/providers@npm:^5.6.8":
+"@ethersproject/providers@npm:5.7.1, @ethersproject/providers@npm:^5.4.4, @ethersproject/providers@npm:^5.5.2, @ethersproject/providers@npm:^5.5.3, @ethersproject/providers@npm:^5.6.8, @ethersproject/providers@npm:^5.7.1":
   version: 5.7.1
   resolution: "@ethersproject/providers@npm:5.7.1"
   dependencies:
@@ -2300,6 +2300,8 @@ __metadata:
     "@dethcrypto/eth-sdk": ^0.3.0
     "@emotion/react": ^11.8.1
     "@emotion/types": ^0.7.0
+    "@ethersproject/networks": ^5.7.1
+    "@ethersproject/providers": ^5.7.1
     "@habx/apollo-multi-endpoint-link": 2.7.0
     "@maticnetwork/maticjs": ^3.2.3
     "@nomiclabs/hardhat-ethers": ^2.0.5

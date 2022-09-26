@@ -4,13 +4,16 @@ import { TNetworkInfo } from 'eth-hooks/models';
 const INFURA_ID = import.meta.env.VITE_KEY_INFURA;
 
 export type TNetworkNames = 'localhost' | 'rinkeby' | 'goerli' | 'gnosis';
+export type TNetworkInfoSubgraph = TNetworkInfo & {
+  subgraph?: string;
+};
 
 let hostname = '';
 if (typeof window !== 'undefined') {
   hostname = window?.location?.hostname;
 }
 
-export const NETWORKS: Record<TNetworkNames, TNetworkInfo> = {
+export const NETWORKS: Record<TNetworkNames, TNetworkInfoSubgraph> = {
   localhost: {
     name: 'localhost',
     color: '#666666',
@@ -49,7 +52,7 @@ export const NETWORKS: Record<TNetworkNames, TNetworkInfo> = {
   },
 };
 
-export const getNetworkByChainID = (chainId: number | undefined): TNetworkInfo | undefined => {
+export const getNetworkByChainID = (chainId: number | undefined): TNetworkInfoSubgraph | undefined => {
   if (!chainId) {
     // if (DEBUG) {
     console.log(`getNetworkByChainID:chainId undefined`);
