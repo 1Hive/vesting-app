@@ -223,7 +223,7 @@ const MyUserStreams = ({
       }
     };
     void updateBlocktimestamp();
-  }, [isMounted, setBlockTimestamp]);
+  }, [isMounted, provider, setBlockTimestamp]);
 
   const isEmpty = useMemo(() => {
     return data?.vestings === undefined || data?.vestings?.length === 0;

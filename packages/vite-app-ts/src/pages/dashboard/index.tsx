@@ -1,22 +1,14 @@
 import { Wrapper } from './index.styled';
-import { useEthersContext } from 'eth-hooks/context';
 import MyUserStreams from '~~/components/my-user-streams.tsx';
 import { PageTitle } from '~~/components/page-title';
 import AllStreamsPack from '~~/components/all-streams-pack.tsx';
 import { useAccount } from 'wagmi';
-import { useEffect, useState } from 'react';
+import { useCurrentChainId } from '~~/hooks/use-chain-id';
 
 function Dashboard() {
-  const { isConnected, address, connector } = useAccount();
+  const { isConnected, address } = useAccount();
 
-  const [chainId, setChainId] = useState<number | undefined>();
-
-  useEffect(() => {
-    void (async () => {
-      const chain = await connector?.getChainId();
-      setChainId(chain);
-    })();
-  }, [connector]);
+  const { chainId } = useCurrentChainId();
 
   return (
     <Wrapper>
