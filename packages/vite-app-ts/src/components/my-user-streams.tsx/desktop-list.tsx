@@ -1,6 +1,7 @@
 import { TokenBadge } from '@1hive/1hive-ui';
-import { useEthersContext } from 'eth-hooks/context';
+import { useAccount } from 'wagmi';
 import { dateFormat } from '~~/helpers/date-utils';
+import { useCurrentChainId } from '~~/hooks/use-chain-id';
 import { RoutesPath } from '~~/main';
 import { VestedErc20 } from '~~/types-and-hooks';
 import { MyStreamingStatus, RedeemValue, getStatusStream } from '.';
@@ -23,7 +24,9 @@ export type UserStreamListDesktopProps = {
 };
 
 const UserStreamListDesktop = ({ isComplete, list, blockTimestamp }: UserStreamListDesktopProps) => {
-  const ethersContext = useEthersContext();
+  const { isConnected, address } = useAccount();
+
+  const { chainId } = useCurrentChainId();
 
   return (
     <>
@@ -57,8 +60,8 @@ const UserStreamListDesktop = ({ isComplete, list, blockTimestamp }: UserStreamL
               </p>
               <p className="mb-0 text-base">
                 $
-                {ethersContext.account ? (
-                  <RedeemValue vesting={vest} accountHolder={ethersContext.account} />
+                {isConnected && address && chainId ? (
+                  <RedeemValue vesting={vest} accountHolder={address} chainId={chainId} />
                 ) : (
                   'Loading...'
                 )}

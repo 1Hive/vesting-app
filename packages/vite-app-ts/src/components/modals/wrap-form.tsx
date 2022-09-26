@@ -10,6 +10,8 @@ import { getContractERC20 } from '~~/helpers/contract';
 import { TransactionBadge } from '@1hive/1hive-ui';
 import { getNetworkInfo } from '~~/functions';
 import { useIsMounted } from '~~/hooks';
+import { useAccount, useSigner } from 'wagmi';
+import { useCurrentChainId } from '~~/hooks/use-chain-id';
 
 export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
   const [state, setState] = useState({
@@ -21,10 +23,14 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
 
   const [txHash, setTxHash] = useState<string | undefined>(undefined);
 
-  const ethersContext = useEthersContext();
-  const network = getNetworkInfo(ethersContext.chainId);
-  const vestedERC20 = useAppContracts('VestedERC20', ethersContext.chainId);
-  const underlyingTokenERC20 = getContractERC20({ ethersContext, contractAddress: underlyingTokenAddress });
+  // const ethersContext = useEthersContext();
+
+  const { data: signer } = useSigner();
+  const { address } = useAccount();
+  const { chainId } = useCurrentChainId();
+  const network = getNetworkInfo(chainId);
+  const vestedERC20 = useAppContracts('VestedERC20', chainId);
+  const underlyingTokenERC20 = getContractERC20({ signer, contractAddress: underlyingTokenAddress });
 
   const [isErcExist, _update, queryStatus] = useContractExistsAtAddress(underlyingTokenERC20);
 
@@ -85,9 +91,9 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
       <button
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onClick={() => {
-          setState((prev: any) => ({ ...prev, address: ethersContext.account }));
-          if (inputAdress.current && ethersContext.account) {
-            inputAdress.current.value = ethersContext.account;
+          setState((prev: any) => ({ ...prev, address }));
+          if (inputAdress.current && address) {
+            inputAdress.current.value = address;
           }
         }}
         className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">

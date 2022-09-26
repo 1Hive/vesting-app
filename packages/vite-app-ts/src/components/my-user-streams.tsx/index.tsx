@@ -1,8 +1,7 @@
 import { Empty, Skeleton } from 'antd';
-import { useEthersContext } from 'eth-hooks/context';
 import { BigNumber, ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
-import { useProvider } from 'wagmi';
+import { useProvider, useSigner } from 'wagmi';
 import { useAppContracts } from '~~/config/contract-context';
 import { getBlockTimestamp, getContractERC20 } from '~~/helpers/contract';
 import { useUserVestings } from '~~/hooks';
@@ -55,20 +54,29 @@ export const getStatusStream = (vest: Vesting, blockTimestamp: number | undefine
   }
 };
 
-export const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; accountHolder: string }) => {
+export const RedeemValue = ({
+  vesting,
+  accountHolder,
+  chainId,
+}: {
+  vesting: Vesting;
+  accountHolder: string;
+  chainId: number;
+}) => {
   const [redeemableAmountBN, setRedeemableAmountBN] = useState<BigNumber | undefined>();
   const [claimedUnderlyingAmount, setClaimedUnderlyingAmount] = useState<BigNumber | undefined>();
   const [startTimestamp] = useState<BigNumber | undefined>(BigNumber.from(vesting.token.startTimestamp));
   const [endTimestamp] = useState<BigNumber | undefined>(BigNumber.from(vesting.token.endTimestamp));
   const [blockTimestamp, setBlockTimestamp] = useState<BigNumber | undefined>();
   const [balanceClaimable, setBalanceClaimable] = useState<BigNumber | undefined>();
-  const ethersContext = useEthersContext();
-
+  // const ethersContext = useEthersContext();
   const vestedERCAddress = vesting.id;
-
-  const vestedERC20Contract = useAppContracts('VestedERC20', ethersContext.chainId)?.attach(vestedERCAddress);
+  const provider = useProvider();
+  const vestedERC20Contract = useAppContracts('VestedERC20', chainId)?.attach(vestedERCAddress);
 
   const isMounted = useIsMounted();
+
+  const { data: signer } = useSigner();
 
   // TODO that use intervalpool maybe its that we dont want, if we want manually initialize
   // const [redeemableAmountBN, _updateRedeemableAmount] = useContractReader(
@@ -85,7 +93,7 @@ export const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; acco
 
         console.log('accountHolder', accountHolder);
 
-        const blockTimestamp = await getBlockTimestamp(ethersContext);
+        const blockTimestamp = await getBlockTimestamp(provider);
         if (blockTimestamp) {
           setBlockTimestamp(BigNumber.from(blockTimestamp));
           console.log('blockTimestamp', blockTimestamp);
@@ -97,7 +105,7 @@ export const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; acco
         const underlyingToken = await vestedERC20Contract?.underlying(); // TODO could now be get for subgraph
         if (underlyingToken) {
           console.log('underlyingToken', underlyingToken);
-          const erc20 = getContractERC20({ ethersContext, contractAddress: underlyingToken });
+          const erc20 = getContractERC20({ signer, contractAddress: underlyingToken });
           const balanceToBeStreamed = await erc20.balanceOf(vestedERCAddress);
           if (balanceToBeStreamed) console.log('balanceToBeStreamed', ethers.utils.formatEther(balanceToBeStreamed));
         }

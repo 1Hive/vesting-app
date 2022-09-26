@@ -1,6 +1,5 @@
 import { RollbackOutlined } from '@ant-design/icons';
 import { Empty, Modal, Skeleton } from 'antd';
-import { useEthersContext } from 'eth-hooks/context';
 import { useEffect, useMemo, useState } from 'react';
 import { useProvider } from 'wagmi';
 import { getBlockTimestamp } from '~~/helpers/contract';

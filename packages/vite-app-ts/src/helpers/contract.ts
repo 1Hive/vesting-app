@@ -1,20 +1,15 @@
 import { Provider } from '@ethersproject/abstract-provider';
-import { IEthersContext } from 'eth-hooks/models';
 import { ContractFactory } from 'ethers';
 import { ERC20__factory } from '~~/generated/contract-types';
 import { ERC20 } from '~~/generated/contract-types/ERC20';
 
 export type ERC20Params = {
-  ethersContext: IEthersContext;
+  signer: any;
   contractAddress: string;
 };
 
-export function getContractERC20({ ethersContext, contractAddress }: ERC20Params): ERC20 {
-  const contractTokenERC20 = ContractFactory.getContract(
-    contractAddress,
-    ERC20__factory.createInterface(),
-    ethersContext.signer
-  ); // TODO if not found?
+export function getContractERC20({ signer, contractAddress }: ERC20Params): ERC20 {
+  const contractTokenERC20 = ContractFactory.getContract(contractAddress, ERC20__factory.createInterface(), signer); // TODO if not found?
   return contractTokenERC20 as ERC20;
 }
 
