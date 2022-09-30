@@ -1,40 +1,51 @@
 // import { BigNumber } from 'ethers';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useEthersContext } from 'eth-hooks/context';
-import { useAppContracts } from '~~/config/contract-context';
-import { BigNumber } from 'ethers';
+import { BigNumber, utils } from 'ethers';
 import { toDecimals } from '~~/helpers/math-utils';
 import { WrapType } from '.';
-import { useContractExistsAtAddress } from 'eth-hooks';
 import { getContractERC20 } from '~~/helpers/contract';
 import { TransactionBadge } from '@1hive/1hive-ui';
 import { getNetworkInfo } from '~~/functions';
 import { useIsMounted } from '~~/hooks';
+import { useAccount, useSigner } from 'wagmi';
+import { useCurrentChainId } from '~~/hooks/use-chain-id';
+import { VestedERC20 } from '~~/generated/contract-types';
+import { useBeeContract } from '~~/hooks/use-bee-contract';
 
 export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
   const [state, setState] = useState({
     underlyingAmount: '',
     address: '',
+    underlyingBalance: BigNumber.from(0),
   });
 
   const isMounted = useIsMounted();
 
   const [txHash, setTxHash] = useState<string | undefined>(undefined);
 
-  const ethersContext = useEthersContext();
-  const network = getNetworkInfo(ethersContext.chainId);
-  const vestedERC20 = useAppContracts('VestedERC20', ethersContext.chainId);
-  const underlyingTokenERC20 = getContractERC20({ ethersContext, contractAddress: underlyingTokenAddress });
+  // const ethersContext = useEthersContext();
 
-  const [isErcExist, _update, queryStatus] = useContractExistsAtAddress(underlyingTokenERC20);
+  const { data: signer } = useSigner();
+  const { address } = useAccount();
+  const { chainId } = useCurrentChainId();
+  const network = getNetworkInfo(chainId);
+  const vestedERC20 = useBeeContract('VestedERC20') as unknown as VestedERC20 | undefined;
+  // const vestedERC20 = useAppContracts('VestedERC20', chainId);
+  const underlyingTokenERC20 = getContractERC20({ signer, contractAddress: underlyingTokenAddress });
+
+  const inputAdress = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    console.log('isErcExist', isErcExist);
-    console.log('queryStatus', queryStatus);
-  }, [isErcExist, queryStatus]);
+    void (async () => {
+      if (underlyingTokenERC20 && address) {
+        const underlyingBalance = await underlyingTokenERC20.balanceOf(address);
+        setState((prev: any) => ({ ...prev, underlyingBalance }));
+      }
+    })();
+  }, [address, underlyingTokenERC20]);
 
   const handleWrap = useCallback(async () => {
-    if (isErcExist && queryStatus === 'success') {
+    try {
       const amount = BigNumber.from(toDecimals(state.underlyingAmount, 18));
       console.log('before approve');
       const r = await underlyingTokenERC20.approve(vestedAdress, amount); // TODO Check with Gabi if need use approve(0) here first
@@ -49,21 +60,15 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
       console.log('wait wrap');
       await tx?.wait();
       console.log('end wrap');
-    } else {
-      console.log('Do something if it not exist, or not found if without internet'); // TODO: Replace for propper Logger.
+    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      console.log(`Error:${error}`); // TODO: Replace for propper Logger.
     }
-  }, [
-    isErcExist,
-    queryStatus,
-    state.underlyingAmount,
-    state.address,
-    underlyingTokenERC20,
-    vestedAdress,
-    vestedERC20,
-    isMounted,
-  ]);
+  }, [state.underlyingAmount, state.address, underlyingTokenERC20, vestedAdress, vestedERC20, isMounted]);
 
-  const inputAdress = useRef<HTMLInputElement | null>(null);
+  const handleAmountOnChange = (e: any) => {
+    setState((prev: any) => ({ ...prev, underlyingAmount: e.target.value }));
+  };
 
   return (
     <div>
@@ -72,8 +77,9 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
         name="amount"
         placeholder="Amount"
         className="block w-full px-2 py-2 mt-4 border border-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        onChange={(e: any) => setState((prev: any) => ({ ...prev, underlyingAmount: e.target.value }))}
+        onChange={handleAmountOnChange}
       />
+      <span>Balance: ${utils.formatEther(state.underlyingBalance)}</span>
       <input
         ref={inputAdress}
         type="text"
@@ -83,11 +89,10 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
         onChange={(e: any) => setState((prev: any) => ({ ...prev, address: e.target.value }))}
       />
       <button
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onClick={() => {
-          setState((prev: any) => ({ ...prev, address: ethersContext.account }));
-          if (inputAdress.current && ethersContext.account) {
-            inputAdress.current.value = ethersContext.account;
+          setState((prev: any) => ({ ...prev, address }));
+          if (inputAdress.current && address) {
+            inputAdress.current.value = address;
           }
         }}
         className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
@@ -98,7 +103,10 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
         <button
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={handleWrap}
-          className="px-3 py-2 font-semibold text-white bg-black pointer-events-auto rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500">
+          disabled={state.underlyingBalance.lte(0)}
+          className={`px-3 py-2 font-semibold text-white bg-black rounded-md text-[0.8125rem] leading-5 hover:bg-gray-500 ${
+            state.underlyingBalance.gt(0) ? 'pointer-events-auto' : 'opacity-50 cursor-not-allowed'
+          }`}>
           Wrap
         </button>
       </div>
@@ -106,8 +114,8 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
         {txHash && network && (
           <TransactionBadge
             transaction={txHash}
-            networkType={network.chainId}
-            explorerProvider={network.blockExplorer}
+            networkType={network.name}
+            // explorerProvider={network.blockExplorer}
           />
         )}
       </div>

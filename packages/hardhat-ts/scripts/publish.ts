@@ -16,7 +16,8 @@ const publishContract = (contractName: string, networkName: string): boolean => 
   try {
     const contract = fs.readFileSync(`${deploymentsDir}/${networkName}/${contractName}.json`).toString();
     const contractJson: { address: string; abi: [] } = JSON.parse(contract);
-    const graphConfigPath = `${graphDir}/config/config.json`;
+    const folderPath = `${graphDir}/config`;
+    const graphConfigPath = `${folderPath}/config.${networkName}.json`;
     let graphConfigStr = '{}';
     try {
       if (fs.existsSync(graphConfigPath)) {
@@ -27,13 +28,10 @@ const publishContract = (contractName: string, networkName: string): boolean => 
     }
 
     const graphConfig = JSON.parse(graphConfigStr);
-    graphConfig[`${networkName}_${contractName}Address`] = contractJson.address;
-    const networkENV = process.env.HARDHAT_TARGET_NETWORK;
+    graphConfig[`${contractName}Address`] = contractJson.address;
 
-    if (networkENV !== undefined && graphConfig?.network === undefined) {
-      graphConfig.network = networkENV;
-    }
-    const folderPath = graphConfigPath.replace('/config.json', '');
+    graphConfig.network = networkName;
+
     if (!fs.existsSync(folderPath)) {
       fs.mkdirSync(folderPath);
     }

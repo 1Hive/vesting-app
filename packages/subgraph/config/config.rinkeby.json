@@ -1,0 +1,7 @@
+{
+  "TestERC20Address": "0x4B9AD20f34DaB95F43f22253C85690f432746df5",
+  "network": "rinkeby",
+  "VestedERC20Address": "0x523eb02aF238d83F7006142cC84f8E2107Be7F67",
+  "VestedERC20FactoryAddress": "0x3c175EE86Ae95B234180e3aA0a27c29d6038CE5A",
+  "startBlock": "10574800"
+}

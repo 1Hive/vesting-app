@@ -23,12 +23,15 @@ export function handleDeployVestedERC20(event: DeployVestedERC20): void {
   const vestedERC20Contract = VestedERC20Contract.bind(newVestedERC20Address);
 
   const vestedERC20 = new VestedERC20(newVestedERC20Address.toHex());
-  vestedERC20.name = vestedERC20Contract.name();
-  vestedERC20.symbol = vestedERC20Contract.symbol();
-  vestedERC20.decimals = vestedERC20Contract.decimals();
-  vestedERC20.underlying = loadOrCreateERC20(
-    vestedERC20Contract.underlying()
-  ).id;
+  vestedERC20.name = vestedERC20Contract.try_name().value;
+  vestedERC20.symbol = vestedERC20Contract.try_symbol().value;
+  vestedERC20.decimals = vestedERC20Contract.try_decimals().value;
+
+  const resultUnderlying = vestedERC20Contract.try_underlying();
+
+  if (!resultUnderlying.reverted) {
+    vestedERC20.underlying = loadOrCreateERC20(resultUnderlying.value).id;
+  }
   vestedERC20.startTimestamp = vestedERC20Contract.startTimestamp();
   vestedERC20.endTimestamp = vestedERC20Contract.endTimestamp();
 

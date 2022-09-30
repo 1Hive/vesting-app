@@ -1,12 +1,12 @@
 import { Empty, Skeleton } from 'antd';
-import { useEthersContext } from 'eth-hooks/context';
 import { BigNumber, ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
-import { useAppContracts } from '~~/config/contract-context';
+import { useProvider, useSigner } from 'wagmi';
 import { getBlockTimestamp, getContractERC20 } from '~~/helpers/contract';
 import { useUserVestings } from '~~/hooks';
 import { useIsMounted } from '~~/hooks/use-is-mounted';
 import useResponsive from '~~/hooks/use-responsive';
+import { getNetworkNameByChainID } from '~~/models/constants/networks';
 import { Vesting } from '~~/types-and-hooks';
 import UserStreamListDesktop from './desktop-list';
 import UserStreamListMobile from './mobile-list';
@@ -53,20 +53,30 @@ export const getStatusStream = (vest: Vesting, blockTimestamp: number | undefine
   }
 };
 
-export const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; accountHolder: string }) => {
+export const RedeemValue = ({
+  vesting,
+  accountHolder,
+  chainId,
+}: {
+  vesting: Vesting;
+  accountHolder: string;
+  chainId: number;
+}) => {
   const [redeemableAmountBN, setRedeemableAmountBN] = useState<BigNumber | undefined>();
   const [claimedUnderlyingAmount, setClaimedUnderlyingAmount] = useState<BigNumber | undefined>();
   const [startTimestamp] = useState<BigNumber | undefined>(BigNumber.from(vesting.token.startTimestamp));
   const [endTimestamp] = useState<BigNumber | undefined>(BigNumber.from(vesting.token.endTimestamp));
   const [blockTimestamp, setBlockTimestamp] = useState<BigNumber | undefined>();
   const [balanceClaimable, setBalanceClaimable] = useState<BigNumber | undefined>();
-  const ethersContext = useEthersContext();
-
+  // const ethersContext = useEthersContext();
   const vestedERCAddress = vesting.id;
-
-  const vestedERC20Contract = useAppContracts('VestedERC20', ethersContext.chainId)?.attach(vestedERCAddress);
+  const provider = useProvider();
+  // const vestedERC20Contract = useAppContracts('VestedERC20', chainId)?.attach(vestedERCAddress);
+  // const vestedERC20Contract = useBeeContract('VestedERC20') as unknown as VestedERC20 | undefined;
 
   const isMounted = useIsMounted();
+
+  const { data: signer } = useSigner();
 
   // TODO that use intervalpool maybe its that we dont want, if we want manually initialize
   // const [redeemableAmountBN, _updateRedeemableAmount] = useContractReader(
@@ -83,19 +93,19 @@ export const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; acco
 
         console.log('accountHolder', accountHolder);
 
-        const blockTimestamp = await getBlockTimestamp(ethersContext);
+        const blockTimestamp = await getBlockTimestamp(provider);
         if (blockTimestamp) {
           setBlockTimestamp(BigNumber.from(blockTimestamp));
           console.log('blockTimestamp', blockTimestamp);
         }
-
+        let vestedERC20Contract: any;
         const balanceAbleClaim = await vestedERC20Contract?.getRedeemableAmount(accountHolder);
         const balanceClaimable = await vestedERC20Contract?.balanceOf(accountHolder);
         const claimedWrappedAmount = await vestedERC20Contract?.claimedUnderlyingAmount(accountHolder); // TODO could now be get for subgraph
         const underlyingToken = await vestedERC20Contract?.underlying(); // TODO could now be get for subgraph
         if (underlyingToken) {
           console.log('underlyingToken', underlyingToken);
-          const erc20 = getContractERC20({ ethersContext, contractAddress: underlyingToken });
+          const erc20 = getContractERC20({ signer, contractAddress: underlyingToken });
           const balanceToBeStreamed = await erc20.balanceOf(vestedERCAddress);
           if (balanceToBeStreamed) console.log('balanceToBeStreamed', ethers.utils.formatEther(balanceToBeStreamed));
         }
@@ -188,16 +198,32 @@ export const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; acco
   return <>{redeemableAmountBN ? ethers.utils.formatEther(redeemableAmountBN) : null}</>;
 };
 
-const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?: boolean }) => {
-  const { loading, error, data } = useUserVestings(account);
+// console.log('load apollo');
+// const client2 = new ApolloClient({
+//   uri: 'https://api.thegraph.com/subgraphs/name/kamikazebr/onehivevestingrinkeby',
+//   cache: new InMemoryCache(),
+// });
+
+const MyUserStreams = ({
+  account,
+  isComplete,
+  chainId,
+}: {
+  account: string;
+  chainId: number;
+  isComplete?: boolean;
+}) => {
+  // const ethersContext = useEthersContext();
+  const provider = useProvider();
   const [blockTimestamp, setBlockTimestamp] = useState<number | undefined>();
-  const ethersContext = useEthersContext();
+  const { loading, error, data } = useUserVestings(account, getNetworkNameByChainID(chainId));
+  console.log('loading', loading);
   const isMounted = useIsMounted();
   const { isMobile } = useResponsive();
 
   useEffect(() => {
     const updateBlocktimestamp = async () => {
-      const blockTimestamp = await getBlockTimestamp(ethersContext);
+      const blockTimestamp = await getBlockTimestamp(provider);
       if (blockTimestamp) {
         if (isMounted()) {
           setBlockTimestamp(blockTimestamp);
@@ -205,11 +231,11 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
       }
     };
     void updateBlocktimestamp();
-  }, [ethersContext, isMounted, setBlockTimestamp]);
+  }, [isMounted, provider, setBlockTimestamp]);
 
   const isEmpty = useMemo(() => {
     return data?.vestings === undefined || data?.vestings?.length === 0;
-  }, [data?.vestings]);
+  }, [data]);
 
   const streams = useMemo(() => {
     return isComplete ? data?.vestings : data?.vestings.slice(0, 5);
@@ -226,6 +252,7 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
     return (
       <div className="mt-4">
         <p>Error...</p>
+        <p>{JSON.stringify(error, null, 4)}</p>
       </div>
     );
 
@@ -242,4 +269,4 @@ const MyUserVestings = ({ account, isComplete }: { account: string; isComplete?:
   );
 };
 
-export default MyUserVestings;
+export default MyUserStreams;

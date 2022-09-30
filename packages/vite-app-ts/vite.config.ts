@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import path, { resolve } from 'path';
 
 import reactPlugin from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
@@ -10,6 +10,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 const isDev = process.env.ENVIRONMENT === 'DEVELOPMENT';
 console.log('env.dev:', process.env.ENVIRONMENT, ' isDev:', isDev);
 
+import { visualizer } from 'rollup-plugin-visualizer';
 /**
  * browserify for web3 components
  */
@@ -40,10 +41,18 @@ const externalPlugin = viteExternalsPlugin({
  */
 const excludeDeps = [`graphql`, 'electron', 'electron-fetch'];
 
+// var stream = fs.createWriteStream('append.txt', { flags: 'a' });
+
 export default defineConfig({
-  plugins: [reactPlugin(), macrosPlugin(), tsconfigPaths(), externalPlugin],
+  plugins: [
+    reactPlugin(),
+    macrosPlugin(),
+    tsconfigPaths(),
+    externalPlugin,
+    visualizer({ emitFile: true, filename: 'stats.html' }),
+  ],
   build: {
-    sourcemap: true,
+    sourcemap: false,
     commonjsOptions: {
       include: /node_modules/,
       transformMixedEsModules: true,
@@ -56,7 +65,7 @@ export default defineConfig({
   },
   esbuild: {
     jsxFactory: 'jsx',
-    jsxInject: `import {jsx, css} from '@emotion/react'`,
+    // jsxInject: `import {jsx, css} from '@emotion/react'`,
   },
   define: {
     __DEV__: isDev.toString(),

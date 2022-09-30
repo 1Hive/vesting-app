@@ -1,10 +1,8 @@
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
-import { TNetworkInfo, TEthersProvider } from 'eth-hooks/models';
 import { invariant } from 'ts-invariant';
 
-import { NETWORKS, TNetworkNames } from '../models/constants/networks';
-
-export const DEBUG = false;
+import { NETWORKS, TNetworkInfoSubgraph, TNetworkNames } from '../models/constants/networks';
+const DEBUG = false;
 invariant.log('MODE', import.meta.env.MODE, import.meta.env.DEV);
 /** ******************************
  * TARGET NETWORK CONFIG: 📡 What chain are your contracts deployed to?
@@ -19,7 +17,7 @@ const targetNetwork: TNetworkNames = import.meta.env.VITE_APP_TARGET_NETWORK as 
 invariant.log('VITE_APP_TARGET_NETWORK', import.meta.env.VITE_APP_TARGET_NETWORK);
 invariant(NETWORKS[targetNetwork] != null, `Invalid target network: ${targetNetwork}`);
 
-export const TARGET_NETWORK_INFO: TNetworkInfo = NETWORKS[targetNetwork];
+export const TARGET_NETWORK_INFO: TNetworkInfoSubgraph = NETWORKS[targetNetwork];
 if (DEBUG) console.log(`📡 Connecting to ${TARGET_NETWORK_INFO.name}`);
 
 /** **************************  ****
@@ -55,7 +53,7 @@ if (DEBUG)
   );
 
 // export const SUBGRAPH_URI = 'http://localhost:8000/subgraphs/name/scaffold-eth/your-contract';
-export const SUBGRAPH_URI = 'https://api.thegraph.com/subgraphs/name/kamikazebr/onehivevestingrinkeby';
+// export const SUBGRAPH_URI = 'https://api.thegraph.com/subgraphs/name/kamikazebr/onehivevestingrinkeby';
 
 /** ******************************
  * OTHER FILES
@@ -95,7 +93,7 @@ export const MAINNET_PROVIDER = mainnetScaffoldEthProvider;
 // -------------------
 
 if (DEBUG) console.log('🏠 Connecting to provider:', NETWORKS.localhost.rpcUrl);
-export const LOCAL_PROVIDER: TEthersProvider | undefined =
-  TARGET_NETWORK_INFO === NETWORKS.localhost && import.meta.env.DEV
-    ? new StaticJsonRpcProvider(NETWORKS.localhost.rpcUrl)
-    : undefined;
+// export const LOCAL_PROVIDER: TEthersProvider | undefined =
+//   TARGET_NETWORK_INFO === NETWORKS.localhost && import.meta.env.DEV
+//     ? new StaticJsonRpcProvider(NETWORKS.localhost.rpcUrl)
+//     : undefined;

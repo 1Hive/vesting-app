@@ -1,4 +1,4 @@
-# Vest
+# Streaming Bee
 
 ## Introduction
 
@@ -26,7 +26,7 @@ Install the dependencies
 yarn install
 ```
 
-![homepage](docs/img/app_homepage.png)
+![homepage](docs/img/home_streaming_bee_v2.png)
 
 ## Run dependencies & Start App
 

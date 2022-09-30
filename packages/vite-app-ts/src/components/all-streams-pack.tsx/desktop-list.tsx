@@ -16,11 +16,11 @@ const StreamPackListDesktop = ({ isComplete, list, handleWrap, blockTimestamp }:
     <>
       {isComplete ? (
         <div className="mb-4 grid grid-cols-5">
-          <p className="uppercase">Vesting Token</p>
-          <p className="uppercase">Start/End</p>
-          <p className="uppercase">Status</p>
-          <p className="uppercase">Wrap Token</p>
-          <p className="uppercase"></p>
+          <div className="uppercase">Vesting Token</div>
+          <div className="uppercase">Start/End</div>
+          <div className="uppercase">Status</div>
+          <div className="uppercase">Wrap Token</div>
+          <div className="uppercase"></div>
         </div>
       ) : null}
 
@@ -33,35 +33,35 @@ const StreamPackListDesktop = ({ isComplete, list, handleWrap, blockTimestamp }:
           return isComplete ? (
             <div className="items-center grid grid-cols-5" key={index}>
               {/* <p className="mb-0 text-base">{vestedERC20.name}</p> */}
-              <p className=" mb-0 text-base">
+              <div className=" mb-0 text-base">
                 <TokenBadge address={vestedERC20.id} name={vestedERC20.name} symbol={vestedERC20.symbol} />
-              </p>
-              <p className="mb-0 text-base">
+              </div>
+              <div className="mb-0 text-base">
                 {startDate} - {endDate}
-              </p>
-              <p className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</p>
+              </div>
+              <div className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</div>
               {/* <p className="mb-0 text-base">{vestedERC20.symbol}</p> */}
-              <p className="mb-0 text-base">
+              <div className="mb-0 text-base">
                 <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
-              </p>
-              <p>
+              </div>
+              <div>
                 {getStatusStreamPack(vestedERC20, blockTimestamp) === StreamPackStatus.OPEN &&
                   WrapButton(() => handleWrap(token.id, vestedERC20.id))}
-              </p>
+              </div>
             </div>
           ) : (
             <div className="items-center grid grid-cols-4 gap-2" key={index}>
-              <p className="mb-0 text-base">
+              <div className="mb-0 text-base">
                 <TokenBadge address={vestedERC20.id} name={vestedERC20.name} symbol={vestedERC20.symbol} />
-              </p>
-              <p className="mb-0 text-base">
+              </div>
+              <div className="mb-0 text-base">
                 <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
-              </p>
-              <p className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</p>
-              <p>
+              </div>
+              <div className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</div>
+              <div>
                 {getStatusStreamPack(vestedERC20, blockTimestamp) === StreamPackStatus.OPEN &&
                   WrapButton(() => handleWrap(token.id, vestedERC20.id))}
-              </p>
+              </div>
             </div>
           );
         })}
