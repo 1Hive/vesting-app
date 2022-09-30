@@ -117,7 +117,7 @@ const AllStreamsPack = ({ isComplete, chainId }: AllStreamPackProps) => {
             />
           )}
 
-          <Modal visible={isModalVisible} footer={null} onCancel={() => setIsModalVisible(false)}>
+          <Modal open={isModalVisible} footer={null} onCancel={() => setIsModalVisible(false)}>
             <p className="mb-4 text-base font-bold">Wrapping Token</p>
             <Wrap
               underlyingTokenAddress={activeElement.underlyingTokenAddress}

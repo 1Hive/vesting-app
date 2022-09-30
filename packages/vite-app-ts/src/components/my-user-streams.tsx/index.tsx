@@ -2,7 +2,6 @@ import { Empty, Skeleton } from 'antd';
 import { BigNumber, ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import { useProvider, useSigner } from 'wagmi';
-import { useAppContracts } from '~~/config/contract-context';
 import { getBlockTimestamp, getContractERC20 } from '~~/helpers/contract';
 import { useUserVestings } from '~~/hooks';
 import { useIsMounted } from '~~/hooks/use-is-mounted';
@@ -72,7 +71,8 @@ export const RedeemValue = ({
   // const ethersContext = useEthersContext();
   const vestedERCAddress = vesting.id;
   const provider = useProvider();
-  const vestedERC20Contract = useAppContracts('VestedERC20', chainId)?.attach(vestedERCAddress);
+  // const vestedERC20Contract = useAppContracts('VestedERC20', chainId)?.attach(vestedERCAddress);
+  // const vestedERC20Contract = useBeeContract('VestedERC20') as unknown as VestedERC20 | undefined;
 
   const isMounted = useIsMounted();
 
@@ -98,7 +98,7 @@ export const RedeemValue = ({
           setBlockTimestamp(BigNumber.from(blockTimestamp));
           console.log('blockTimestamp', blockTimestamp);
         }
-
+        let vestedERC20Contract: any;
         const balanceAbleClaim = await vestedERC20Contract?.getRedeemableAmount(accountHolder);
         const balanceClaimable = await vestedERC20Contract?.balanceOf(accountHolder);
         const claimedWrappedAmount = await vestedERC20Contract?.claimedUnderlyingAmount(accountHolder); // TODO could now be get for subgraph

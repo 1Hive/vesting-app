@@ -1,17 +1,16 @@
 // import { BigNumber } from 'ethers';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useEthersContext } from 'eth-hooks/context';
-import { useAppContracts } from '~~/config/contract-context';
 import { BigNumber } from 'ethers';
 import { toDecimals } from '~~/helpers/math-utils';
 import { WrapType } from '.';
-import { useContractExistsAtAddress } from 'eth-hooks';
 import { getContractERC20 } from '~~/helpers/contract';
 import { TransactionBadge } from '@1hive/1hive-ui';
 import { getNetworkInfo } from '~~/functions';
 import { useIsMounted } from '~~/hooks';
 import { useAccount, useSigner } from 'wagmi';
 import { useCurrentChainId } from '~~/hooks/use-chain-id';
+import { VestedERC20 } from '~~/generated/contract-types';
+import { useBeeContract } from '~~/hooks/use-bee-contract';
 
 export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
   const [state, setState] = useState({
@@ -29,10 +28,12 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
   const { address } = useAccount();
   const { chainId } = useCurrentChainId();
   const network = getNetworkInfo(chainId);
-  const vestedERC20 = useAppContracts('VestedERC20', chainId);
+  const vestedERC20 = useBeeContract('VestedERC20') as unknown as VestedERC20 | undefined;
+  // const vestedERC20 = useAppContracts('VestedERC20', chainId);
   const underlyingTokenERC20 = getContractERC20({ signer, contractAddress: underlyingTokenAddress });
 
-  const [isErcExist, _update, queryStatus] = useContractExistsAtAddress(underlyingTokenERC20);
+  // const [isErcExist, _update, queryStatus] = useContractExistsAtAddress(underlyingTokenERC20);
+  const [isErcExist, _update, queryStatus] = [true, () => {}, '']; // TODO FIXME
 
   useEffect(() => {
     console.log('isErcExist', isErcExist);
@@ -89,7 +90,6 @@ export const Wrap = ({ vestedAdress, underlyingTokenAddress }: WrapType) => {
         onChange={(e: any) => setState((prev: any) => ({ ...prev, address: e.target.value }))}
       />
       <button
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onClick={() => {
           setState((prev: any) => ({ ...prev, address }));
           if (inputAdress.current && address) {

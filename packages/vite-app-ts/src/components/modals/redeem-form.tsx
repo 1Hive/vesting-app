@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Field } from '@1hive/1hive-ui';
 import { ethers } from 'ethers';
-import { useEthersContext } from 'eth-hooks/context';
-import { useAppContracts } from '~~/config/contract-context';
 import { RedeemType } from '.';
 import { useIsMounted } from '~~/hooks/use-is-mounted';
+import { VestedERC20 } from '~~/generated/contract-types';
+import { useBeeContract } from '~~/hooks/use-bee-contract';
 
 export const Redeem = ({ vestedAdress, address }: RedeemType) => {
   const isMounted = useIsMounted();
   const [redeemableAmount, setRedeemableAmount] = useState('');
 
-  const ethersContext = useEthersContext();
-  const vestedERC20 = useAppContracts('VestedERC20', ethersContext.chainId);
+  const vestedERC20 = useBeeContract('VestedERC20') as unknown as VestedERC20 | undefined;
+  // const vestedERC20 = useAppContracts('VestedERC20', ethersContext.chainId);
 
   useEffect(() => {
     const loadAmount = async () => {

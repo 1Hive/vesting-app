@@ -1,24 +1,21 @@
 import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom';
-import { Main, Modal, Popover } from '@1hive/1hive-ui';
+import { Main } from '@1hive/1hive-ui';
 import { Modal as ModalAntd } from 'antd';
 
 import FaqView from './pages/faq';
 import { DollarOutlined, HomeOutlined, PlusOutlined, QuestionCircleOutlined, RetweetOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 
 import './styles/app.less';
-import StreamsPack from './pages/streams-pack';
-import MyStreams from './pages/my-streams';
-import Dashboard from './pages/dashboard';
 import useResponsive from './hooks/use-responsive';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useAccount, useProvider } from 'wagmi';
-import { disconnect } from 'process';
-import { DownArrowIcon, UpArrowIcon } from './components/accordion';
-import { Add } from './components/modals';
-import { truncateAddress } from './helpers';
-import { getNetworkNameByChainID } from './models/constants/networks';
+import { useAccount } from 'wagmi';
+
+const Add = lazy(() => import('./components/modals/add-form'));
+const Dashboard = lazy(() => import('./pages/dashboard'));
+const MyStreams = lazy(() => import('./pages/my-streams'));
+const StreamsPack = lazy(() => import('./pages/streams-pack'));
 
 export enum RoutesPath {
   DASHBOARD = '/',
@@ -58,7 +55,9 @@ const MainApp = () => {
                       </div>
                       <ModalAntd visible={isAddModalVisible} footer={null} onCancel={() => setIsAddModalVisible(false)}>
                         <p className="mb-4 text-base font-bold">Creating new StreamPack</p>
-                        <Add />
+                        <Suspense fallback={<div>Loading...</div>}>
+                          <Add />
+                        </Suspense>
                       </ModalAntd>
                     </>
                   ) : null}
@@ -106,16 +105,24 @@ const MainApp = () => {
           <div className="content">
             <Switch>
               <Route exact path={RoutesPath.DASHBOARD}>
-                <Dashboard />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Dashboard />
+                </Suspense>
               </Route>
               <Route exact path={RoutesPath.MY_STREAMS}>
-                <MyStreams />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <MyStreams />
+                </Suspense>
               </Route>
               <Route exact path={RoutesPath.STREAMS_PACK}>
-                <StreamsPack />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <StreamsPack />
+                </Suspense>
               </Route>
               <Route exact path={RoutesPath.FAQ}>
-                <FaqView />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <FaqView />
+                </Suspense>
               </Route>
             </Switch>
           </div>

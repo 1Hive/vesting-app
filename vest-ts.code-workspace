@@ -1,10 +1,25 @@
 {
   "folders": [
-    { "name": "WebApp", "path": "./packages/vite-app-ts" },
-    { "name": "Hardhat", "path": "./packages/hardhat-ts" },
-    { "name": "Subgraph", "path": "./packages/subgraph" },
-    { "name": "Services", "path": "./packages/services" },
-    { "name": "Root", "path": "." }
+    {
+      "name": "WebApp",
+      "path": "./packages/vite-app-ts"
+    },
+    {
+      "name": "Hardhat",
+      "path": "./packages/hardhat-ts"
+    },
+    {
+      "name": "Subgraph",
+      "path": "./packages/subgraph"
+    },
+    {
+      "name": "Services",
+      "path": "./packages/services"
+    },
+    {
+      "name": "Root",
+      "path": "."
+    }
   ],
   "settings": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -12,7 +27,10 @@
     "prettier.enable": true,
     "eslint.enable": true,
     "eslint.codeActionsOnSave.mode": "all",
-    "eslint.run": "onSave"
+    "eslint.run": "onSave",
+    "[svg]": {
+      "editor.defaultFormatter": "jock.svg"
+    }
   },
   "extensions": {
     "recommendations": [

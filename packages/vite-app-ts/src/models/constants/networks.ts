@@ -1,10 +1,15 @@
-import { TNetworkInfo } from 'eth-hooks/models';
-// import { DEBUG } from '~~/config/app-config';
-
 const INFURA_ID = import.meta.env.VITE_KEY_INFURA;
 
 export type TNetworkNames = 'localhost' | 'rinkeby' | 'goerli' | 'gnosis';
-export type TNetworkInfoSubgraph = TNetworkInfo & {
+export type TNetworkInfoSubgraph = {
+  name: string;
+  chainId: number;
+  color?: string | undefined;
+  price?: number | undefined;
+  gasPrice?: number | undefined;
+  faucet?: string | undefined;
+  blockExplorer?: string | undefined;
+  rpcUrl?: string | undefined;
   subgraph?: string;
 };
 

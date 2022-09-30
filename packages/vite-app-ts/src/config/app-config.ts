@@ -1,5 +1,4 @@
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
-import { TEthersProvider } from 'eth-hooks/models';
 import { invariant } from 'ts-invariant';
 
 import { NETWORKS, TNetworkInfoSubgraph, TNetworkNames } from '../models/constants/networks';
@@ -94,7 +93,7 @@ export const MAINNET_PROVIDER = mainnetScaffoldEthProvider;
 // -------------------
 
 if (DEBUG) console.log('🏠 Connecting to provider:', NETWORKS.localhost.rpcUrl);
-export const LOCAL_PROVIDER: TEthersProvider | undefined =
-  TARGET_NETWORK_INFO === NETWORKS.localhost && import.meta.env.DEV
-    ? new StaticJsonRpcProvider(NETWORKS.localhost.rpcUrl)
-    : undefined;
+// export const LOCAL_PROVIDER: TEthersProvider | undefined =
+//   TARGET_NETWORK_INFO === NETWORKS.localhost && import.meta.env.DEV
+//     ? new StaticJsonRpcProvider(NETWORKS.localhost.rpcUrl)
+//     : undefined;
