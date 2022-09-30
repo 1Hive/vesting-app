@@ -4,8 +4,8 @@ import * as util from 'util';
 
 import 'eth-hooks/helpers/__global';
 
-// (window as any).global = window;
-// const global = window;
+(window as any).global = window;
+const global = window;
 
 if (!global.hasOwnProperty('Buffer')) {
   (global as any).Buffer = nodeBuffer.Buffer;

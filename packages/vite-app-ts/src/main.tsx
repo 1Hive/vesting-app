@@ -1,6 +1,6 @@
 import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom';
 import { Main } from '@1hive/1hive-ui';
-import { Modal as ModalAntd } from 'antd';
+import { Modal as ModalAntd, Skeleton } from 'antd';
 
 import FaqView from './pages/faq';
 import { DollarOutlined, HomeOutlined, PlusOutlined, QuestionCircleOutlined, RetweetOutlined } from '@ant-design/icons';
@@ -53,9 +53,9 @@ const MainApp = () => {
                           </button>
                         </div>
                       </div>
-                      <ModalAntd visible={isAddModalVisible} footer={null} onCancel={() => setIsAddModalVisible(false)}>
+                      <ModalAntd open={isAddModalVisible} footer={null} onCancel={() => setIsAddModalVisible(false)}>
                         <p className="mb-4 text-base font-bold">Creating new StreamPack</p>
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense fallback={<Skeleton />}>
                           <Add />
                         </Suspense>
                       </ModalAntd>
@@ -104,26 +104,20 @@ const MainApp = () => {
 
           <div className="content">
             <Switch>
-              <Route exact path={RoutesPath.DASHBOARD}>
-                <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Skeleton />}>
+                <Route exact path={RoutesPath.DASHBOARD}>
                   <Dashboard />
-                </Suspense>
-              </Route>
-              <Route exact path={RoutesPath.MY_STREAMS}>
-                <Suspense fallback={<div>Loading...</div>}>
+                </Route>
+                <Route exact path={RoutesPath.MY_STREAMS}>
                   <MyStreams />
-                </Suspense>
-              </Route>
-              <Route exact path={RoutesPath.STREAMS_PACK}>
-                <Suspense fallback={<div>Loading...</div>}>
+                </Route>
+                <Route exact path={RoutesPath.STREAMS_PACK}>
                   <StreamsPack />
-                </Suspense>
-              </Route>
-              <Route exact path={RoutesPath.FAQ}>
-                <Suspense fallback={<div>Loading...</div>}>
+                </Route>
+                <Route exact path={RoutesPath.FAQ}>
                   <FaqView />
-                </Suspense>
-              </Route>
+                </Route>
+              </Suspense>
             </Switch>
           </div>
         </main>

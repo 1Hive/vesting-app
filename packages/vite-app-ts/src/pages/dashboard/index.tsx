@@ -1,9 +1,12 @@
 import { Wrapper } from './index.styled';
-import MyUserStreams from '~~/components/my-user-streams.tsx';
 import { PageTitle } from '~~/components/page-title';
 import AllStreamsPack from '~~/components/all-streams-pack.tsx';
 import { useAccount } from 'wagmi';
 import { useCurrentChainId } from '~~/hooks/use-chain-id';
+import { lazy, Suspense } from 'react';
+import { Skeleton } from 'antd';
+
+const MyUserStreams = lazy(() => import('~~/components/my-user-streams.tsx'));
 
 function Dashboard() {
   const { isConnected, address } = useAccount();
@@ -26,7 +29,9 @@ function Dashboard() {
           <label className="text-base font-bold text-black">My Active Streams</label>
           <div className="mt-4">
             {isConnected && address && chainId ? (
-              <MyUserStreams account={address} chainId={chainId} />
+              <Suspense fallback={<Skeleton />}>
+                <MyUserStreams account={address} chainId={chainId} />
+              </Suspense>
             ) : (
               'Connect you wallet'
             )}

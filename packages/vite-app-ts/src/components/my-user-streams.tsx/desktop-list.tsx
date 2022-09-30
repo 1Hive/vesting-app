@@ -1,4 +1,5 @@
 import { TokenBadge } from '@1hive/1hive-ui';
+import { NavLink } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { dateFormat } from '~~/helpers/date-utils';
 import { useCurrentChainId } from '~~/hooks/use-chain-id';
@@ -82,11 +83,12 @@ const UserStreamListDesktop = ({ isComplete, list, blockTimestamp }: UserStreamL
       </div>
       {!isComplete ? (
         <div className="mt-4">
-          <a
-            href={RoutesPath.MY_STREAMS}
-            className="flex-none px-2 font-medium bg-white pointer-events-auto rounded-md py-[0.3125rem] text-slate-700 shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50">
-            View all streams
-          </a>
+          <NavLink
+            to={RoutesPath.MY_STREAMS}
+            className="flex-none px-2 font-medium bg-white pointer-events-auto rounded-md py-[0.3125rem] text-slate-700 shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50"
+            activeClassName="selected">
+            View all
+          </NavLink>
         </div>
       ) : null}
     </>

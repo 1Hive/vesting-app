@@ -24,11 +24,11 @@ const run = async (): Promise<void> => {
 
   ReactDOM.render(
     <StrictMode>
-      <Suspense fallback={<div />}>
-        <ApolloProvider client={client}>
+      <ApolloProvider client={client}>
+        <Suspense fallback={<div />}>
           <App />
-        </ApolloProvider>
-      </Suspense>
+        </Suspense>
+      </ApolloProvider>
     </StrictMode>,
     document.getElementById('root')
   );
