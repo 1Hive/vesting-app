@@ -65,7 +65,6 @@ export const getNetworkByChainID = (chainId: number | undefined): TNetworkInfoSu
     return undefined;
   }
   const key = (Object.keys(NETWORKS) as Array<TNetworkNames>).find((key) => NETWORKS[key].chainId === chainId);
-  console.log(`getNetworkByChainID:chainId `, key);
   if (!key) {
     return undefined;
   }

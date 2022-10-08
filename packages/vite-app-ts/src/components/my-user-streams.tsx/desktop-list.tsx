@@ -50,14 +50,24 @@ const UserStreamListDesktop = ({ isComplete, list, blockTimestamp }: UserStreamL
           return isComplete ? (
             <div className="grid grid-cols-5" key={index}>
               <p className="mb-0 text-base">
-                <TokenBadge address={vestToken.id} name={vestToken.name} symbol={vestToken.symbol} />
+                <TokenBadge
+                  address={vestToken.id}
+                  name={vestToken.name}
+                  symbol={vestToken.symbol}
+                  networkType="something"
+                />
               </p>
               <p className="mb-0 text-base">
                 {startDate} - {endDate}
               </p>
-              <p className="mb-0 text-base">{MyStreamingStatus[getStatusStream(vest, blockTimestamp)]}</p>
+              <p className="mb-0 text-base">{MyStreamingStatus[getStatusStream(vest, blockTimestamp, address)]}</p>
               <p className="mb-0 text-base">
-                <TokenBadge address={wrappedToken.id} name={wrappedToken.name} symbol={wrappedToken.symbol} />
+                <TokenBadge
+                  address={wrappedToken.id}
+                  name={wrappedToken.name}
+                  symbol={wrappedToken.symbol}
+                  networkType="something"
+                />
               </p>
               <p className="mb-0 text-base">
                 $
@@ -71,10 +81,20 @@ const UserStreamListDesktop = ({ isComplete, list, blockTimestamp }: UserStreamL
           ) : (
             <div className="grid grid-cols-3" key={index}>
               <p className="mb-0 text-base">
-                <TokenBadge address={vestToken.id} name={vestToken.name} symbol={vestToken.symbol} />
+                <TokenBadge
+                  address={vestToken.id}
+                  name={vestToken.name}
+                  symbol={vestToken.symbol}
+                  networkType="something"
+                />
               </p>
               <p className="mb-0 text-base">
-                <TokenBadge address={wrappedToken.id} name={wrappedToken.name} symbol={wrappedToken.symbol} />
+                <TokenBadge
+                  address={wrappedToken.id}
+                  name={wrappedToken.name}
+                  symbol={wrappedToken.symbol}
+                  networkType="something"
+                />
               </p>
               <p className="mb-0 text-base">$12.20</p>
             </div>

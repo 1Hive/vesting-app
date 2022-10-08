@@ -35,7 +35,12 @@ const StreamPackListDesktop = ({ isComplete, list, handleWrap, blockTimestamp }:
             <div className="items-center grid grid-cols-5" key={index}>
               {/* <p className="mb-0 text-base">{vestedERC20.name}</p> */}
               <div className=" mb-0 text-base">
-                <TokenBadge address={vestedERC20.id} name={vestedERC20.name} symbol={vestedERC20.symbol} />
+                <TokenBadge
+                  address={vestedERC20.id}
+                  name={vestedERC20.name}
+                  symbol={vestedERC20.symbol}
+                  networkType="something"
+                />
               </div>
               <div className="mb-0 text-base">
                 {startDate} - {endDate}
@@ -43,7 +48,7 @@ const StreamPackListDesktop = ({ isComplete, list, handleWrap, blockTimestamp }:
               <div className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</div>
               {/* <p className="mb-0 text-base">{vestedERC20.symbol}</p> */}
               <div className="mb-0 text-base">
-                <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
+                <TokenBadge address={token.id} name={token.name} symbol={token.symbol} networkType="something" />
               </div>
               <div>
                 {getStatusStreamPack(vestedERC20, blockTimestamp) === StreamPackStatus.OPEN &&
@@ -53,10 +58,15 @@ const StreamPackListDesktop = ({ isComplete, list, handleWrap, blockTimestamp }:
           ) : (
             <div className="items-center grid grid-cols-4 gap-2" key={index}>
               <div className="mb-0 text-base">
-                <TokenBadge address={vestedERC20.id} name={vestedERC20.name} symbol={vestedERC20.symbol} />
+                <TokenBadge
+                  address={vestedERC20.id}
+                  name={vestedERC20.name}
+                  symbol={vestedERC20.symbol}
+                  networkType="something"
+                />
               </div>
               <div className="mb-0 text-base">
-                <TokenBadge address={token.id} name={token.name} symbol={token.symbol} />
+                <TokenBadge address={token.id} name={token.name} symbol={token.symbol} networkType="something" />
               </div>
               <div className="mb-0 text-base">{StreamPackStatus[getStatusStreamPack(vestedERC20, blockTimestamp)]}</div>
               <div>

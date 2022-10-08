@@ -42,7 +42,7 @@ const gnosisChain: Chain = {
 };
 
 const { chains, provider } = configureChains(
-  [gnosisChain, chain.goerli],
+  [chain.goerli],
   [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
 );
 
