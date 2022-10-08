@@ -64,15 +64,7 @@ export const getStatusStream = (vest: Vesting, blockTimestamp: number | undefine
   }
 };
 
-export const RedeemValue = ({
-  vesting,
-  accountHolder,
-  chainId,
-}: {
-  vesting: Vesting;
-  accountHolder: string;
-  chainId: number | undefined;
-}) => {
+export const RedeemValue = ({ vesting, accountHolder }: { vesting: Vesting; accountHolder: string }) => {
   const [redeemableAmountBN, setRedeemableAmountBN] = useState<BigNumber | undefined>();
   const [redeemableAmount, setRedeemableAmount] = useState<string | undefined>();
   const [claimedUnderlyingAmount, setClaimedUnderlyingAmount] = useState<BigNumber | undefined>();
@@ -201,11 +193,59 @@ export const RedeemValue = ({
   return <>{redeemableAmount ? redeemableAmount : ' Loading...'}</>;
 };
 
-// console.log('load apollo');
-// const client2 = new ApolloClient({
-//   uri: 'https://api.thegraph.com/subgraphs/name/kamikazebr/onehivevestingrinkeby',
-//   cache: new InMemoryCache(),
-// });
+export const ClaimedValue = ({ vesting, accountHolder }: { vesting: Vesting; accountHolder: string }) => {
+  const [claimedUnderlyingAmount, setClaimedUnderlyingAmount] = useState<BigNumber | undefined>();
+  const [balanceClaimable, setBalanceClaimable] = useState<BigNumber | undefined>();
+
+  const vestedERCAddress = vesting.id.split('-')[0];
+  const provider = useProvider();
+
+  const isMounted = useIsMounted();
+
+  const { data: signer } = useSigner();
+
+  const vestedERC20 = useBeeContract('VestedERC20') as unknown as VestedERC20 | undefined;
+
+  useEffect(() => {
+    const some = async () => {
+      if (isMounted()) {
+        // console.log('vesting', vesting);
+        const vestedERC20Contract = vestedERC20?.attach(vestedERCAddress);
+
+        const balanceAbleClaim = await vestedERC20Contract?.getRedeemableAmount(accountHolder);
+        const balanceClaimable = await vestedERC20Contract?.balanceOf(accountHolder);
+
+        const claimedWrappedAmount = BigNumber.from(vesting.claimedUnderlyingAmount);
+        // const claimedWrappedAmount = await vestedERC20Contract?.claimedUnderlyingAmount(accountHolder); // TODO could now be get for subgraph
+        const underlyingToken = await vestedERC20Contract?.underlying(); // TODO could now be get for subgraph
+        // const underlyingToken = await vestedERC20Contract?.underlying(); // TODO could now be get for subgraph
+
+        console.log('underlyingToken', underlyingToken);
+        if (underlyingToken) {
+          const erc20 = getContractERC20({ signer, contractAddress: underlyingToken });
+          const balanceToBeStreamed = await erc20.balanceOf(vestedERCAddress);
+          if (balanceToBeStreamed) console.log('balanceToBeStreamed', ethers.utils.formatEther(balanceToBeStreamed));
+        }
+        if (balanceClaimable) {
+          console.log('balanceClaimable', ethers.utils.formatEther(balanceClaimable));
+          setBalanceClaimable(balanceClaimable);
+        }
+        if (balanceAbleClaim) console.log('balanceAbleClaim', ethers.utils.formatEther(balanceAbleClaim));
+        if (claimedWrappedAmount) console.log('claimedWrappedAmount', ethers.utils.formatEther(claimedWrappedAmount));
+        setClaimedUnderlyingAmount(claimedWrappedAmount);
+      }
+    };
+
+    void some();
+  }, [accountHolder, isMounted, provider, signer, vestedERC20, vestedERCAddress, vesting]);
+
+  return (
+    <>
+      {claimedUnderlyingAmount ? truncate(ethers.utils.formatEther(claimedUnderlyingAmount), 3) : ' Loading...'} /{' '}
+      {balanceClaimable ? truncate(ethers.utils.formatEther(balanceClaimable), 3) : ' Loading...'}
+    </>
+  );
+};
 
 const MyUserStreams = ({
   account,
@@ -216,7 +256,6 @@ const MyUserStreams = ({
   chainId: number;
   isComplete?: boolean;
 }) => {
-  // const ethersContext = useEthersContext();
   const provider = useProvider();
   const [blockTimestamp, setBlockTimestamp] = useState<number | undefined>();
   const { loading, error, data } = useUserVestings(account, getNetworkNameByChainID(chainId));

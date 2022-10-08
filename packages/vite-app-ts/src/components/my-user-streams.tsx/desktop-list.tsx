@@ -5,7 +5,7 @@ import { dateFormat } from '~~/helpers/date-utils';
 import { useCurrentChainId } from '~~/hooks/use-chain-id';
 import { RoutesPath } from '~~/main';
 import { VestedErc20 } from '~~/types-and-hooks';
-import { MyStreamingStatus, RedeemValue, getStatusStream } from '.';
+import { MyStreamingStatus, RedeemValue, getStatusStream, ClaimedValue } from '.';
 
 export type UserStreamListDesktopProps = {
   isComplete?: boolean;
@@ -32,12 +32,13 @@ const UserStreamListDesktop = ({ isComplete, list, blockTimestamp }: UserStreamL
   return (
     <>
       {isComplete ? (
-        <div className="mb-4 grid grid-cols-5">
-          <p className="uppercase">Vesting Token</p>
+        <div className="mb-4 grid grid-cols-7">
+          <p className="uppercase">StreamPack</p>
           <p className="uppercase">Start/End</p>
-          <p className="uppercase">Streaming</p>
+          <p className="uppercase">Status</p>
           <p className="uppercase">Wrapped Token</p>
-          <p className="uppercase">$</p>
+          <p className="uppercase">Streaming</p>
+          <p className="uppercase">Claimed / Total</p>
         </div>
       ) : null}
       <div className="mt-4 grid gap-2">
@@ -48,7 +49,7 @@ const UserStreamListDesktop = ({ isComplete, list, blockTimestamp }: UserStreamL
           const endDate = dateFormat(vestToken.endTimestamp);
 
           return isComplete ? (
-            <div className="grid grid-cols-5" key={index}>
+            <div className="grid grid-cols-7" key={index}>
               <p className="mb-0 text-base">
                 <TokenBadge
                   address={vestToken.id}
@@ -70,12 +71,10 @@ const UserStreamListDesktop = ({ isComplete, list, blockTimestamp }: UserStreamL
                 />
               </p>
               <p className="mb-0 text-base">
-                $
-                {isConnected && address && chainId ? (
-                  <RedeemValue vesting={vest} accountHolder={address} chainId={chainId} />
-                ) : (
-                  'Loading...'
-                )}
+                {isConnected && address ? <RedeemValue vesting={vest} accountHolder={address} /> : 'Loading...'}
+              </p>
+              <p className="mb-0 text-base">
+                {isConnected && address ? <ClaimedValue vesting={vest} accountHolder={address} /> : 'Loading...'}
               </p>
             </div>
           ) : (
@@ -96,7 +95,7 @@ const UserStreamListDesktop = ({ isComplete, list, blockTimestamp }: UserStreamL
                   networkType="something"
                 />
               </p>
-              <p className="mb-0 text-base">$12.20</p>
+              <p className="mb-0 text-base">12.20</p>
             </div>
           );
         })}
